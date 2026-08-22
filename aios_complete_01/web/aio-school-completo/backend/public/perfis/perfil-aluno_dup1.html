@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>O Meu Perfil — All in One School</title>
+<meta name="description" content="Edita o teu perfil de estudante na All in One School.">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#ff4d00">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0a0a0f;--paper:#f5f2eb;--accent:#ff4d00;--muted:#8a8780;--card:#fff;--border:rgba(10,10,15,0.08);--shadow:0 4px 32px rgba(10,10,15,0.10);--green:#00b37e;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(245,242,235,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:0.5rem;}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block;}
+.btn-logout{background:none;border:1px solid var(--border);border-radius:100px;padding:0.4rem 1rem;font-size:0.82rem;cursor:pointer;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;transition:0.2s;}
+.btn-logout:hover{border-color:var(--ink);color:var(--ink);}
+#loadingOverlay{position:fixed;inset:0;background:var(--paper);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity 0.4s;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.main{max-width:760px;margin:0 auto;padding:7rem 5% 4rem;}
+.page-header{margin-bottom:2rem;}
+.page-header h1{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;}
+.page-header p{color:var(--muted);margin-top:0.25rem;font-size:0.9rem;}
+/* Avatar */
+.avatar-section{display:flex;align-items:center;gap:1.5rem;background:var(--card);border-radius:20px;padding:1.5rem;border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:1.5rem;}
+.avatar-circle{width:72px;height:72px;border-radius:50%;background:var(--ink);color:#fff;font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.avatar-circle img{width:100%;height:100%;object-fit:cover;}
+.btn-avatar{background:none;border:1.5px solid var(--border);border-radius:100px;padding:0.5rem 1.1rem;font-size:0.82rem;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;transition:0.2s;}
+.btn-avatar:hover{border-color:var(--accent);color:var(--accent);}
+/* Secções */
+.section{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);padding:1.75rem;margin-bottom:1.25rem;}
+.section-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem;}
+/* Inputs */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:500px){.form-row{grid-template-columns:1fr;}}
+.form-group{margin-bottom:1rem;}
+label{display:block;font-size:0.8rem;font-weight:600;margin-bottom:0.35rem;}
+input,select,textarea{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:0.8rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;background:#fff;transition:border-color 0.2s;}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,77,0,0.08);}
+textarea{resize:vertical;min-height:90px;}
+/* Chips */
+.chips-grid{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.chip-cb{display:none;}
+.chip-lbl{padding:0.35rem 0.9rem;border:1.5px solid var(--border);border-radius:100px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.2s;user-select:none;}
+.chip-cb:checked + .chip-lbl{background:var(--accent);color:#fff;border-color:var(--accent);}
+.chip-lbl:hover{border-color:var(--accent);color:var(--accent);}
+/* Completude */
+.completion-banner{background:linear-gradient(135deg,var(--green),#009968);color:#fff;border-radius:16px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;}
+.completion-banner .num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;flex-shrink:0;}
+.completion-bar-bg{height:6px;background:rgba(255,255,255,0.3);border-radius:10px;overflow:hidden;margin-top:0.4rem;}
+.completion-bar-fill{height:100%;background:#fff;border-radius:10px;transition:width 0.8s ease;}
+/* Botão guardar */
+.save-bar{position:sticky;bottom:0;background:rgba(245,242,235,0.95);backdrop-filter:blur(12px);border-top:1px solid var(--border);padding:1rem 0;display:flex;gap:1rem;justify-content:flex-end;margin-top:1.5rem;}
+.btn-save{background:var(--accent);color:#fff;border:none;border-radius:100px;padding:0.75rem 2rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:0.2s;}
+.btn-save:hover{background:#cc3d00;}
+.btn-back{background:none;border:1.5px solid var(--border);border-radius:100px;padding:0.75rem 1.5rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;color:var(--muted);transition:0.2s;text-decoration:none;}
+.btn-back:hover{border-color:var(--ink);color:var(--ink);}
+.toast{position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;border-radius:100px;padding:0.75rem 1.5rem;font-size:0.88rem;font-weight:600;display:none;z-index:200;white-space:nowrap;}
+</style>
+</head>
+<body>
+<div id="loadingOverlay"><div class="spinner"></div></div>
+<div class="toast" id="toast">✓ Perfil guardado com sucesso!</div>
+
+<nav>
+  <a class="logo" href="../serviços/dashboard-aluno.html"><span class="logo-dot"></span>All in One School</a>
+  <button class="btn-logout" id="btnLogout">Sair</button>
+</nav>
+
+<main class="main">
+  <div class="page-header">
+    <h1>O Meu Perfil</h1>
+    <p>Mantém o perfil actualizado para receberes melhores recomendações.</p>
+  </div>
+
+  <!-- Completude -->
+  <div class="completion-banner">
+    <div class="num" id="completionNum">0%</div>
+    <div style="flex:1;">
+      <strong style="font-family:'Syne',sans-serif;">Completude do perfil</strong>
+      <div class="completion-bar-bg"><div class="completion-bar-fill" id="completionBar" style="width:0%"></div></div>
+      <p id="completionTip" style="font-size:0.78rem;margin-top:0.35rem;opacity:0.8;"></p>
+    </div>
+  </div>
+
+  <!-- Avatar -->
+  <div class="avatar-section">
+    <div class="avatar-circle" id="avatarCircle">?</div>
+    <div>
+      <strong style="font-family:'Syne',sans-serif;" id="avatarName">—</strong>
+      <p style="font-size:0.82rem;color:var(--muted);">Foto de perfil</p>
+      <label class="btn-avatar" for="avatarUpload" style="margin-top:0.5rem;display:inline-block;">Alterar foto</label>
+      <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
+    </div>
+  </div>
+
+  <form id="profileForm">
+    <!-- Dados pessoais -->
+    <div class="section">
+      <div class="section-title">👤 Dados Pessoais</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nome completo</label>
+          <input type="text" id="fFullName" placeholder="O teu nome completo"/>
+        </div>
+        <div class="form-group">
+          <label>Telefone / WhatsApp</label>
+          <input type="tel" id="fPhone" placeholder="+244 9XX XXX XXX"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Província</label>
+          <select id="fProvince">
+            <option value="">Selecionar...</option>
+            <option>Bengo</option><option>Benguela</option><option>Bié</option>
+            <option>Cabinda</option><option>Cuando Cubango</option>
+            <option>Cuanza Norte</option><option>Cuanza Sul</option>
+            <option>Cunene</option><option>Huambo</option><option>Huíla</option>
+            <option>Luanda</option><option>Lunda Norte</option><option>Lunda Sul</option>
+            <option>Malanje</option><option>Moxico</option><option>Namibe</option>
+            <option>Uíge</option><option>Zaire</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Escola / Instituição actual</label>
+          <input type="text" id="fInstitution" placeholder="Ex: PUNIV, UCAN, ..."/>
+        </div>
+      </div>
+    </div>
+
+    <!-- Académico -->
+    <div class="section">
+      <div class="section-title">🎓 Académico</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nível académico actual</label>
+          <select id="fAcademicLevel">
+            <option value="">Selecionar...</option>
+            <option value="primario">Ensino Primário</option>
+            <option value="1ciclo">1º Ciclo</option>
+            <option value="2ciclo">2º Ciclo</option>
+            <option value="universidade">Universitário</option>
+            <option value="profissional">Formação Profissional</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Área académica</label>
+          <input type="text" id="fAcademicArea" placeholder="Ex: Ciências, Humanidades..."/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Objectivo principal</label>
+        <select id="fMainObjective">
+          <option value="">Selecionar...</option>
+          <option value="ingressar">Ingressar na universidade</option>
+          <option value="bolsa">Conseguir uma bolsa de estudo</option>
+          <option value="formacao">Fazer uma formação profissional</option>
+          <option value="emprego">Encontrar emprego</option>
+          <option value="empreender">Empreender</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Interesses -->
+    <div class="section">
+      <div class="section-title">⚡ Interesses & Competências</div>
+      <label style="margin-bottom:0.6rem;display:block;">Áreas de interesse</label>
+      <div class="chips-grid" id="interestChips">
+        <input type="checkbox" class="chip-cb" id="i1" value="Tecnologia"><label class="chip-lbl" for="i1">💻 Tecnologia</label>
+        <input type="checkbox" class="chip-cb" id="i2" value="Saúde"><label class="chip-lbl" for="i2">🏥 Saúde</label>
+        <input type="checkbox" class="chip-cb" id="i3" value="Negócios"><label class="chip-lbl" for="i3">📊 Negócios</label>
+        <input type="checkbox" class="chip-cb" id="i4" value="Direito"><label class="chip-lbl" for="i4">⚖️ Direito</label>
+        <input type="checkbox" class="chip-cb" id="i5" value="Engenharia"><label class="chip-lbl" for="i5">🔧 Engenharia</label>
+        <input type="checkbox" class="chip-cb" id="i6" value="Educação"><label class="chip-lbl" for="i6">📚 Educação</label>
+        <input type="checkbox" class="chip-cb" id="i7" value="Artes"><label class="chip-lbl" for="i7">🎨 Artes</label>
+        <input type="checkbox" class="chip-cb" id="i8" value="Ciências"><label class="chip-lbl" for="i8">🔬 Ciências</label>
+        <input type="checkbox" class="chip-cb" id="i9" value="Agricultura"><label class="chip-lbl" for="i9">🌱 Agricultura</label>
+        <input type="checkbox" class="chip-cb" id="i10" value="Comunicação"><label class="chip-lbl" for="i10">📡 Comunicação</label>
+      </div>
+      <div class="form-group" style="margin-top:1.25rem;">
+        <label>Orçamento disponível para educação</label>
+        <select id="fBudget">
+          <option value="">Selecionar...</option>
+          <option value="0">Gratuito / Bolsa</option>
+          <option value="baixo">Até 50.000 AOA/mês</option>
+          <option value="medio">50.000 – 150.000 AOA/mês</option>
+          <option value="alto">Acima de 150.000 AOA/mês</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Sobre mim -->
+    <div class="section">
+      <div class="section-title">📝 Sobre mim</div>
+      <div class="form-group">
+        <label>Apresentação pessoal (opcional)</label>
+        <textarea id="fBio" placeholder="Conta um pouco sobre ti, os teus objectivos e o que procuras..."></textarea>
+      </div>
+    </div>
+
+    <div class="save-bar">
+      <a href="../serviços/dashboard-aluno.html" class="btn-back">← Voltar ao painel</a>
+      <button type="submit" class="btn-save" id="btnSave">Guardar alterações</button>
+    </div>
+  </form>
+</main>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, onSnapshot, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
+import { firebaseConfig } from '../firebase-config.js';
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const storage = getStorage(app);
+const overlay = document.getElementById('loadingOverlay');
+
+let uid  = null;
+let data = {};
+
+function hideOverlay() {
+  if (!overlay) return;
+  overlay.style.opacity = '0';
+  setTimeout(() => overlay.style.display = 'none', 400);
+}
+function showFatalError(msg) {
+  hideOverlay();
+  document.querySelector('.main').innerHTML = `
+    <div style="text-align:center;padding:4rem 1rem;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">⚠️</div>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;margin-bottom:0.5rem;">Não foi possível carregar o perfil</h2>
+      <p style="color:var(--muted);max-width:420px;margin:0 auto 1.5rem;">${msg}</p>
+      <button onclick="window.location.reload()" style="background:var(--accent);color:#fff;border:none;border-radius:100px;padding:0.75rem 1.5rem;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;">Tentar novamente</button>
+    </div>`;
+}
+const safetyTimeout = setTimeout(() => {
+  showFatalError('A ligação está a demorar demasiado. Verifica a tua internet ou se o firebase-config.js está correctamente configurado.');
+}, 10000);
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) { window.location.href = '../auth/login.html'; return; }
+  uid = user.uid;
+  listenProfile();
+  document.getElementById('btnLogout').onclick = async () => { await signOut(auth); window.location.href = '../auth/login.html'; };
+});
+
+function listenProfile() {
+  onSnapshot(
+    doc(db,'users',uid),
+    (snap) => {
+      clearTimeout(safetyTimeout);
+      // Mesmo que o documento ainda não exista, mostra o formulário vazio em vez de ficar preso
+      data = snap.exists() ? snap.data() : {};
+      populateForm();
+      updateCompletion();
+      hideOverlay();
+    },
+    (err) => {
+      clearTimeout(safetyTimeout);
+      console.error('Erro ao carregar perfil:', err);
+      const msg = err.code === 'permission-denied'
+        ? 'Sem permissão para aceder aos teus dados. Verifica se as regras do Firestore foram publicadas.'
+        : 'Ocorreu um erro inesperado: ' + (err.message || err.code || 'erro desconhecido');
+      showFatalError(msg);
+    }
+  );
+}
+
+function populateForm() {
+  const s = (id,val) => { const el=document.getElementById(id); if(el) el.value=val||''; };
+  s('fFullName',      data.fullName);
+  s('fPhone',         data.phone||data.identifier);
+  s('fProvince',      data.province);
+  s('fInstitution',   data.institution);
+  s('fAcademicLevel', data.academicLevel);
+  s('fAcademicArea',  data.academicArea);
+  s('fMainObjective', data.mainObjective);
+  s('fBudget',        data.budget);
+  s('fBio',           data.bio);
+
+  // Avatar
+  const av = document.getElementById('avatarCircle');
+  const initials = (data.fullName||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  av.innerHTML = data.avatarUrl ? `<img src="${data.avatarUrl}" alt=""/>` : initials;
+  document.getElementById('avatarName').textContent = data.fullName||'—';
+
+  // Chips de interesses
+  const interests = Array.isArray(data.interest) ? data.interest : (data.interest?[data.interest]:[]);
+  document.querySelectorAll('#interestChips .chip-cb').forEach(cb => {
+    cb.checked = interests.includes(cb.value);
+  });
+}
+
+function updateCompletion() {
+  const fields = [
+    {key:'fullName',   label:'Adiciona o nome completo'},
+    {key:'province',   label:'Seleciona a tua província'},
+    {key:'academicLevel', label:'Define o nível académico'},
+    {key:'mainObjective', label:'Define o teu objectivo principal'},
+    {key:'interest',   label:'Seleciona os teus interesses'},
+    {key:'budget',     label:'Define o teu orçamento'},
+    {key:'bio',        label:'Adiciona uma apresentação'},
+    {key:'avatarUrl',  label:'Adiciona uma foto de perfil'}
+  ];
+  const filled = fields.filter(f => {
+    const v = data[f.key];
+    return Array.isArray(v) ? v.length>0 : (v && v!=='');
+  });
+  const pct = Math.round((filled.length/fields.length)*100);
+  document.getElementById('completionNum').textContent = pct+'%';
+  document.getElementById('completionBar').style.width = pct+'%';
+  const missing = fields.find(f => { const v=data[f.key]; return Array.isArray(v)?v.length===0:(!v||v===''); });
+  document.getElementById('completionTip').textContent = missing ? `Próximo: ${missing.label}` : '✓ Perfil completo!';
+}
+
+// ── Guardar ──
+document.getElementById('profileForm').onsubmit = async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('btnSave');
+  btn.disabled=true; btn.textContent='A guardar...';
+  const interests = Array.from(document.querySelectorAll('#interestChips .chip-cb:checked')).map(cb=>cb.value);
+  await updateDoc(doc(db,'users',uid), {
+    fullName:      document.getElementById('fFullName').value,
+    phone:         document.getElementById('fPhone').value,
+    province:      document.getElementById('fProvince').value,
+    institution:   document.getElementById('fInstitution').value,
+    academicLevel: document.getElementById('fAcademicLevel').value,
+    academicArea:  document.getElementById('fAcademicArea').value,
+    mainObjective: document.getElementById('fMainObjective').value,
+    budget:        document.getElementById('fBudget').value,
+    bio:           document.getElementById('fBio').value,
+    interest:      interests
+  });
+  btn.disabled=false; btn.textContent='Guardar alterações';
+  const toast = document.getElementById('toast');
+  toast.style.display='block'; setTimeout(()=>toast.style.display='none',3000);
+};
+
+// ── Upload avatar ──
+document.getElementById('avatarUpload').onchange = async function() {
+  const file = this.files[0]; if(!file) return;
+  const r = ref(storage, `users/${uid}/avatar`);
+  await uploadBytes(r, file);
+  const url = await getDownloadURL(r);
+  await updateDoc(doc(db,'users',uid), { avatarUrl: url });
+};
+
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
+</script>
+</body>
+</html>

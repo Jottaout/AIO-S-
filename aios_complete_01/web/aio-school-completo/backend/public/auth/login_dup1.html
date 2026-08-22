@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Entrar — All in One School</title>
+<meta name="description" content="Acede à All in One School — plataforma educativa de Angola.">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#ff4d00">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../style.css">
+<style>
+input{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:0.85rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.95rem;transition:border-color 0.2s,box-shadow 0.2s;outline:none;background:#fff;}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,77,0,0.10);}
+label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.4rem;}
+.form-group{margin-bottom:1.1rem;}
+.error-msg{color:#ef4444;font-size:0.8rem;margin-top:0.25rem;display:none;}
+.success-msg{color:var(--green);font-size:0.82rem;margin-top:0.25rem;display:none;}
+.btn-primary{width:100%;background:var(--ink);color:#fff;border:none;border-radius:100px;padding:0.875rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;transition:0.2s;}
+.btn-primary:hover{background:var(--accent);}
+.btn-link{background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.82rem;text-decoration:underline;padding:0;}
+.divider{display:flex;align-items:center;gap:1rem;margin:1.25rem 0;color:var(--muted);font-size:0.78rem;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.reg-link{display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border-radius:12px;border:1.5px solid var(--border);text-decoration:none;color:var(--ink);transition:0.2s;font-size:0.88rem;margin-bottom:0.5rem;}
+.reg-link:hover{border-color:var(--ink);}
+.reg-link .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.reg-link .label{font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;}
+.reg-link .sub{font-size:0.75rem;color:var(--muted);}
+</style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+<nav>
+  <a class="logo" href="/"><span class="logo-dot"></span>All in One School</a>
+</nav>
+
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:7rem 1.5rem 3rem;">
+  <div class="login-card" style="max-width:440px;width:100%;">
+
+    <!-- VISTA: LOGIN -->
+    <div id="viewLogin">
+      <h2 style="font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:0.25rem;">Bem-vindo de volta</h2>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.75rem;">Entra com o teu e-mail e senha.</p>
+
+      <form id="loginForm">
+        <div class="form-group"><label>E-mail</label><input type="email" id="email" required placeholder="seu@dominio.com"/></div>
+        <div class="form-group"><label>Senha</label><input type="password" id="password" required placeholder="••••••••"/></div>
+        <div id="loginError" class="error-msg"></div>
+        <button type="submit" id="loginBtn" class="btn-primary" style="margin-top:0.5rem;">Entrar</button>
+        <div style="text-align:right;margin-top:0.75rem;">
+          <button type="button" class="btn-link" id="showRecovery">Esqueceste a senha?</button>
+        </div>
+      </form>
+
+      <div class="divider">Ainda não tens conta?</div>
+      <a href="/registar" class="reg-link"><div class="icon" style="background:rgba(255,77,0,0.1);">🎓</div><div><div class="label">Sou Aluno / Estudante</div><div class="sub">Recebe recomendações personalizadas</div></div></a>
+      <a href="/professor" class="reg-link"><div class="icon" style="background:rgba(0,87,255,0.1);">📚</div><div><div class="label">Sou Professor / Formador</div><div class="sub">Regista-te como freelancer educativo</div></div></a>
+      <a href="/instituicao" class="reg-link"><div class="icon" style="background:rgba(0,179,126,0.1);">🏫</div><div><div class="label">Somos uma Instituição</div><div class="sub">Universidades, escolas, centros de formação</div></div></a>
+    </div>
+
+    <!-- VISTA: RECUPERAÇÃO -->
+    <div id="viewRecovery" style="display:none;">
+      <button id="backToLogin" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:0.85rem;margin-bottom:1.25rem;padding:0;">← Voltar</button>
+      <h2 style="font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:0.25rem;">Recuperar senha</h2>
+      <p style="color:var(--muted);font-size:0.88rem;margin-bottom:1.5rem;">Introduz o teu e-mail e enviamos um link de recuperação.</p>
+      <form id="recoveryForm">
+        <div class="form-group"><label>E-mail da conta</label><input type="email" id="recoveryEmail" required placeholder="seu@dominio.com"/></div>
+        <div id="recoveryError" class="error-msg"></div>
+        <div id="recoverySuccess" class="success-msg">✓ Link enviado! Verifica o e-mail (incluindo spam).</div>
+        <button type="submit" id="recoveryBtn" class="btn-primary">Enviar link de recuperação</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="../api.js"></script>
+<script>
+  // Redireciona se já estiver autenticado
+  if (API.isLoggedIn()) API.redirectByRole();
+
+  // ── Login ──
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('loginBtn');
+    const err = document.getElementById('loginError');
+    err.style.display = 'none';
+    btn.disabled = true; btn.textContent = 'A entrar...';
+    try {
+      await API.loginAluno(
+        document.getElementById('email').value.trim(),
+        document.getElementById('password').value
+      );
+      API.redirectByRole();
+    } catch (ex) {
+      const msgs = { 401: 'E-mail ou senha incorrectos.', 429: 'Muitas tentativas. Aguarda alguns minutos.' };
+      err.textContent = msgs[ex.status] || ex.message || 'Erro ao entrar.';
+      err.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Entrar';
+    }
+  });
+
+  // ── Recuperação de senha ──
+  document.getElementById('showRecovery').onclick = () => {
+    document.getElementById('viewLogin').style.display = 'none';
+    document.getElementById('viewRecovery').style.display = 'block';
+  };
+  document.getElementById('backToLogin').onclick = () => {
+    document.getElementById('viewRecovery').style.display = 'none';
+    document.getElementById('viewLogin').style.display = 'block';
+  };
+  document.getElementById('recoveryForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('recoveryBtn');
+    const err = document.getElementById('recoveryError');
+    const ok  = document.getElementById('recoverySuccess');
+    err.style.display = 'none'; ok.style.display = 'none';
+    btn.disabled = true; btn.textContent = 'A enviar...';
+    try {
+      await API.recuperarSenha(document.getElementById('recoveryEmail').value.trim(), 'student');
+      ok.style.display = 'block'; btn.textContent = 'Enviado ✓';
+    } catch (ex) {
+      err.textContent = ex.message || 'Erro ao enviar.';
+      err.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'Enviar link de recuperação';
+    }
+  });
+</script>
+</body>
+</html>

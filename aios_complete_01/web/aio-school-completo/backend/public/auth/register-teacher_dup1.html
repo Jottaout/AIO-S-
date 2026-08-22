@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Registo de Professor / Formador — All in One School</title>
+<meta name="description" content="Regista-te como professor ou formador freelancer na All in One School e alcança estudantes em todo o país.">
+<meta property="og:title" content="Registo de Professor — All in One School">
+<meta property="og:type" content="website">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#0057ff">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0a0a0f;--paper:#f5f2eb;--accent:#0057ff;--accent-light:rgba(0,87,255,0.08);--muted:#8a8780;--card:#fff;--border:rgba(10,10,15,0.10);--shadow:0 4px 32px rgba(10,10,15,0.10);--green:#00b37e;--orange:#ff4d00;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;min-height:100vh;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 5%;background:rgba(245,242,235,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:0.5rem;}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block;}
+
+/* Wizard layout */
+.wizard-wrapper{max-width:640px;margin:0 auto;padding:7rem 1.5rem 4rem;}
+.wizard-header{text-align:center;margin-bottom:2.5rem;}
+.wizard-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--ink);color:#fff;border-radius:100px;padding:0.35rem 1rem;font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1rem;}
+.wizard-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(1.4);}}
+.wizard-header h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;letter-spacing:-0.02em;}
+.wizard-header p{color:var(--muted);margin-top:0.5rem;}
+
+/* Progress */
+.progress-container{margin-bottom:2rem;}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;font-size:0.8rem;}
+.progress-phase{font-family:'Syne',sans-serif;font-weight:700;color:var(--accent);}
+.progress-bar-bg{height:4px;background:var(--border);border-radius:10px;overflow:hidden;}
+.progress-bar-fill{height:100%;background:var(--accent);border-radius:10px;transition:width 0.5s ease;}
+
+/* Steps slider */
+.steps-outer{overflow:hidden;}
+.steps-inner{display:flex;transition:transform 0.45s cubic-bezier(0.4,0,0.2,1);}
+.step{min-width:100%;padding:0.25rem 0.1rem;}
+
+/* Cards de step */
+.step-card{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);padding:2rem;}
+.step-card h2{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;margin-bottom:0.35rem;}
+.step-card .subtitle{color:var(--muted);font-size:0.88rem;margin-bottom:1.75rem;}
+
+/* Inputs */
+label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.4rem;color:var(--ink);}
+input[type="text"],input[type="email"],input[type="password"],input[type="number"],input[type="tel"],select,textarea{
+  width:100%;border:1.5px solid var(--border);border-radius:12px;padding:0.85rem 1rem;
+  font-family:'DM Sans',sans-serif;font-size:0.95rem;background:#fff;color:var(--ink);
+  transition:border-color 0.2s,box-shadow 0.2s;outline:none;
+}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,87,255,0.10);}
+textarea{resize:vertical;min-height:100px;}
+.form-group{margin-bottom:1.25rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:480px){.form-row{grid-template-columns:1fr;}}
+.error-msg{color:#ef4444;font-size:0.78rem;margin-top:0.3rem;display:none;}
+
+/* Chips de selecção múltipla */
+.chips-label{font-size:0.82rem;font-weight:600;margin-bottom:0.6rem;display:block;}
+.chips-grid{display:flex;flex-wrap:wrap;gap:0.5rem;}
+.chip-input{display:none;}
+.chip-label{display:inline-flex;align-items:center;gap:0.35rem;padding:0.4rem 0.9rem;border:1.5px solid var(--border);border-radius:100px;font-size:0.82rem;font-weight:600;cursor:pointer;transition:0.2s;user-select:none;background:#fff;}
+.chip-input:checked + .chip-label{background:var(--accent);color:#fff;border-color:var(--accent);}
+.chip-label:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Preço / Rate */
+.rate-row{display:flex;gap:0.75rem;align-items:center;}
+.rate-row input{max-width:180px;}
+.rate-row select{max-width:140px;}
+
+/* Navegação */
+.wizard-nav{display:flex;justify-content:space-between;margin-top:1.75rem;gap:1rem;}
+.btn-back{background:none;border:1.5px solid var(--border);border-radius:100px;padding:0.75rem 1.5rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;color:var(--muted);transition:0.2s;}
+.btn-back:hover{border-color:var(--ink);color:var(--ink);}
+.btn-next,.btn-submit{background:var(--accent);color:#fff;border:none;border-radius:100px;padding:0.75rem 1.75rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;transition:0.2s;flex:1;}
+.btn-next:hover,.btn-submit:hover{background:#0040cc;}
+.btn-submit{background:var(--green);}
+.btn-submit:hover{background:#009968;}
+.hidden{display:none!important;}
+
+/* Sucesso */
+.success-view{display:none;text-align:center;padding:2rem 1rem;}
+.success-icon{font-size:3.5rem;margin-bottom:1rem;}
+.success-view h2{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;margin-bottom:0.75rem;}
+.success-view p{color:var(--muted);max-width:400px;margin:0 auto 2rem;}
+.btn-cta{display:inline-block;background:var(--accent);color:#fff;font-family:'Syne',sans-serif;font-weight:700;border-radius:100px;padding:0.875rem 2rem;font-size:1rem;text-decoration:none;transition:0.2s;}
+.btn-cta:hover{background:#0040cc;}
+
+/* Links rodapé */
+.footer-links{text-align:center;margin-top:1.5rem;font-size:0.82rem;color:var(--muted);}
+.footer-links a{color:var(--accent);font-weight:700;text-decoration:none;}
+</style>
+</head>
+<body>
+<nav>
+    <a class="logo" href="../serviços/página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+    <span style="font-size:0.78rem;color:var(--muted);font-weight:600;">Área do Profissional</span>
+</nav>
+
+<div class="wizard-wrapper">
+    <div class="wizard-header">
+        <div class="wizard-badge"><span class="wizard-badge-dot"></span>Profissionais</div>
+        <h1>Regista-te como Professor</h1>
+        <p>Cria o teu perfil, define a tua disponibilidade e alcança estudantes que precisam de ti.</p>
+    </div>
+
+    <!-- Progresso -->
+    <div class="progress-container" id="progressContainer">
+        <div class="progress-meta">
+            <span class="progress-phase" id="phaseLabel">Fase 1: Identidade</span>
+            <span style="color:var(--muted);font-size:0.8rem;" id="stepCounter">1 / 4</span>
+        </div>
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressBar" style="width:25%"></div></div>
+    </div>
+
+    <!-- Formulário -->
+    <form id="teacherForm" novalidate>
+        <div class="steps-outer">
+            <div class="steps-inner" id="stepsInner">
+
+                <!-- STEP 1: Identidade -->
+                <div class="step">
+                    <div class="step-card">
+                        <h2>Quem és tu?</h2>
+                        <p class="subtitle">Informação básica de identificação e contacto.</p>
+                        <div class="form-group">
+                            <label>Nome completo *</label>
+                            <input type="text" name="fullName" required placeholder="Ex: João Manuel da Silva"/>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>E-mail *</label>
+                                <input type="email" name="email" required placeholder="professor@email.com"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Telefone / WhatsApp *</label>
+                                <input type="tel" name="phone" required placeholder="+244 9XX XXX XXX"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Província *</label>
+                                <select name="province" required>
+                                    <option value="">Selecionar...</option>
+                                    <option>Bengo</option><option>Benguela</option><option>Bié</option>
+                                    <option>Cabinda</option><option>Cuando Cubango</option>
+                                    <option>Cuanza Norte</option><option>Cuanza Sul</option>
+                                    <option>Cunene</option><option>Huambo</option><option>Huíla</option>
+                                    <option>Luanda</option><option>Lunda Norte</option><option>Lunda Sul</option>
+                                    <option>Malanje</option><option>Moxico</option><option>Namibe</option>
+                                    <option>Uíge</option><option>Zaire</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Município</label>
+                                <input type="text" name="municipality" placeholder="Ex: Samba"/>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Senha *</label>
+                                <input type="password" name="password" required placeholder="Mínimo 6 caracteres" minlength="6"/>
+                            </div>
+                            <div class="form-group">
+                                <label>Confirmar senha *</label>
+                                <input type="password" name="confirmPassword" required placeholder="Repete a senha"/>
+                                <div class="error-msg" id="passError">As senhas não coincidem.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Habilitações -->
+                <div class="step">
+                    <div class="step-card">
+                        <h2>As tuas habilitações</h2>
+                        <p class="subtitle">Nível académico, formação e experiência docente.</p>
+                        <div class="form-group">
+                            <label>Nível académico mais elevado *</label>
+                            <select name="academicLevel" required>
+                                <option value="">Selecionar...</option>
+                                <option value="tecnico-medio">Técnico Médio</option>
+                                <option value="licenciatura">Licenciatura</option>
+                                <option value="pos-graduacao">Pós-Graduação</option>
+                                <option value="mestrado">Mestrado</option>
+                                <option value="doutoramento">Doutoramento</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Área de formação / especialização *</label>
+                            <input type="text" name="specialization" required placeholder="Ex: Engenharia Informática, Matemática, Inglês..."/>
+                        </div>
+                        <div class="form-group">
+                            <label>Instituição onde se formou</label>
+                            <input type="text" name="graduationInstitution" placeholder="Ex: UAN, UCAN, ISPRA..."/>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Anos de experiência a ensinar *</label>
+                                <select name="yearsExperience" required>
+                                    <option value="">Selecionar...</option>
+                                    <option value="menos1">Menos de 1 ano</option>
+                                    <option value="1-3">1 a 3 anos</option>
+                                    <option value="3-5">3 a 5 anos</option>
+                                    <option value="5-10">5 a 10 anos</option>
+                                    <option value="mais10">Mais de 10 anos</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Tem certificação pedagógica?</label>
+                                <select name="pedagogicCert">
+                                    <option value="nao">Não</option>
+                                    <option value="sim">Sim</option>
+                                    <option value="em-curso">Em curso</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Línguas em que ensina *</label>
+                            <div class="chips-grid">
+                                <input type="checkbox" name="language" value="Português" id="l1" class="chip-input"><label for="l1" class="chip-label">🇵🇹 Português</label>
+                                <input type="checkbox" name="language" value="Inglês" id="l2" class="chip-input"><label for="l2" class="chip-label">🇬🇧 Inglês</label>
+                                <input type="checkbox" name="language" value="Francês" id="l3" class="chip-input"><label for="l3" class="chip-label">🇫🇷 Francês</label>
+                                <input type="checkbox" name="language" value="Espanhol" id="l4" class="chip-input"><label for="l4" class="chip-label">🇪🇸 Espanhol</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: O que ensinas -->
+                <div class="step">
+                    <div class="step-card">
+                        <h2>O que ensinas</h2>
+                        <p class="subtitle">Disciplinas, público-alvo e modalidade de aulas.</p>
+                        <div class="form-group">
+                            <span class="chips-label">Disciplinas / áreas que leccionas *</span>
+                            <div class="chips-grid">
+                                <input type="checkbox" name="subject" value="Matemática" id="s1" class="chip-input"><label for="s1" class="chip-label">Matemática</label>
+                                <input type="checkbox" name="subject" value="Física" id="s2" class="chip-input"><label for="s2" class="chip-label">Física</label>
+                                <input type="checkbox" name="subject" value="Química" id="s3" class="chip-input"><label for="s3" class="chip-label">Química</label>
+                                <input type="checkbox" name="subject" value="Biologia" id="s4" class="chip-input"><label for="s4" class="chip-label">Biologia</label>
+                                <input type="checkbox" name="subject" value="Inglês" id="s5" class="chip-input"><label for="s5" class="chip-label">Inglês</label>
+                                <input type="checkbox" name="subject" value="Francês" id="s6" class="chip-input"><label for="s6" class="chip-label">Francês</label>
+                                <input type="checkbox" name="subject" value="Português" id="s7" class="chip-input"><label for="s7" class="chip-label">Português</label>
+                                <input type="checkbox" name="subject" value="História" id="s8" class="chip-input"><label for="s8" class="chip-label">História</label>
+                                <input type="checkbox" name="subject" value="Geografia" id="s9" class="chip-input"><label for="s9" class="chip-label">Geografia</label>
+                                <input type="checkbox" name="subject" value="Informática" id="s10" class="chip-input"><label for="s10" class="chip-label">Informática</label>
+                                <input type="checkbox" name="subject" value="Programação" id="s11" class="chip-input"><label for="s11" class="chip-label">Programação</label>
+                                <input type="checkbox" name="subject" value="Contabilidade" id="s12" class="chip-input"><label for="s12" class="chip-label">Contabilidade</label>
+                                <input type="checkbox" name="subject" value="Economia" id="s13" class="chip-input"><label for="s13" class="chip-label">Economia</label>
+                                <input type="checkbox" name="subject" value="Música" id="s14" class="chip-input"><label for="s14" class="chip-label">Música</label>
+                                <input type="checkbox" name="subject" value="Artes" id="s15" class="chip-input"><label for="s15" class="chip-label">Artes</label>
+                                <input type="checkbox" name="subject" value="Desporto" id="s16" class="chip-input"><label for="s16" class="chip-label">Desporto</label>
+                                <input type="checkbox" name="subject" value="Outro" id="s17" class="chip-input"><label for="s17" class="chip-label">+ Outro</label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="subjectOtherGroup" style="display:none;">
+                            <label>Outra(s) disciplina(s)</label>
+                            <input type="text" name="subjectOther" placeholder="Separa por vírgulas: ex. Robótica, Direito"/>
+                        </div>
+                        <div class="form-group">
+                            <span class="chips-label">Nível de alunos que aceitas *</span>
+                            <div class="chips-grid">
+                                <input type="checkbox" name="targetLevel" value="Primário" id="tl1" class="chip-input"><label for="tl1" class="chip-label">Primário</label>
+                                <input type="checkbox" name="targetLevel" value="1º Ciclo" id="tl2" class="chip-input"><label for="tl2" class="chip-label">1º Ciclo</label>
+                                <input type="checkbox" name="targetLevel" value="2º Ciclo" id="tl3" class="chip-input"><label for="tl3" class="chip-label">2º Ciclo</label>
+                                <input type="checkbox" name="targetLevel" value="Universitário" id="tl4" class="chip-input"><label for="tl4" class="chip-label">Universitário</label>
+                                <input type="checkbox" name="targetLevel" value="Adultos" id="tl5" class="chip-input"><label for="tl5" class="chip-label">Adultos</label>
+                                <input type="checkbox" name="targetLevel" value="Empresas" id="tl6" class="chip-input"><label for="tl6" class="chip-label">Empresas</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <span class="chips-label">Modalidade de aulas *</span>
+                            <div class="chips-grid">
+                                <input type="checkbox" name="modality" value="Presencial" id="m1" class="chip-input"><label for="m1" class="chip-label">📍 Presencial</label>
+                                <input type="checkbox" name="modality" value="Online" id="m2" class="chip-input"><label for="m2" class="chip-label">💻 Online</label>
+                                <input type="checkbox" name="modality" value="Híbrido" id="m3" class="chip-input"><label for="m3" class="chip-label">🔄 Híbrido</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Disponibilidade & Apresentação -->
+                <div class="step">
+                    <div class="step-card">
+                        <h2>Disponibilidade & Apresentação</h2>
+                        <p class="subtitle">Como e quando podes ser contactado. Esta informação aparece no teu perfil público.</p>
+                        <div class="form-group">
+                            <span class="chips-label">Disponibilidade *</span>
+                            <div class="chips-grid">
+                                <input type="checkbox" name="availability" value="Manhã" id="av1" class="chip-input"><label for="av1" class="chip-label">🌅 Manhã</label>
+                                <input type="checkbox" name="availability" value="Tarde" id="av2" class="chip-input"><label for="av2" class="chip-label">☀️ Tarde</label>
+                                <input type="checkbox" name="availability" value="Noite" id="av3" class="chip-input"><label for="av3" class="chip-label">🌙 Noite</label>
+                                <input type="checkbox" name="availability" value="Fins de semana" id="av4" class="chip-input"><label for="av4" class="chip-label">📅 Fim de semana</label>
+                                <input type="checkbox" name="availability" value="Flexível" id="av5" class="chip-input"><label for="av5" class="chip-label">✅ Flexível</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Valor por hora (AOA) — opcional</label>
+                            <div class="rate-row">
+                                <input type="number" name="rateMin" placeholder="Mínimo" min="0" step="500"/>
+                                <span style="color:var(--muted);flex-shrink:0;">—</span>
+                                <input type="number" name="rateMax" placeholder="Máximo" min="0" step="500"/>
+                                <select name="ratePer">
+                                    <option value="hora">/ hora</option>
+                                    <option value="aula">/ aula</option>
+                                    <option value="mes">/ mês</option>
+                                </select>
+                            </div>
+                            <p style="font-size:0.75rem;color:var(--muted);margin-top:0.35rem;">Deixa em branco para "A combinar".</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Apresentação pessoal *</label>
+                            <textarea name="bio" required placeholder="Descreve a tua experiência, metodologia e o que te torna diferente como professor..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>LinkedIn ou portfólio (opcional)</label>
+                            <input type="text" name="portfolioUrl" placeholder="https://linkedin.com/in/seuperfil"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Como soubeste da plataforma?</label>
+                            <select name="howFound">
+                                <option value="">Selecionar...</option>
+                                <option value="amigo">Indicação de amigo</option>
+                                <option value="redes-sociais">Redes sociais</option>
+                                <option value="google">Google / pesquisa</option>
+                                <option value="evento">Evento / feira</option>
+                                <option value="instituicao">Instituição de ensino</option>
+                                <option value="outro">Outro</option>
+                            </select>
+                        </div>
+                        <div id="errSubmit" class="error-msg" style="text-align:center;font-size:0.85rem;"></div>
+                    </div>
+                </div>
+
+            </div><!-- /steps-inner -->
+        </div><!-- /steps-outer -->
+
+        <div class="wizard-nav">
+            <button type="button" class="btn-back hidden" id="btnBack">← Anterior</button>
+            <button type="button" class="btn-next" id="btnNext">Seguinte →</button>
+            <button type="submit" class="btn-submit hidden" id="btnSubmit">✓ Criar Perfil</button>
+        </div>
+    </form>
+
+    <!-- Sucesso -->
+    <div class="success-view" id="successView">
+        <div class="success-icon">🎓</div>
+        <h2>Perfil criado com sucesso!</h2>
+        <p>Bem-vindo à plataforma. O teu perfil já é visível para estudantes em Angola. Completa-o para receberes mais contactos.</p>
+        <a href="../perfis/perfil-professor.html" class="btn-cta">Ir para o meu perfil →</a>
+    </div>
+
+    <div class="footer-links">
+        Já tens conta? <a href="login.html">Entrar</a> &nbsp;·&nbsp;
+        <a href="../serviços/sobre.html">Sobre</a> &nbsp;·&nbsp;
+        <a href="../serviços/privacidade.html">Privacidade</a>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { firebaseConfig } from '../firebase-config.js';
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+onAuthStateChanged(auth, (user) => {
+    if (user) window.location.href = '../perfis/perfil-professor.html';
+});
+
+// ── Chips: "Outro" toggle ──
+document.getElementById('s17').addEventListener('change', function() {
+    document.getElementById('subjectOtherGroup').style.display = this.checked ? 'block' : 'none';
+});
+
+// ── Wizard ──
+const totalSteps = 4;
+let currentStep  = 0;
+
+const stepsInner  = document.getElementById('stepsInner');
+const progressBar = document.getElementById('progressBar');
+const stepCounter = document.getElementById('stepCounter');
+const phaseLabel  = document.getElementById('phaseLabel');
+const btnBack     = document.getElementById('btnBack');
+const btnNext     = document.getElementById('btnNext');
+const btnSubmit   = document.getElementById('btnSubmit');
+
+const phases = ['Fase 1: Identidade','Fase 2: Habilitações','Fase 3: O que ensinas','Fase 4: Disponibilidade'];
+
+function updateUI() {
+    stepsInner.style.transform = `translateX(-${currentStep * 100}%)`;
+    progressBar.style.width    = `${((currentStep+1)/totalSteps)*100}%`;
+    stepCounter.textContent    = `${currentStep+1} / ${totalSteps}`;
+    phaseLabel.textContent     = phases[currentStep];
+    btnBack.classList.toggle('hidden', currentStep === 0);
+    btnNext.classList.toggle('hidden', currentStep === totalSteps - 1);
+    btnSubmit.classList.toggle('hidden', currentStep !== totalSteps - 1);
+}
+
+function validateStep() {
+    const stepEl = stepsInner.children[currentStep];
+    const required = stepEl.querySelectorAll('[required]');
+    let ok = true;
+    for (const el of required) {
+        el.style.borderColor = '';
+        if (!el.value.trim()) { el.style.borderColor = '#ef4444'; el.focus(); ok = false; break; }
+    }
+    // Confirmar senha no step 0
+    if (currentStep === 0) {
+        const p1 = stepEl.querySelector('[name="password"]');
+        const p2 = stepEl.querySelector('[name="confirmPassword"]');
+        const err = document.getElementById('passError');
+        if (p1.value && p2.value && p1.value !== p2.value) {
+            p2.style.borderColor = '#ef4444';
+            err.style.display = 'block';
+            ok = false;
+        } else { err.style.display = 'none'; }
+    }
+    return ok;
+}
+
+btnNext.addEventListener('click', () => {
+    if (!validateStep()) return;
+    if (currentStep < totalSteps - 1) { currentStep++; updateUI(); }
+});
+btnBack.addEventListener('click', () => {
+    if (currentStep > 0) { currentStep--; updateUI(); }
+});
+
+// ── Submit ──
+document.getElementById('teacherForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    if (!validateStep()) return;
+
+    btnSubmit.classList.add('loading'); btnSubmit.disabled = true;
+    document.getElementById('errSubmit').style.display = 'none';
+
+    const fd = new FormData(this);
+
+    // Recolhe arrays de checkboxes
+    const getAll = (name) => {
+        const vals = [];
+        this.querySelectorAll(`[name="${name}"]:checked`).forEach(el => vals.push(el.value));
+        return vals;
+    };
+
+    const profileData = {
+        role:                    'teacher',
+        fullName:                fd.get('fullName')||'',
+        email:                   fd.get('email')||'',
+        phone:                   fd.get('phone')||'',
+        province:                fd.get('province')||'',
+        municipality:            fd.get('municipality')||'',
+        academicLevel:           fd.get('academicLevel')||'',
+        specialization:          fd.get('specialization')||'',
+        graduationInstitution:   fd.get('graduationInstitution')||'',
+        yearsExperience:         fd.get('yearsExperience')||'',
+        pedagogicCert:           fd.get('pedagogicCert')||'nao',
+        languages:               getAll('language'),
+        subjects:                getAll('subject'),
+        subjectOther:            fd.get('subjectOther')||'',
+        targetLevels:            getAll('targetLevel'),
+        modalities:              getAll('modality'),
+        availability:            getAll('availability'),
+        rateMin:                 fd.get('rateMin')||'',
+        rateMax:                 fd.get('rateMax')||'',
+        ratePer:                 fd.get('ratePer')||'hora',
+        bio:                     fd.get('bio')||'',
+        portfolioUrl:            fd.get('portfolioUrl')||'',
+        howFound:                fd.get('howFound')||'',
+        avatarUrl:               '',
+        rating:                  0,
+        reviewCount:             0,
+        verified:                false,
+        createdAt:               serverTimestamp()
+    };
+
+    // Adiciona outros assuntos ao array
+    if (profileData.subjectOther) {
+        profileData.subjectOther.split(',').map(s=>s.trim()).filter(s=>s)
+            .forEach(s => profileData.subjects.push(s));
+    }
+
+    try {
+        const cred = await createUserWithEmailAndPassword(auth, profileData.email, fd.get('password'));
+        profileData.uid = cred.user.uid;
+        await setDoc(doc(db, 'teachers', cred.user.uid), profileData);
+        await sendEmailVerification(cred.user);
+
+        // Mostra ecrã de sucesso
+        document.getElementById('teacherForm').style.display = 'none';
+        document.getElementById('progressContainer').style.display = 'none';
+        document.getElementById('successView').style.display = 'block';
+    } catch (err) {
+        const msgs = {
+            'auth/email-already-in-use': 'Este e-mail já está registado. Faz login.',
+            'auth/weak-password':        'Senha fraca. Usa pelo menos 6 caracteres.',
+            'auth/invalid-email':        'E-mail inválido.'
+        };
+        const errEl = document.getElementById('errSubmit');
+        errEl.textContent = msgs[err.code] || 'Erro ao criar conta. Tenta novamente.';
+        errEl.style.display = 'block';
+        btnSubmit.classList.remove('loading'); btnSubmit.disabled = false;
+    }
+});
+
+updateUI();
+</script>
+</body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The School - Registro de Instituição</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+    <meta name="description" content="Registe a sua instituição na All in One School — alcance milhares de estudantes angolanos em busca de educação e oportunidades.">
+    <meta property="og:title" content="Registar Instituição — All in One School">
+    <meta property="og:type" content="website">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#00b37e">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        :root {
+            --ink: #0a0a0f;
+            --paper: #f5f2eb;
+            --green: #00b37e;
+            --accent: #ff4d00; /* Orange for main page accent */
+            --accent2: #0057ff; /* Blue, used in main page badges, not critical for nav */
+            --muted: #8a8780;
+            --card: #ffffff;
+            --border: rgba(10,10,15,0.08);
+        }
+        body { font-family: 'DM Sans', sans-serif; background-color: var(--paper); color: var(--ink); }
+        h2 { font-family: 'Syne', sans-serif; color: var(--green) !important; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden; /* Prevent horizontal scroll from background elements */
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.1rem 5%;
+            background: rgba(245,242,235,0.90);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            animation: slideDown 0.6s ease both;
+        }
+
+        @keyframes slideDown { from { transform: translateY(-100%); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            text-decoration: none;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+
+        .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+        .nav-links {
+            display: flex; gap: 2rem; list-style: none;
+        }
+        .nav-links a {
+            font-size: 0.9rem; font-weight: 500; color: var(--muted);
+            text-decoration: none; transition: color 0.2s;
+            letter-spacing: 0.01em;
+        }
+        .nav-links a:hover { color: var(--ink); }
+
+        .nav-cta {
+            background: var(--ink); color: var(--paper) !important;
+            padding: 0.55rem 1.4rem; border-radius: 100px;
+            font-weight: 500 !important; font-size: 0.875rem !important;
+            transition: background 0.2s, transform 0.2s !important;
+        }
+        .nav-cta:hover { background: var(--accent) !important; color: #fff !important; transform: scale(1.04) !important; }
+
+        h2 { font-family: 'Syne', sans-serif; color: var(--green) !important; }
+        label { font-weight: 600; font-size: 0.82rem; margin-bottom: 0.5rem; display: block; color: var(--ink); }
+        input, select { 
+            background-color: #fff !important; 
+            border: 1.5px solid var(--border) !important; 
+            border-radius: 12px !important;
+            padding: 0.625rem 0.875rem !important;
+            font-size: 1rem !important;
+            line-height: 1.5 !important;
+            transition: border-color 0.2s, background 0.2s, box-shadow 0.2s !important;
+            width: 100% !important;
+        }
+        input:focus, select:focus { 
+            border-color: var(--green) !important; 
+            background-color: #fff !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(0,179,126,0.1) !important;
+        }
+        .btn-submit-custom {
+            background: var(--green); color: #fff;
+            font-family: 'Syne', sans-serif; border-radius: 100px;
+            box-shadow: 0 8px 24px rgba(0,179,126,0.25);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .btn-submit-custom:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,179,126,0.35); }
+        .error-message { color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem; display: none; }
+        
+        /* Loader Animation */
+        .btn-submit-custom.loading {
+            color: transparent !important;
+            position: relative;
+            pointer-events: none;
+        }
+        .btn-submit-custom.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px; height: 20px;
+            top: 50%; left: 50%;
+            margin-top: -10px; margin-left: -10px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .warning-border { border-color: #f97316 !important; background-color: #fff7ed !important; }
+        .error-border { border-color: #ef4444 !important; }        
+
+        /* ─── HERO BG ─── */
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 0;
+            background:
+              radial-gradient(ellipse 70% 60% at 80% 20%, rgba(255,77,0,0.10) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 50% at 10% 80%, rgba(0,87,255,0.08) 0%, transparent 60%);
+        }
+
+        .hero-grid {
+            position: absolute; inset: 0; z-index: 0;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+    <!-- NAV -->
+    <nav>
+      <a class="logo" href="../serviços/página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+      <ul class="nav-links">
+      </ul>
+      <a href="Register.html" class="nav-cta">Registrar Aluno →</a>
+    </nav>
+
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+
+    <div class="relative z-10 flex justify-center items-center min-h-screen pt-24 pb-4 px-4">
+        <div class="bg-white p-8 rounded-[24px] shadow-[0_4px_32px_rgba(10,10,15,0.10)] w-full max-w-lg">
+        <h2 class="text-2xl font-extrabold mb-2 text-center">Registro de Instituição</h2>
+        <p class="text-gray-600 text-center mb-6 text-sm">Universidades, Escolas, Centros e Organizações</p>
+        
+        <form id="institutionForm" class="space-y-4">
+            <!-- Nome da Instituição -->
+            <div>
+                <label id="nameLabel">Nome da Instituição / Organização</label>
+                <input type="text" id="instName" name="instName" required>
+            </div>
+
+            <!-- NIF Obrigatório na FASE 1 -->
+            <div>
+                <label>NIF / Número de Registro Oficial</label>
+                <input type="text" id="nif" name="nif" required placeholder="000000000">
+            </div>
+
+            <!-- Província Obrigatória na FASE 1 -->
+            <div>
+                <label>Província Principal</label>
+                <select id="province" name="province" required>
+                    <option value="">Selecionar província...</option>
+                    <option value="Bengo">Bengo</option>
+                    <option value="Benguela">Benguela</option>
+                    <option value="Bié">Bié</option>
+                    <option value="Cabinda">Cabinda</option>
+                    <option value="Cuando Cubango">Cuando Cubango</option>
+                    <option value="Cuanza Norte">Cuanza Norte</option>
+                    <option value="Cuanza Sul">Cuanza Sul</option>
+                    <option value="Cunene">Cunene</option>
+                    <option value="Huambo">Huambo</option>
+                    <option value="Huíla">Huíla</option>
+                    <option value="Luanda">Luanda</option>
+                    <option value="Lunda Norte">Lunda Norte</option>
+                    <option value="Lunda Sul">Lunda Sul</option>
+                    <option value="Malanje">Malanje</option>
+                    <option value="Moxico">Moxico</option>
+                    <option value="Namibe">Namibe</option>
+                    <option value="Uíge">Uíge</option>
+                    <option value="Zaire">Zaire</option>
+                </select>
+            </div>
+
+            <!-- Tipo de Instituição -->
+            <div>
+                <label>Tipo de Instituição</label>
+                <select id="instType" name="instType" required>
+          <option value="">Selecione o tipo</option>
+          <option value="U. pública">Universidade Pública</option>
+          <option value="U. privada">Universidade Privada</option>
+          <option value="IESs">Instituto Superior</option>
+          <option value="I. médio">Instituição de Ensino Médio</option>
+          <option value="Academia">Academia de Formação</option>
+          <option value="Centro de Formação Profissional">Centro de Formação Profissional</option>
+          <option value="Organização de Gestão de Bolsas">Organização de Gestão de Bolsas</option>
+          <option value="Ministérios">Instituições Governamentais</option>
+                </select>
+            </div>
+
+            <!-- Campo Dinâmico: Ministério (Apenas para Governamentais) -->
+            <div id="ministryContainer" class="hidden">
+                <label>Ministério a que pertence</label>
+                <input type="text" id="ministry" name="ministry" placeholder="">
+            </div>
+
+            <!-- E-mail Institucional -->
+            <div>
+                <label>E-mail Institucional</label>
+                <input type="email" id="email" name="email" required placeholder="contato@instituicao.ao">
+                <p id="emailError" class="error-message">Por favor, insira um e-mail válido.</p>
+            </div>
+
+            <!-- Telefone Angolano -->
+            <div>
+                <label>Telefone de Contacto (Angola)</label>
+                <input type="text" id="phone" name="phone" required placeholder="9xx xxx xxx">
+                <p style="color: var(--muted); font-size: 0.75rem; margin-top: 0.5rem; font-style: italic;">Formatos: 9XXXXXXXX, +244 9XXXXXXXX ou 244 9XXXXXXXX</p>
+                <p id="phoneError" class="error-message">⚠️ Número de Angola inválido. Deve começar com 9 e ter 9 dígitos.</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <!-- Senha -->
+                <div>
+                    <label>Senha</label>
+                    <input type="password" id="password" name="password" required>
+                    <p id="passwordError" class="error-message">Mínimo 6 caracteres.</p>
+                </div>
+
+                <!-- Confirmar Senha -->
+                <div>
+                    <label id="confirmLabel">Confirmar Senha</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+            </div>
+            <p id="confirmError" style="color: #f97316; font-size: 0.75rem; font-weight: 600; display: none; text-align: center;">⚠️ As senhas não coincidem!</p>
+
+            <button type="submit" 
+                class="w-full btn-submit-custom text-white font-bold py-3 transition duration-300 mt-2">
+                Registrar Instituição →
+            </button>
+        </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+        import { getFirestore, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+        import { firebaseConfig } from '../firebase-config.js';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db   = getFirestore(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) window.location.href = '../perfis/perfil-organizacao.html';
+        });
+
+        const form           = document.getElementById('institutionForm');
+        const emailInput     = document.getElementById('email');
+        const instTypeSelect = document.getElementById('instType');
+        const phoneInput     = document.getElementById('phone');
+        const passwordInput  = document.getElementById('password');
+        const confirmInput   = document.getElementById('confirmPassword');
+        const ministryContainer = document.getElementById('ministryContainer');
+        const ministryInput  = document.getElementById('ministry');
+        const confirmError   = document.getElementById('confirmError');
+        const confirmLabel   = document.getElementById('confirmLabel');
+
+        const validateEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+        const validatePhone = p => /^(\+244|244)?9\d{8}$/.test(p.replace(/\s/g,''));
+
+        function clearError(input, errEl) {
+            input.classList.remove('error-border','warning-border');
+            if (errEl) errEl.style.display = 'none';
+        }
+
+        instTypeSelect.addEventListener('change', function() {
+            const isGov = this.value === 'Ministérios';
+            ministryContainer.classList.toggle('hidden', !isGov);
+            if (isGov) { ministryInput.setAttribute('required','required'); document.getElementById('nameLabel').textContent='Nome da Instituição / Órgão'; }
+            else { ministryInput.removeAttribute('required'); ministryInput.value=''; document.getElementById('nameLabel').textContent='Nome da Instituição / Organização'; }
+        });
+
+        phoneInput.addEventListener('input', function() {
+            const v = this.value.trim();
+            if (v && !validatePhone(v)) { this.classList.add('warning-border'); document.getElementById('phoneError').style.display='block'; }
+            else clearError(this, document.getElementById('phoneError'));
+        });
+
+        confirmInput.addEventListener('input', function() {
+            if (this.value !== passwordInput.value && this.value) {
+                this.classList.add('warning-border'); confirmError.style.display='block';
+                confirmLabel.classList.replace('text-gray-700','text-orange-600');
+            } else clearError(this, confirmError);
+        });
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            let isValid = true;
+            if (!validateEmail(emailInput.value)) { emailInput.classList.add('error-border'); document.getElementById('emailError').style.display='block'; isValid=false; }
+            if (!validatePhone(phoneInput.value))  { phoneInput.classList.add('error-border');  document.getElementById('phoneError').style.display='block'; isValid=false; }
+            if (passwordInput.value.length < 6)    { passwordInput.classList.add('error-border'); document.getElementById('passwordError').style.display='block'; isValid=false; }
+            if (passwordInput.value !== confirmInput.value) { confirmInput.classList.add('warning-border'); confirmError.style.display='block'; isValid=false; }
+            if (!isValid) return;
+
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.classList.add('loading'); submitBtn.disabled = true;
+
+            const fd = new FormData(form);
+            const profileData = {
+                nome: fd.get('instName')||'', tipo: fd.get('instType')||'',
+                ministry: fd.get('ministry')||'', email: fd.get('email')||'',
+                telefone: fd.get('phone')||'', province: fd.get('province')||'',
+                nif: fd.get('nif')||'', role: 'institution',
+                location:'', website:'', facebook:'', instagram:'',
+                whatsapp:'', logo:'', tagline:'', descricao:'',
+                mission:'', vision:'', publicacoes:[],
+                createdAt: serverTimestamp()
+            };
+
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, profileData.email, fd.get('password'));
+                profileData.uid = cred.user.uid;
+                await setDoc(doc(db, 'institutions', cred.user.uid), profileData);
+                await sendEmailVerification(cred.user);
+                alert('Instituição registada! Verifica o e-mail para activar a conta.');
+                window.location.href = '../perfis/perfil-organizacao.html';
+            } catch (err) {
+                const msgs = {'auth/email-already-in-use':'Este e-mail já está registado.','auth/weak-password':'Senha fraca.'};
+                alert(msgs[err.code]||'Erro ao registar. Tenta novamente.');
+                submitBtn.classList.remove('loading'); submitBtn.disabled=false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+// ════════════════════════════════════════════════════════════
+//  Prisma Schema — All in One School Backend
+//  Mapeamento das antigas coleções Firestore para tabelas SQL
+// ════════════════════════════════════════════════════════════
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ────────────────────────────────────────────────────────────
+// ALUNOS  (antiga coleção Firestore: users)
+// ────────────────────────────────────────────────────────────
+model Student {
+  id              String   @id @default(uuid())
+  fullName        String
+  email           String   @unique
+  passwordHash    String
+  phone           String?
+  province        String?
+  municipality    String?
+  institution     String?
+  academicLevel   String?
+  academicArea    String?
+  mainObjective   String?
+  budget          String?
+  bio             String?
+  avatarUrl       String?
+  interests       String[] @default([])
+  emailVerified   Boolean  @default(false)
+  verifyToken     String?
+  resetToken      String?
+  resetTokenExp   DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("students")
+}
+
+// ────────────────────────────────────────────────────────────
+// PROFESSORES / FORMADORES FREELANCER  (antiga coleção: teachers)
+// ────────────────────────────────────────────────────────────
+model Teacher {
+  id                    String   @id @default(uuid())
+  fullName              String
+  email                 String   @unique
+  passwordHash          String
+  phone                 String?
+  province              String?
+  municipality          String?
+  academicLevel         String?
+  specialization        String?
+  graduationInstitution String?
+  yearsExperience       String?
+  pedagogicCert         String?  @default("nao")
+  languages             String[] @default([])
+  subjects              String[] @default([])
+  targetLevels          String[] @default([])
+  modalities            String[] @default([])
+  availability          String[] @default([])
+  rateMin               Int?
+  rateMax               Int?
+  ratePer               String?  @default("hora")
+  bio                   String?
+  portfolioUrl          String?
+  avatarUrl             String?
+  rating                Float    @default(0)
+  reviewCount           Int      @default(0)
+  verified              Boolean  @default(false)
+  emailVerified         Boolean  @default(false)
+  verifyToken           String?
+  resetToken            String?
+  resetTokenExp         DateTime?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("teachers")
+}
+
+// ────────────────────────────────────────────────────────────
+// INSTITUIÇÕES  (antiga coleção: institutions)
+// ────────────────────────────────────────────────────────────
+model Institution {
+  id              String   @id @default(uuid())
+  nome            String
+  tipo            String?
+  ministry        String?
+  email           String   @unique
+  passwordHash    String
+  telefone        String?
+  province        String?
+  municipality    String?
+  address         String?
+  nif             String?
+  slogan          String?
+  foundationYear  String?
+  teachingType    String?
+  ageGroup        String?
+  language        String?
+  mapsLink        String?
+  website         String?
+  whatsapp        String?
+  appEmail        String?
+  facebook        String?
+  instagram       String?
+  linkedin        String?
+  descricao       String?
+  postal          String?
+  servicos        String[] @default([])
+  logo            String?
+  capa            String?
+  ceo             String?
+  emailVerified   Boolean  @default(false)
+  verifyToken     String?
+  resetToken      String?
+  resetTokenExp   DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  posts    Post[]
+  branches Branch[]
+
+  @@map("institutions")
+}
+
+// ────────────────────────────────────────────────────────────
+// PUBLICAÇÕES das instituições  (antigo array: publicacoes)
+// ────────────────────────────────────────────────────────────
+model Post {
+  id            String   @id @default(uuid())
+  text          String
+  isHighlighted Boolean  @default(false)
+  isAlert       Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  institutionId String
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  @@map("posts")
+  @@index([institutionId])
+}
+
+// ────────────────────────────────────────────────────────────
+// UNIDADES ORGÂNICAS  (antigo array: branches)
+// ────────────────────────────────────────────────────────────
+model Branch {
+  id        String   @id @default(uuid())
+  nome      String
+  endereco  String?
+  telefone  String?
+  createdAt DateTime @default(now())
+
+  institutionId String
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  @@map("branches")
+  @@index([institutionId])
+}

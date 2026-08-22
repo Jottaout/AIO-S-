@@ -1,0 +1,122 @@
+### ════════════════════════════════════════════════════
+### Testes da API — AIO School Backend
+### Usa a extensão "REST Client" no VS Code para correr
+### estes pedidos directamente clicando em "Send Request"
+### ════════════════════════════════════════════════════
+
+@baseUrl = http://localhost:4000/api
+
+### 1. Verificar se o servidor está a correr
+GET {{baseUrl}}/health
+
+### ════════════════════════════════════════════════════
+### REGISTO
+### ════════════════════════════════════════════════════
+
+### 2. Registar um aluno
+POST {{baseUrl}}/auth/register/student
+Content-Type: application/json
+
+{
+  "fullName": "Maria João Santos",
+  "email": "maria.teste@example.com",
+  "password": "senha123",
+  "province": "Luanda",
+  "academicLevel": "2ciclo",
+  "mainObjective": "ingressar"
+}
+
+### 3. Registar um professor
+POST {{baseUrl}}/auth/register/teacher
+Content-Type: application/json
+
+{
+  "fullName": "João Manuel Pereira",
+  "email": "joao.professor@example.com",
+  "password": "senha123",
+  "province": "Luanda",
+  "specialization": "Matemática",
+  "subjects": ["Matemática", "Física"],
+  "yearsExperience": "3-5"
+}
+
+### 4. Registar uma instituição
+POST {{baseUrl}}/auth/register/institution
+Content-Type: application/json
+
+{
+  "nome": "Instituto Superior de Teste",
+  "email": "contacto@institutoteste.ao",
+  "password": "senha123",
+  "tipo": "IESs",
+  "province": "Luanda",
+  "telefone": "+244923000000"
+}
+
+### ════════════════════════════════════════════════════
+### LOGIN — copia o "token" da resposta para usar abaixo
+### ════════════════════════════════════════════════════
+
+### 5. Login (detecta automaticamente o papel)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "maria.teste@example.com",
+  "password": "senha123"
+}
+
+### ════════════════════════════════════════════════════
+### PERFIL (substitui SEU_TOKEN_AQUI pelo token do login)
+### ════════════════════════════════════════════════════
+
+@token = SEU_TOKEN_AQUI
+
+### 6. Ver o meu perfil de aluno
+GET {{baseUrl}}/students/me
+Authorization: Bearer {{token}}
+
+### 7. Actualizar o meu perfil de aluno
+PUT {{baseUrl}}/students/me
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "bio": "Estudante de ciências interessada em tecnologia.",
+  "interests": ["Tecnologia", "Ciências"]
+}
+
+### 8. Listar professores (filtros opcionais)
+GET {{baseUrl}}/teachers?province=Luanda
+Authorization: Bearer {{token}}
+
+### 9. Listar instituições por tipo
+GET {{baseUrl}}/institutions?tipo=IESs
+Authorization: Bearer {{token}}
+
+### ════════════════════════════════════════════════════
+### RECUPERAÇÃO DE SENHA
+### ════════════════════════════════════════════════════
+
+### 10. Pedir recuperação de senha
+POST {{baseUrl}}/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "maria.teste@example.com",
+  "role": "student"
+}
+
+### ════════════════════════════════════════════════════
+### PUBLICAÇÕES (precisa de token de instituição)
+### ════════════════════════════════════════════════════
+
+### 11. Criar uma publicação
+POST {{baseUrl}}/institutions/me/posts
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "text": "Inscrições abertas para o próximo semestre!",
+  "isHighlighted": true
+}
