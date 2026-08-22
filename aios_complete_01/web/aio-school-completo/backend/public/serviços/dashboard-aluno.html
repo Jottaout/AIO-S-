@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>O Meu Painel — All in One School</title>
+<meta name="description" content="O teu painel personalizado de oportunidades educativas em Angola.">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#ff4d00">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root { --ink:#0a0a0f; --paper:#f5f2eb; --accent:#ff4d00; --accent2:#0057ff; --muted:#8a8780; --card:#ffffff; --border:rgba(10,10,15,0.08); --shadow:0 4px 32px rgba(10,10,15,0.10); --green:#00b37e; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'DM Sans',sans-serif; background:var(--paper); color:var(--ink); line-height:1.6; overflow-x:hidden; }
+nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:1.1rem 5%; background:rgba(245,242,235,0.92); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); }
+.logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.1rem; color:var(--ink); text-decoration:none; display:flex; align-items:center; gap:0.5rem; }
+.logo-dot { width:10px; height:10px; border-radius:50%; background:var(--accent); display:inline-block; }
+.nav-actions { display:flex; align-items:center; gap:1rem; }
+.btn-logout { background:none; border:1px solid var(--border); border-radius:100px; padding:0.4rem 1rem; font-size:0.82rem; cursor:pointer; color:var(--muted); transition:0.2s; font-family:'Syne',sans-serif; font-weight:700; }
+.btn-logout:hover { border-color:var(--ink); color:var(--ink); }
+.main { max-width:1100px; margin:0 auto; padding:7rem 5% 4rem; }
+.greeting { margin-bottom:2.5rem; }
+.greeting h1 { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; }
+.greeting p { color:var(--muted); margin-top:0.25rem; }
+.verify-banner { background:#fff7ed; border:1px solid #f97316; border-radius:12px; padding:1rem 1.5rem; margin-bottom:2rem; display:none; font-size:0.88rem; color:#c2410c; }
+.verify-banner a { color:#c2410c; font-weight:700; text-decoration:underline; cursor:pointer; }
+.stats-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; margin-bottom:2.5rem; }
+.stat-card { background:var(--card); border-radius:16px; padding:1.25rem 1.5rem; border:1px solid var(--border); box-shadow:var(--shadow); }
+.stat-card .num { font-family:'Syne',sans-serif; font-size:1.8rem; font-weight:800; }
+.stat-card .lbl { font-size:0.78rem; color:var(--muted); margin-top:0.25rem; }
+.dashboard-grid { display:grid; grid-template-columns:1fr 340px; gap:1.5rem; }
+@media(max-width:768px){.dashboard-grid{grid-template-columns:1fr;}}
+.card { background:var(--card); border-radius:16px; border:1px solid var(--border); box-shadow:var(--shadow); overflow:hidden; }
+.card-header { padding:1.25rem 1.5rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.card-header h3 { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; }
+.card-body { padding:1.25rem 1.5rem; }
+.inst-item { display:flex; gap:1rem; align-items:center; padding:0.75rem 0; border-bottom:1px solid var(--border); }
+.inst-item:last-child { border-bottom:none; }
+.inst-icon { width:44px; height:44px; border-radius:10px; background:var(--paper); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; border:1px solid var(--border); }
+.inst-name { font-weight:600; font-size:0.9rem; }
+.inst-type { font-size:0.75rem; color:var(--muted); }
+.match-score { margin-left:auto; background:var(--ink); color:#fff; font-family:'Syne',sans-serif; font-weight:700; font-size:0.75rem; padding:0.25rem 0.6rem; border-radius:100px; white-space:nowrap; }
+.match-score.high { background:var(--green); }
+.match-score.mid  { background:var(--accent); }
+.profile-completion { margin-bottom:1rem; }
+.completion-bar-bg { height:6px; background:var(--border); border-radius:10px; overflow:hidden; margin-top:0.5rem; }
+.completion-bar-fill { height:100%; background:var(--green); border-radius:10px; transition:width 0.8s ease; }
+.tag { display:inline-block; background:var(--paper); border:1px solid var(--border); border-radius:100px; padding:0.2rem 0.7rem; font-size:0.75rem; font-weight:600; margin:0.2rem 0.1rem; }
+.empty-state { text-align:center; padding:2.5rem 1rem; color:var(--muted); }
+.empty-state .icon { font-size:2.5rem; margin-bottom:0.75rem; }
+.btn-primary { background:var(--ink); color:#fff; font-family:'Syne',sans-serif; font-weight:700; border:none; border-radius:100px; padding:0.7rem 1.4rem; font-size:0.88rem; cursor:pointer; transition:0.2s; text-decoration:none; display:inline-block; }
+.btn-primary:hover { background:var(--accent); }
+#loadingOverlay { position:fixed; inset:0; background:var(--paper); display:flex; align-items:center; justify-content:center; z-index:999; transition:opacity 0.4s; }
+.spinner { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.8s linear infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div id="loadingOverlay"><div class="spinner"></div></div>
+
+<nav>
+    <a class="logo" href="../serviços/página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+    <div class="nav-actions">
+        <span id="navUserName" style="font-size:0.88rem;color:var(--muted);"></span>
+        <button class="btn-logout" id="btnLogout">Sair</button>
+    </div>
+</nav>
+
+<main class="main">
+    <div id="verifyBanner" class="verify-banner">
+        ⚠️ O teu e-mail ainda não foi verificado. <a id="resendVerify">Reenviar link de verificação →</a>
+    </div>
+
+    <div class="greeting">
+        <h1 id="greetingText">Olá! 👋</h1>
+        <p id="greetingSub">Aqui estão as tuas recomendações personalizadas.</p>
+    </div>
+
+    <div class="stats-row" id="statsRow">
+        <div class="stat-card"><div class="num" id="statMatches">—</div><div class="lbl">Correspondências</div></div>
+        <div class="stat-card"><div class="num" id="statProvince">—</div><div class="lbl">Tua Província</div></div>
+        <div class="stat-card"><div class="num" id="statLevel">—</div><div class="lbl">Nível Académico</div></div>
+        <div class="stat-card"><div class="num" id="statCompletion">—%</div><div class="lbl">Perfil completo</div></div>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Coluna principal: Recomendações -->
+        <div>
+            <div class="card" style="margin-bottom:1.5rem;">
+                <div class="card-header">
+                    <h3>🎯 Instituições Recomendadas</h3>
+                    <a href="../serviços/institutos-superiores.html" style="font-size:0.8rem;color:var(--accent);font-weight:700;text-decoration:none;">Ver todas →</a>
+                </div>
+                <div class="card-body" id="recommendationsList">
+                    <div class="empty-state"><div class="icon">🔍</div><p>A carregar recomendações...</p></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna lateral: Perfil + Interesses -->
+        <div style="display:flex;flex-direction:column;gap:1.25rem;">
+            <div class="card">
+                <div class="card-header"><h3>👤 O Meu Perfil</h3></div>
+                <div class="card-body">
+                    <div class="profile-completion">
+                        <div style="display:flex;justify-content:space-between;font-size:0.82rem;">
+                            <span>Completude</span>
+                            <span id="completionPct" style="font-weight:700;color:var(--green);">0%</span>
+                        </div>
+                        <div class="completion-bar-bg"><div class="completion-bar-fill" id="completionBar" style="width:0%"></div></div>
+                    </div>
+                    <div id="profileSummary" style="margin-top:1rem;font-size:0.88rem;line-height:1.8;"></div>
+                    <a href="../perfis/perfil-aluno.html" class="btn-primary" style="margin-top:1rem;width:100%;text-align:center;">Editar Perfil</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><h3>⚡ Os Meus Interesses</h3></div>
+                <div class="card-body" id="interestsList">
+                    <div class="empty-state"><p style="font-size:0.85rem;">Interesses não definidos.</p></div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><h3>🎓 Bolsas & Oportunidades</h3></div>
+                <div class="card-body">
+                    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1rem;">Oportunidades disponíveis para o teu perfil.</p>
+                    <a href="../serviços/bolsas.html" class="btn-primary" style="width:100%;text-align:center;">Explorar Bolsas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signOut, sendEmailVerification } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, getDoc, collection, getDocs, query, limit } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { firebaseConfig } from '../firebase-config.js';
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const overlay = document.getElementById('loadingOverlay');
+
+// ── Segurança: nunca deixar o overlay preso para sempre ──
+function hideOverlay() {
+  if (!overlay) return;
+  overlay.style.opacity = '0';
+  setTimeout(() => overlay.style.display = 'none', 400);
+}
+function showFatalError(msg) {
+  hideOverlay();
+  document.querySelector('.main').innerHTML = `
+    <div style="text-align:center;padding:4rem 1rem;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">⚠️</div>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;margin-bottom:0.5rem;">Não foi possível carregar o painel</h2>
+      <p style="color:var(--muted);max-width:420px;margin:0 auto 1.5rem;">${msg}</p>
+      <button onclick="window.location.reload()" style="background:var(--ink);color:#fff;border:none;border-radius:100px;padding:0.75rem 1.5rem;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;">Tentar novamente</button>
+    </div>`;
+}
+const safetyTimeout = setTimeout(() => {
+  showFatalError('A ligação está a demorar demasiado. Verifica a tua internet ou se o firebase-config.js está correctamente configurado.');
+}, 10000);
+
+onAuthStateChanged(auth, async (user) => {
+  try {
+    if (!user) { window.location.href = '../auth/login.html'; return; }
+
+    // Verificação de e-mail
+    if (!user.emailVerified && !user.email.endsWith('@aluno.aio.ao')) {
+        document.getElementById('verifyBanner').style.display = 'block';
+        document.getElementById('resendVerify').onclick = async () => {
+            await sendEmailVerification(user);
+            alert('Link de verificação reenviado!');
+        };
+    }
+
+    // Carrega dados do utilizador
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    const data = snap.exists() ? snap.data() : {};
+
+    renderDashboard(data);
+    await loadRecommendations(data);
+    clearTimeout(safetyTimeout);
+    hideOverlay();
+  } catch (err) {
+    clearTimeout(safetyTimeout);
+    console.error('Erro ao carregar o painel:', err);
+    const msg = err.code === 'permission-denied'
+      ? 'Sem permissão para aceder aos dados. Verifica se as regras do Firestore foram publicadas.'
+      : 'Ocorreu um erro inesperado: ' + (err.message || err.code || 'erro desconhecido');
+    showFatalError(msg);
+  }
+});
+
+document.getElementById('btnLogout').onclick = async () => {
+    await signOut(auth);
+    window.location.href = '../serviços/página de Iniciação.html';
+};
+
+function renderDashboard(data) {
+    const name = (data.fullName || '').split(' ')[0];
+    document.getElementById('greetingText').textContent = `Olá, ${name || 'Estudante'}! 👋`;
+    document.getElementById('navUserName').textContent  = data.fullName || '';
+
+    // Stats
+    document.getElementById('statProvince').textContent = data.province || '—';
+    const levelMap = { primario:'Primário', '1ciclo':'1º Ciclo', '2ciclo':'2º Ciclo', universidade:'Universitário', profissional:'Profissional' };
+    document.getElementById('statLevel').textContent = levelMap[data.academicLevel] || data.academicLevel || '—';
+
+    // Completude do perfil
+    const fields = ['fullName','identifier','province','academicLevel','interest','futureGoal','budget'];
+    const filled  = fields.filter(f => data[f] && data[f] !== '').length;
+    const pct     = Math.round((filled/fields.length)*100);
+    document.getElementById('statCompletion').textContent = pct + '%';
+    document.getElementById('completionPct').textContent  = pct + '%';
+    document.getElementById('completionBar').style.width  = pct + '%';
+
+    // Resumo perfil lateral
+    const summary = document.getElementById('profileSummary');
+    summary.innerHTML = `
+        <div style="margin-bottom:0.4rem;"><strong>Nome:</strong> ${data.fullName||'—'}</div>
+        <div style="margin-bottom:0.4rem;"><strong>Província:</strong> ${data.province||'—'}</div>
+        <div style="margin-bottom:0.4rem;"><strong>Escola:</strong> ${data.institution||'—'}</div>
+        <div><strong>Objectivo:</strong> ${data.mainObjective||'—'}</div>
+    `;
+
+    // Interesses
+    const intEl = document.getElementById('interestsList');
+    const interests = Array.isArray(data.interest) ? data.interest : (data.interest ? [data.interest] : []);
+    if (interests.length > 0) {
+        intEl.innerHTML = interests.map(i => `<span class="tag">${i}</span>`).join('');
+    }
+}
+
+async function loadRecommendations(userData) {
+    const listEl = document.getElementById('recommendationsList');
+    try {
+        const q    = query(collection(db, 'institutions'), limit(20));
+        const snap = await getDocs(q);
+        const insts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        // Score simples baseado em província e interesses
+        const scored = insts.map(inst => {
+            let score = 0;
+            if (inst.province === userData.province) score += 40;
+            const interests = Array.isArray(userData.interest) ? userData.interest : [userData.interest];
+            const services  = (inst.servicos||[]).join(' ').toLowerCase();
+            interests.forEach(i => { if (i && services.includes(i)) score += 20; });
+            if (userData.budget === '0' && inst.tipo && inst.tipo.includes('pública')) score += 15;
+            return { ...inst, score };
+        }).sort((a,b) => b.score - a.score).slice(0,6);
+
+        document.getElementById('statMatches').textContent = scored.length;
+
+        if (scored.length === 0) {
+            listEl.innerHTML = '<div class="empty-state"><div class="icon">🏫</div><p>Sem correspondências ainda. Completa o teu perfil para receberes recomendações.</p></div>';
+            return;
+        }
+
+        const icons = { 'U. pública':'🏛️', 'U. privada':'🎓', 'IESs':'📚', 'Academia':'⚡', 'Centro de Formação Profissional':'🔧', 'I. médio':'🏫' };
+        listEl.innerHTML = scored.map(inst => {
+            const scoreClass = inst.score >= 50 ? 'high' : inst.score >= 20 ? 'mid' : '';
+            const scoreLabel = inst.score >= 50 ? `${inst.score}% match` : inst.score >= 20 ? `${inst.score}% match` : 'Sugestão';
+            return `<div class="inst-item">
+                <div class="inst-icon">${icons[inst.tipo]||'🏫'}</div>
+                <div>
+                    <div class="inst-name">${inst.nome||inst.name||'Instituição'}</div>
+                    <div class="inst-type">${inst.tipo||''} · ${inst.province||''}</div>
+                </div>
+                <span class="match-score ${scoreClass}">${scoreLabel}</span>
+            </div>`;
+        }).join('');
+    } catch(e) {
+        listEl.innerHTML = '<div class="empty-state"><p>Erro ao carregar recomendações.</p></div>';
+    }
+}
+</script>
+</body>
+</html>

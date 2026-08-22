@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Centros de Formação — All in One School</title>
+<meta name="description" content="Descobre centros de formação profissional em Angola por província, área e modalidade.">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#ff4d00">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0a0a0f;--paper:#f5f2eb;--accent:#ff4d00;--muted:#8a8780;--card:#fff;--border:rgba(10,10,15,0.08);--shadow:0 4px 32px rgba(10,10,15,0.10);--green:#00b37e;--accent2:#0057ff;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(245,242,235,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:0.5rem;}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block;}
+.nav-right{display:flex;align-items:center;gap:0.75rem;}
+.nav-name{font-size:0.85rem;color:var(--muted);}
+.btn-logout{background:none;border:1px solid var(--border);border-radius:100px;padding:0.4rem 1rem;font-size:0.82rem;cursor:pointer;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;transition:0.2s;}
+.btn-logout:hover{border-color:var(--ink);color:var(--ink);}
+/* Loading */
+#loadingOverlay{position:fixed;inset:0;background:var(--paper);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity 0.4s;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+/* Conteúdo */
+.main{max-width:1200px;margin:0 auto;padding:7rem 5% 4rem;}
+.page-header{margin-bottom:2rem;}
+.page-header h1{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;}
+.page-header p{color:var(--muted);margin-top:0.25rem;}
+/* Filtros */
+.filters{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2rem;align-items:center;}
+.filter-select{border:1.5px solid var(--border);border-radius:100px;padding:0.5rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;background:#fff;cursor:pointer;outline:none;transition:border-color 0.2s;}
+.filter-select:focus{border-color:var(--accent);}
+.search-input{flex:1;min-width:200px;border:1.5px solid var(--border);border-radius:100px;padding:0.5rem 1.25rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;outline:none;background:#fff;}
+.search-input:focus{border-color:var(--accent);}
+.results-count{font-size:0.82rem;color:var(--muted);margin-bottom:1rem;}
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;}
+.card{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(10,10,15,0.14);}
+.card-top{padding:1.5rem 1.5rem 0;}
+.card-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem;}
+.card-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.25rem;}
+.card-type{font-size:0.75rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;}
+.card-body{padding:1rem 1.5rem 1.5rem;}
+.card-desc{font-size:0.85rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+.card-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:1rem;}
+.tag{display:inline-block;background:var(--paper);border:1px solid var(--border);border-radius:100px;padding:0.2rem 0.65rem;font-size:0.72rem;font-weight:600;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-top:1px solid var(--border);}
+.card-province{font-size:0.78rem;color:var(--muted);}
+.btn-contact{background:var(--ink);color:#fff;border:none;border-radius:100px;padding:0.45rem 1rem;font-size:0.78rem;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;transition:0.2s;text-decoration:none;}
+.btn-contact:hover{background:var(--accent);}
+/* Nav interna */
+.page-nav{display:flex;gap:0.5rem;margin-bottom:2rem;flex-wrap:wrap;}
+.nav-tab{padding:0.5rem 1.2rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--muted);transition:0.2s;}
+.nav-tab.active,.nav-tab:hover{background:var(--ink);color:#fff;border-color:var(--ink);}
+/* Estado vazio */
+.empty{text-align:center;padding:4rem 1rem;color:var(--muted);}
+.empty-icon{font-size:3rem;margin-bottom:1rem;}
+/* Floating dashboard btn */
+.fab{position:fixed;bottom:2rem;right:2rem;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:0.75rem 1.5rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;box-shadow:0 4px 20px rgba(255,77,0,0.35);transition:0.2s;text-decoration:none;display:flex;align-items:center;gap:0.5rem;z-index:50;}
+.fab:hover{background:#cc3d00;transform:translateY(-2px);}
+</style>
+</head>
+<body>
+<div id="loadingOverlay"><div class="spinner"></div></div>
+
+<nav>
+  <a class="logo" href="../serviços/página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+  <div class="nav-right">
+    <span class="nav-name" id="navName"></span>
+    <button class="btn-logout" id="btnLogout">Sair</button>
+  </div>
+</nav>
+
+<main class="main">
+  <div class="page-header">
+    <h1>Explorar Formações</h1>
+    <p id="pageSubtitle">Centros de formação, universidades e professores disponíveis em Angola.</p>
+  </div>
+
+  <!-- Navegação interna -->
+  <div class="page-nav">
+    <button class="nav-tab active" data-tab="centros">🔧 Centros de Formação</button>
+    <button class="nav-tab" data-tab="professores">📚 Professores</button>
+    <button class="nav-tab" data-tab="universidades">🏛 Universidades</button>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters">
+    <input class="search-input" id="searchInput" type="text" placeholder="Pesquisar por nome, área..."/>
+    <select class="filter-select" id="filterProvince">
+      <option value="">Todas as províncias</option>
+      <option>Bengo</option><option>Benguela</option><option>Bié</option>
+      <option>Cabinda</option><option>Cuando Cubango</option>
+      <option>Cuanza Norte</option><option>Cuanza Sul</option>
+      <option>Cunene</option><option>Huambo</option><option>Huíla</option>
+      <option>Luanda</option><option>Lunda Norte</option><option>Lunda Sul</option>
+      <option>Malanje</option><option>Moxico</option><option>Namibe</option>
+      <option>Uíge</option><option>Zaire</option>
+    </select>
+    <select class="filter-select" id="filterModality" style="display:none;">
+      <option value="">Todas as modalidades</option>
+      <option>Presencial</option><option>Online</option><option>Híbrido</option>
+    </select>
+  </div>
+
+  <p class="results-count" id="resultsCount"></p>
+  <div class="grid" id="mainGrid"></div>
+</main>
+
+<a class="fab" href="../serviços/dashboard-aluno.html">← O meu painel</a>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, collection, getDocs, query, limit, getDoc, doc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { firebaseConfig } from '../firebase-config.js';
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+const overlay = document.getElementById('loadingOverlay');
+
+let currentTab = 'centros';
+let allItems   = [];
+let userData   = {};
+
+// ── Segurança: nunca deixar o overlay preso para sempre ──
+function hideOverlay() {
+  if (!overlay) return;
+  overlay.style.opacity = '0';
+  setTimeout(() => overlay.style.display = 'none', 400);
+}
+function showFatalError(msg) {
+  hideOverlay();
+  document.querySelector('.main').innerHTML = `
+    <div style="text-align:center;padding:4rem 1rem;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">⚠️</div>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;margin-bottom:0.5rem;">Não foi possível carregar</h2>
+      <p style="color:var(--muted);max-width:420px;margin:0 auto 1.5rem;">${msg}</p>
+      <button onclick="window.location.reload()" style="background:var(--ink);color:#fff;border:none;border-radius:100px;padding:0.75rem 1.5rem;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;">Tentar novamente</button>
+    </div>`;
+}
+// Rede de segurança: se nada resolver em 10s, mostra erro em vez de spinner infinito
+const safetyTimeout = setTimeout(() => {
+  showFatalError('A ligação está a demorar demasiado. Verifica a tua internet ou se o firebase-config.js está correctamente configurado.');
+}, 10000);
+
+// ── Auth guard ──
+onAuthStateChanged(auth, async (user) => {
+  try {
+    if (!user) { window.location.href = '../auth/login.html'; return; }
+    document.getElementById('btnLogout').onclick = async () => { await signOut(auth); window.location.href = '../auth/login.html'; };
+    // Carrega dados do utilizador para personalização
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    if (snap.exists()) {
+      userData = snap.data();
+      document.getElementById('navName').textContent = (userData.fullName||'').split(' ')[0];
+    }
+    await loadTab('centros');
+    clearTimeout(safetyTimeout);
+    hideOverlay();
+  } catch (err) {
+    clearTimeout(safetyTimeout);
+    console.error('Erro ao carregar a página:', err);
+    const msg = err.code === 'permission-denied'
+      ? 'Sem permissão para aceder aos dados. Verifica as regras do Firestore (firestore.rules) foram publicadas.'
+      : 'Ocorreu um erro inesperado: ' + (err.message || err.code || 'erro desconhecido');
+    showFatalError(msg);
+  }
+});
+
+// ── Tabs ──
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentTab = btn.dataset.tab;
+    const modalityFilter = document.getElementById('filterModality');
+    modalityFilter.style.display = currentTab === 'professores' ? 'block' : 'none';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('filterProvince').value = '';
+    await loadTab(currentTab);
+  });
+});
+
+async function loadTab(tab) {
+  const grid = document.getElementById('mainGrid');
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">A carregar...</div>';
+
+  try {
+    if (tab === 'centros') {
+      await loadInstitutions('Centro de Formação Profissional');
+    } else if (tab === 'universidades') {
+      await loadInstitutions('U. pública,U. privada,IESs');
+    } else if (tab === 'professores') {
+      await loadTeachers();
+    }
+  } catch(e) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--muted);">Erro ao carregar. Tenta novamente.</div>';
+  }
+}
+
+async function loadInstitutions(tipos) {
+  const snap = await getDocs(query(collection(db,'institutions'), limit(50)));
+  const tipoArr = tipos.split(',');
+  allItems = snap.docs.map(d=>({id:d.id,...d.data()}))
+    .filter(i => tipos === 'all' || tipoArr.some(t => (i.tipo||'').includes(t.trim())));
+  renderGrid();
+}
+
+async function loadTeachers() {
+  const snap = await getDocs(query(collection(db,'teachers'), limit(50)));
+  allItems = snap.docs.map(d=>({id:d.id,...d.data()}));
+  renderGrid();
+}
+
+function renderGrid() {
+  const search   = document.getElementById('searchInput').value.toLowerCase();
+  const province = document.getElementById('filterProvince').value;
+  const modality = document.getElementById('filterModality').value;
+
+  let filtered = allItems.filter(item => {
+    const name = (item.nome||item.fullName||'').toLowerCase();
+    const desc = (item.descricao||item.bio||item.specialization||'').toLowerCase();
+    const subjects = (item.subjects||[]).join(' ').toLowerCase();
+    const matchSearch   = !search   || name.includes(search) || desc.includes(search) || subjects.includes(search);
+    const matchProvince = !province || item.province === province;
+    const matchModality = !modality || (item.modalities||[]).includes(modality);
+    return matchSearch && matchProvince && matchModality;
+  });
+
+  document.getElementById('resultsCount').textContent = `${filtered.length} resultado${filtered.length!==1?'s':''} encontrado${filtered.length!==1?'s':''}`;
+
+  const grid = document.getElementById('mainGrid');
+  if (filtered.length === 0) {
+    const isFiltering = search || province || modality;
+    const msg = isFiltering
+      ? 'Nenhum resultado com estes filtros. Tenta outra pesquisa.'
+      : (currentTab === 'professores'
+          ? 'Ainda não há professores registados. Sê o primeiro a partilhar isto com um professor que conheças!'
+          : 'Ainda não há instituições registadas nesta categoria. A plataforma está em fase de lançamento — volta em breve.');
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1;"><div class="empty-icon">${isFiltering?'🔍':'🌱'}</div><p>${msg}</p></div>`;
+    return;
+  }
+
+  const icons = {'U. pública':'🏛️','U. privada':'🎓','IESs':'📚','Centro de Formação Profissional':'🔧','Academia':'⚡'};
+  const colors = {'U. pública':'rgba(0,87,255,0.08)','U. privada':'rgba(255,77,0,0.08)','Centro de Formação Profissional':'rgba(0,179,126,0.08)'};
+
+  grid.innerHTML = filtered.map(item => {
+    const isTeacher = currentTab === 'professores';
+    if (isTeacher) return renderTeacherCard(item);
+    return renderInstitutionCard(item, icons, colors);
+  }).join('');
+}
+
+function renderInstitutionCard(item, icons, colors) {
+  const icon  = icons[item.tipo]  || '🏫';
+  const color = colors[item.tipo] || 'rgba(10,10,15,0.04)';
+  const contact = item.whatsapp || item.telefone || item.email || '';
+  return `<div class="card">
+    <div class="card-top">
+      <div class="card-icon" style="background:${color};">${icon}</div>
+      <div class="card-name">${item.nome||'—'}</div>
+      <div class="card-type">${item.tipo||''}</div>
+    </div>
+    <div class="card-body">
+      <p class="card-desc">${(item.descricao||item.tagline||'Sem descrição disponível.').substring(0,120)}...</p>
+      <div class="card-tags">
+        ${(item.servicos||[]).slice(0,3).map(s=>`<span class="tag">${s}</span>`).join('')}
+      </div>
+    </div>
+    <div class="card-footer">
+      <span class="card-province">📍 ${item.province||'—'}</span>
+      ${contact ? `<a class="btn-contact" href="https://wa.me/${contact.replace(/\D/g,'')}" target="_blank">Contactar →</a>` : ''}
+    </div>
+  </div>`;
+}
+
+function renderTeacherCard(item) {
+  const initials = (item.fullName||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+  const avatar   = item.avatarUrl ? `<img src="${item.avatarUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : initials;
+  const subjects = (item.subjects||[]).slice(0,4);
+  const rate     = (item.rateMin||item.rateMax) ? `${item.rateMin||'?'}–${item.rateMax||'?'} AOA/${item.ratePer||'hora'}` : 'A combinar';
+  const mods     = (item.modalities||[]).join(' · ');
+  return `<div class="card">
+    <div class="card-top" style="display:flex;gap:1rem;align-items:flex-start;padding-bottom:1rem;">
+      <div style="width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;">${avatar}</div>
+      <div>
+        <div class="card-name">${item.fullName||'—'}</div>
+        <div class="card-type">${item.specialization||'Professor'}</div>
+        <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem;">${mods}</div>
+      </div>
+    </div>
+    <div class="card-body" style="padding-top:0;">
+      <p class="card-desc">${(item.bio||'Sem apresentação.').substring(0,110)}...</p>
+      <div class="card-tags">${subjects.map(s=>`<span class="tag">${s}</span>`).join('')}</div>
+    </div>
+    <div class="card-footer">
+      <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;color:var(--accent2);">${rate}</span>
+      ${item.phone ? `<a class="btn-contact" href="https://wa.me/${item.phone.replace(/\D/g,'')}" target="_blank">Contactar →</a>` : ''}
+    </div>
+  </div>`;
+}
+
+// ── Filtros em tempo real ──
+document.getElementById('searchInput').addEventListener('input', renderGrid);
+document.getElementById('filterProvince').addEventListener('change', renderGrid);
+document.getElementById('filterModality').addEventListener('change', renderGrid);
+
+// ── SW ──
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
+</script>
+</body>
+</html>
