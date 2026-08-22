@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>All in One School — O Teu Futuro Começa Aqui</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../style.css">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f2eb;
+    --accent: #ff4d00;
+    --accent2: #0057ff; 
+    --muted: #8a8780;
+    --card: #ffffff;
+    --border: rgba(10,10,15,0.08);
+    --shadow: 0 4px 32px rgba(10,10,15,0.10);
+    --green: #00b37e;
+    --step-transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { 
+    font-family: 'DM Sans', sans-serif; 
+    background: var(--paper); 
+    color: var(--ink); 
+    line-height: 1.6; 
+    overflow-x: hidden; 
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 5%;
+    background: rgba(245,242,235,0.90);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    animation: slideDown 0.6s ease both;
+  }
+
+  @keyframes slideDown { from { transform: translateY(-100%); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.25rem;
+    color: var(--ink); text-decoration: none;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-cta {
+    background: var(--ink); color: var(--paper) !important;
+    padding: 0.55rem 1.4rem; border-radius: 100px;
+    text-decoration: none; transition: background 0.2s;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 9rem 5% 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 20%, rgba(255,77,0,0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, rgba(0,87,255,0.08) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--ink); color: var(--paper);
+    border-radius: 100px; padding: 0.35rem 1rem;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 800; line-height: 1.0;
+    letter-spacing: -0.03em; position: relative; z-index: 1;
+  }
+  h1 .highlight { color: var(--accent); }
+
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    padding: 0.9rem 2.2rem; border-radius: 100px;
+    text-decoration: none; font-weight: 600; font-family: 'Syne', sans-serif;
+  }
+
+  .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 1.5s infinite; }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--muted);
+    max-width: 52ch;
+    margin-top: 1.6rem;
+    font-weight: 300;
+    line-height: 1.7;
+    animation: fadeUp 0.7s 0.5s ease both;
+    position: relative; z-index: 1;
+  }
+
+  .hero-actions {
+    display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.8rem;
+    animation: fadeUp 0.7s 0.65s ease both;
+    position: relative; z-index: 1;
+  }
+  .btn-outline {
+    background: transparent; color: var(--ink);
+    padding: 0.9rem 2.2rem; border-radius: 100px;
+    font-size: 1rem; font-weight: 500;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+    border: 1.5px solid var(--ink);
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+  }
+  .btn-outline:hover { background: var(--ink); color: var(--paper); }
+
+  .hero-stats {
+    display: flex; flex-wrap: wrap; gap: 3rem; margin-top: 5rem;
+    animation: fadeUp 0.7s 0.8s ease both;
+    position: relative; z-index: 1;
+  }
+
+  .stat { display: flex; flex-direction: column; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem; font-weight: 800;
+    letter-spacing: -0.04em; line-height: 1;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; }
+
+  /* ─── SECTION GENERAL ─── */
+  section { padding: 6rem 5%; }
+  .section-tag {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; display: block;
+  }
+  h2 { font-family: 'Syne', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; line-height: 1.1; }
+  .section-intro {
+    font-size: 1.1rem; color: var(--muted);
+    max-width: 55ch; line-height: 1.7;
+    font-weight: 300; margin-bottom: 3.5rem;
+  }
+
+  /* ─── PROBLEM STRIP ─── */
+  .problem-strip {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 5rem 5%;
+    position: relative; overflow: hidden;
+  }
+  .problem-strip blockquote {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 600; line-height: 1.4;
+    max-width: 70ch; position: relative; z-index: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .problem-strip blockquote em {
+    color: var(--accent); font-style: normal;
+  }
+
+  .problem-strip .attribution {
+    margin-top: 1.5rem; font-size: 0.9rem;
+    color: rgba(245,242,235,0.4); font-style: italic;
+    position: relative; z-index: 1;
+  }
+
+  /* ─── FEATURES GRID ─── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .feature-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid var(--border);
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative; overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent));
+    border-radius: 20px 20px 0 0;
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .feature-card:hover::before { transform: scaleX(1); }
+
+  .feature-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; margin-bottom: 1.2rem;
+    background: var(--icon-bg, rgba(255,77,0,0.1));
+  }
+
+  .feature-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: 0.9rem; color: var(--muted); line-height: 1.6;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how-section { background: var(--ink); color: var(--paper); }
+  .how-section h2 { color: var(--paper); }
+  .how-section .section-intro { color: rgba(245,242,235,0.5); }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    position: relative;
+  }
+
+  .step {
+    display: flex; flex-direction: column; gap: 1rem;
+    position: relative;
+  }
+
+  .step-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 4rem; font-weight: 800;
+    color: rgba(255,255,255,0.07);
+    line-height: 1; letter-spacing: -0.04em;
+  }
+
+  .step-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.15rem; font-weight: 700;
+    margin-top: -1.5rem;
+  }
+
+  .step p { font-size: 0.9rem; color: rgba(245,242,235,0.5); line-height: 1.6; }
+
+  .step-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); margin-bottom: 0.5rem;
+  }
+
+  /* ─── AUDIENCE ─── */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .audience-card {
+    border-radius: 20px;
+    padding: 2.2rem;
+    border: 1px solid var(--border);
+    position: relative; overflow: hidden;
+    background: var(--card);
+    transition: transform 0.25s, box-shadow 0.25s;
+  }
+
+  .audience-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+
+  .audience-card.primary { background: var(--accent); color: #fff; border-color: transparent; }
+  .audience-card.primary p { color: rgba(255,255,255,0.75); }
+  .audience-card.primary .audience-label { color: rgba(255,255,255,0.6); }
+
+  .audience-emoji { font-size: 2.5rem; margin-bottom: 1rem; }
+  .audience-label {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;
+    font-weight: 700; color: var(--muted); margin-bottom: 0.5rem;
+  }
+
+  .audience-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem; font-weight: 800;
+    margin-bottom: 0.6rem; letter-spacing: -0.02em;
+  }
+
+  .audience-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    background: var(--paper);
+    text-align: center;
+    padding: 8rem 5%;
+  }
+
+  .cta-section h2 { margin-bottom: 1rem; }
+  .cta-section p { color: var(--muted); font-size: 1.1rem; max-width: 50ch; margin: 0 auto 2.5rem; }
+
+  .cta-badges {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: rgba(10,10,15,0.06); border-radius: 100px;
+    padding: 0.4rem 1rem; font-size: 0.82rem; font-weight: 500;
+  }
+
+  .badge-dot { 
+    width: 6px; 
+    height: 6px; 
+    border-radius: 50%; 
+    background: var(--accent2);
+   }
+
+  /* ─── CTA BUTTONS ROW ─── */
+  .cta-buttons {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    justify-content: center; align-items: center;
+  }
+
+  .btn-green {
+    background: var(--green); color: #fff;
+    padding: 0.9rem 2.2rem; border-radius: 100px;
+    font-size: 1rem; font-weight: 600; font-family: 'Syne', sans-serif;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 24px rgba(0,179,126,0.25);
+    border: none; cursor: pointer;
+  }
+  .btn-green:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,179,126,0.35); }
+
+  /* ─── MODAL OVERLAY ─── */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(10,10,15,0.65);
+    backdrop-filter: blur(6px);
+    align-items: center; justify-content: center;
+    padding: 1.5rem;
+    animation: fadeIn 0.25s ease;
+  }
+  .modal-overlay.active { display: flex; }
+
+  @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+  .modal-box {
+    background: var(--card);
+    border-radius: 24px;
+    padding: 0;
+    width: 100%; max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(10,10,15,0.25);
+    animation: slideUp 0.3s ease;
+  }
+
+  .progress-container {
+      padding: 2rem 2rem 0;
+  }
+  .progress-bar-bg { height: 4px; background: var(--border); border-radius: 10px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
+
+  .steps-wrapper {
+      display: flex;
+      width: 800%; /* Aumentado para 8 telas */
+      transition: transform var(--step-transition);
+  }
+  .step-page {
+      width: 12.5%; /* 100 / 8 */
+      padding: 1.2rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+  }
+  
+  .btn-prev {
+      background: transparent; color: var(--muted);
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      border: 1px solid var(--border); border-radius: 100px;
+      padding: 0.35rem 0.9rem; cursor: pointer; transition: 0.3s;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+  }
+  .btn-prev:hover { border-color: var(--ink); color: var(--ink); }
+
+  @keyframes slideUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+
+  .modal-close {
+    position: absolute; top: 1.2rem; right: 1.4rem;
+    background: none; border: none; cursor: pointer;
+    font-size: 1.4rem; color: var(--muted);
+    line-height: 1; padding: 0.3rem;
+    transition: color 0.2s;
+  }
+  .modal-close:hover { color: var(--ink); }
+
+  .modal-tag {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--green);
+    margin-bottom: 0.6rem;
+  }
+
+  .modal-box h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem; font-weight: 800;
+    letter-spacing: -0.02em; margin-bottom: 0.4rem;
+  }
+
+  .modal-box .modal-sub {
+    font-size: 0.9rem; color: var(--muted);
+    margin-bottom: 1.8rem;
+  }
+
+  /* ─── FORM STYLES (inside modal) ─── */
+  .reg-form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+
+  .form-group label {
+    font-size: 0.82rem; font-weight: 600;
+    color: var(--ink); letter-spacing: 0.01em; font-family: 'DM Sans', sans-serif;
+  }
+
+  .form-group input,
+  .form-group select {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.95rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    background: var(--paper);
+    color: var(--ink);
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+  }
+
+  .form-group textarea {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.95rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 0.7rem 1rem;
+    background: var(--paper);
+    resize: vertical;
+  }
+
+  .form-group select {
+    appearance: none; /* Remove o estilo padrão do sistema */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff4d00' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.1rem;
+    padding-right: 3rem !important;
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 0;
+  }
+
+  .form-group select option {
+    font-family: 'DM Sans', sans-serif;
+    background-color: #fff;
+    color: var(--ink);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--green);
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0, 179, 126, 0.08);
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-hint {
+    font-size: 0.75rem; color: var(--muted);
+    font-style: italic; margin-top: 0.1rem;
+  }
+
+  .form-error {
+    font-size: 0.75rem; color: #ef4444;
+    display: none; margin-top: 0.1rem;
+  }
+
+  .form-error.warning { color: #f97316; }
+
+  .input-error { border-color: #ef4444 !important; }
+  .input-warning { border-color: #f97316 !important; background: #fff7ed !important; }
+
+  .form-hidden { display: none; }
+
+  .btn-submit {
+    background: var(--green); color: #fff;
+    padding: 0.35rem 1rem; border-radius: 100px;
+    font-size: 0.72rem; font-weight: 700; font-family: 'Syne', sans-serif;
+    border: none; cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 6px 20px rgba(0,179,126,0.25);
+    margin-top: 0;
+    width: auto;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,179,126,0.35); }
+
+  /* ─── LOADING ANIMATION ─── */
+  .btn-submit.loading {
+    color: transparent !important;
+    position: relative;
+    pointer-events: none;
+  }
+  .btn-submit.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    top: 50%; left: 50%;
+    margin-top: -10px; margin-left: -10px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink); color: var(--paper);
+    padding: 3rem 5%;
+    display: flex; flex-wrap: wrap;
+    justify-content: space-between; align-items: center;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem; font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  footer p { font-size: 0.85rem; color: rgba(245,242,235,0.35); }
+
+  .footer-links {
+    display: flex; gap: 1.5rem; list-style: none;
+  }
+  .footer-links a {
+    font-size: 0.85rem; color: rgba(245,242,235,0.45);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--paper); }
+
+  /* ─── CATALOG GRID ─── */
+  .catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .catalog-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2.2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  .catalog-item:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow);
+    border-color: var(--accent);
+  }
+
+  .catalog-item .icon {
+    font-size: 2.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .catalog-item h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .catalog-btn {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-top: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    margin-left: -1.2rem; /* Mantém o texto alinhado à esquerda compensando o preenchimento */
+    width: fit-content;
+  }
+
+  .catalog-btn:hover {
+    background: rgba(255, 77, 0, 0.1);
+    gap: 0.8rem;
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:0.6; transform:scale(1.4); } }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .hero { padding-top: 7rem; }
+    .hero-stats { gap: 2rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .form-row { grid-template-columns: 1fr; }
+    .modal-box { padding: 2rem 1.4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="#"><span class="logo-dot"></span>All in One School</a>
+  <ul class="nav-links">
+    <li><a href="#features">O que oferecemos</a></li>
+    <li><a href="#como-funciona">Como funciona</a></li>
+    <li><a href="#para-quem">Para quem</a></li>
+    <li><a href="../perfis/perfil-organizacao.html">Perfil Institucional</a></li>
+    <li><a href="javascript:void(0)" class="nav-cta" id="openModalBtn">Juntar-me →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-tag"><span class="hero-tag-dot"></span> O teu núcleo educativo completo</div>
+
+  <h1>Tudo o que precisas para o teu <span class="highlight">futuro</span></h1>
+
+  <p class="hero-sub">
+    Escolas, bolsas, certificações, oportunidades de emprego e muito mais — num só lugar.
+    Porque nenhum jovem deve decidir o seu caminho no escuro.
+  </p>
+
+  <div class="hero-actions">
+    <a href="javascript:void(0)" class="btn-primary" id="heroRegBtn">Explorar agora →</a>
+
+    <!-- como funciona é repetido na nav bar e aqui. Na minha opinião, melhor apagar este.
+ <a href="#como-funciona" class="btn-outline">Como funciona</a>
+ -->
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">500<span>+</span></span>
+      <span class="stat-label">Instituições parceiras</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">120<span>+</span></span>
+      <span class="stat-label">Áreas de formação</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">0<span>Kz</span></span>
+      <span class="stat-label">Custo para o aluno</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">1<span>×</span></span>
+      <span class="stat-label">Lugar para tudo</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<div class="problem-strip">
+  <blockquote>
+    "Sempre disseram que eu devia seguir a tecnologia, mas ninguém me explicou 
+    <em>onde ir</em>, <em>o que exigiam</em>, nem <em>o que me esperava</em>. 
+    Decidi às cegas — e sofri por isso."
+  </blockquote>
+  <p class="attribution">— Fundador da All in One School · A história que deu origem a tudo</p>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <span class="section-tag">O que oferecemos</span>
+  <h2>Um pacote <br>verdadeiramente completo</h2>
+  <p class="section-intro">
+    Tudo o que um estudante precisa de saber antes de escolher o seu caminho, 
+    reunido num único núcleo acessível e verificado.
+  </p>
+
+<!-- há ou havia, porque vou tentar resolver um problema nesse bloco
+  não aparece no desktop. 
+  1* Havia sessões não fechadas; 2* problema de renderização; 3* o reveal sozinho deixava o bloco invisível; 4* não havia nenhuma classe .visible e nem reveal.visble; e isso deixava a última div ou bloco com opacidade 0 por isso não aparecia no código-->
+
+  <div class="features-grid reveal visible">
+    <div class="feature-card" style="--card-accent:#ff4d00; --icon-bg:rgba(255,77,0,0.10)">
+      <div class="feature-icon">🏫</div>
+      <h3>Escolas e Instituições</h3>
+      <p>Encontra escolas, universidades e centros de formação organizados por área, localização e requisitos de entrada.</p>
+    </div>
+    <div class="feature-card" style="--card-accent:#0057ff; --icon-bg:rgba(0,87,255,0.10)">
+      <div class="feature-icon">🎓</div>
+      <h3>Bolsas de Estudo</h3>
+      <p>Listagem actualizada de bolsas disponíveis — quem pode candidatar-se, como e quando. Sem informação de boca em boca.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="how-section reveal">
+  <span class="section-tag">Passo a Passo</span>
+  <h2>Como a All in One <br>te ajuda</h2>
+  <p class="section-intro">Um processo simples para tirar as tuas dúvidas e começar a estudar.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3 class="step-title">Explora</h3>
+      <p>Navega pelas categorias de cursos, escolas e bolsas disponíveis no nosso núcleo.</p>
+      <div class="step-dot"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3 class="step-title">Compara</h3>
+      <p>Vê os requisitos, localizações e benefícios de cada oportunidade de forma clara.</p>
+      <div class="step-dot"></div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3 class="step-title">Candidata-te</h3>
+      <p>Segue os links diretos e as instruções para submeteres a tua inscrição com confiança.</p>
+      <div class="step-dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section id="para-quem" class="reveal">
+  <span class="section-tag">Público-alvo</span>
+  <h2>O teu lugar é aqui</h2>
+  <p class="section-intro">Seja qual for a tua fase atual, temos as ferramentas para o teu próximo passo.</p>
+
+  <div class="audience-grid">
+    <div class="audience-card primary">
+      <div class="audience-emoji">🎓</div>
+      <span class="audience-label">Estudantes</span>
+      <h3>Finalistas e Recém-graduados</h3>
+      <p>Para quem terminou o médio ou a faculdade e não sabe qual é o próximo passo lógico na carreira.</p>
+    </div>
+    <div class="audience-card">
+      <div class="audience-emoji">👨‍🏫</div>
+      <span class="audience-label">Educadores</span>
+      <h3>Escolas e Institutos</h3>
+      <p>Para instituições que desejam dar visibilidade aos seus cursos e atrair os melhores talentos.</p>
+    </div>
+    <div class="audience-card">
+      <div class="audience-emoji">💼</div>
+      <span class="audience-label">Profissionais</span>
+      <h3>Em busca de Especialização</h3>
+      <p>Para quem já trabalha mas precisa de certificações específicas para subir de nível no mercado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMEÇAR (CATÁLOGO) -->
+<section id="comecar" class="reveal">
+  <span class="section-tag">Começar Agora</span>
+  <h2>O que procuras <br>hoje?</h2>
+  <p class="section-intro">Explora o nosso catálogo completo e encontra a oportunidade ideal para o teu perfil.</p>
+
+  <div class="catalog-grid">
+    <a href="bolsas.html" class="catalog-item">
+      <div class="icon">📜</div>
+      <h3>Bolsas de Estudo</h3>
+      <p>Financiamento e apoios para a tua formação académica.</p>
+      <span class="catalog-btn">Ver Bolsas →</span>
+    </a>
+
+    <a href="training-centers.html" class="catalog-item">
+      <div class="icon">🏫</div>
+      <h3>Academias</h3>
+      <p>Centros de formação técnica e profissionalizante.</p>
+      <span class="catalog-btn">Ver Academias →</span>
+    </a>
+
+    <a href="institutos-medios.html" class="catalog-item">
+      <div class="icon">🏢</div>
+      <h3>Institutos Médios</h3>
+      <p>Escolas de ensino secundário e técnico profissional.</p>
+      <span class="catalog-btn">Ver Institutos →</span>
+    </a>
+
+    <a href="institutos-superiores.html" class="catalog-item">
+      <div class="icon">🎓</div>
+      <h3>Ensino Superior</h3>
+      <p>Universidades, ISCEDs e Institutos Superiores.</p>
+      <span class="catalog-btn">Ver Cursos →</span>
+    </a>
+
+    <a href="carreiras.html" class="catalog-item">
+      <div class="icon">🚀</div>
+      <h3>Carreira</h3>
+      <p>Ecossistemas de emprego, estágios e mentoria.</p>
+      <span class="catalog-btn">Explorar →</span>
+    </a>
+  </div>
+</section>
+
+<!-- MODAL REGISTRO ALUNO (POP-UP) -->
+<div class="modal-overlay" id="regModal">
+  <div class="modal-box">
+    <button class="modal-close" id="closeModalBtn">&times;</button>
+    
+    <div class="progress-container">
+        <div class="flex justify-end text-[9px] font-bold uppercase tracking-wider text-muted mb-2" style="font-family: 'Syne', sans-serif;">
+            <span id="stepCounter">1 / 8</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+    </div>
+
+    <form id="studentRegisterForm">
+      <div class="steps-wrapper" id="stepsWrapper">
+          <!-- FASE 1: Identidade -->
+          <div class="step-page">
+              <h3 class="text-xl font-extrabold mb-1">Olá! Vamos começar?</h3>
+              <p class="text-sm text-muted mb-6">Primeiro, o básico para criarmos o teu perfil.</p>
+              <div class="reg-form">
+                  <div class="form-group"><label>Como te chamas?</label><input type="text" id="regFullName" name="fullName" required placeholder="Teu nome completo"></div>
+                  
+                  <div class="form-group"><label>Data de Nascimento</label><input type="date" id="regBirthDate" name="birthDate" required></div>
+                  
+                  <div class="form-row">
+                      <div class="form-group"><label>E-mail</label><input type="email" id="regEmail" name="email" required placeholder="teu.email@exemplo.com"></div>
+                      <div class="form-group"><label>Terminal Telefónico</label><input type="tel" id="regPhone" name="phone" placeholder="+244 9XX XXX XXX"></div>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label>Onde vives atualmente? (Província)</label>
+                      <select id="regProvince" name="province" required>
+                          <option value="">Seleciona a província</option>
+                          <option value="Luanda">Luanda</option>
+                          <option value="Benguela">Benguela</option>
+                          <option value="Huambo">Huambo</option>
+                          <option value="Huila">Huíla</option>
+                          <option value="Cabinda">Cabinda</option>
+                          <!-- Adicionar mais províncias conforme necessário -->
+                      </select>
+                  </div>
+                  <div class="form-group"><label>Cidade/Município atual</label><input type="text" id="regCityMunicipality" name="cityMunicipality" placeholder="Ex: Viana, Lubango"></div>
+
+                  <div class="form-group">
+                      <label>Naturalidade (País onde nasceste)</label>
+                      <select id="regBirthCountry" name="birthCountry" required>
+                          <option value="">Seleciona o país</option>
+                          <option value="Angola">Angola</option>
+                          <option value="Portugal">Portugal</option>
+                          <option value="Brasil">Brasil</option>
+                          <!-- Adicionar mais países conforme necessário -->
+                      </select>
+                  </div>
+                  <div class="form-row">
+                      <div class="form-group">
+                          <label>Naturalidade (Província)</label>
+                          <select id="regBirthProvince" name="birthProvince">
+                              <option value="">Seleciona a província</option>
+                              <option value="Luanda">Luanda</option>
+                              <option value="Benguela">Benguela</option>
+                              <option value="Huambo">Huambo</option>
+                              <option value="Huila">Huíla</option>
+                              <option value="Cabinda">Cabinda</option>
+                              <!-- Adicionar mais províncias conforme necessário -->
+                          </select>
+                      </div>
+                      <div class="form-group"><label>Naturalidade (Cidade/Município)</label><input type="text" id="regBirthCityMunicipality" name="birthCityMunicipality" placeholder="Ex: Luanda, Lobito"></div>
+                  </div>
+
+                  <div class="form-group"><label>Cria uma senha segura</label><input type="password" id="regPassword" name="password" required></div>
+              </div>
+          </div>
+
+          <!-- FASE 2: Situação Académica -->
+          <div class="step-page">
+              <h3 class="text-xl font-extrabold mb-1">Situação Académica</h3>
+              <p class="text-sm text-muted mb-6">Conta-nos onde estás para calibrarmos as recomendações.</p>
+              <div class="reg-form">
+                  <div class="form-group">
+                      <label>Qual é o teu nível académico?</label>
+                      <select id="regAcademicLevel" name="academicLevel" required>
+                          <option value="">Seleciona o nível...</option>
+                          <option value="primario">Ensino Primário</option>
+                          <option value="1ciclo">1º Ciclo</option>
+                          <option value="2ciclo">2º Ciclo / Médio</option>
+                          <option value="universidade">Ensino Superior / Universidade</option>
+                          <option value="profissional">Formação Profissional</option>
+                      </select>
+                  </div>
+                  <div class="form-group"><label>Nome da Instituição</label><input type="text" id="regInstitution" name="institution" placeholder="Ex: Escola 123 ou UAN"></div>
+                  <div class="form-group">
+                      <label>Natureza da Instituição</label>
+                      <select id="regInstNature" name="instNature">
+                          <option value="publica">Pública</option>
+                          <option value="privada">Privada</option>
+                          <option value="comparticipada">Comparticipada</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Classe / Ano que frequentas</label>
+                      <select id="regAcademicYear" name="academicYear">
+                          <option value="">Seleciona a classe...</option>
+                          <optgroup label="Ensino de Base / Médio">
+                              <option value="1">1º Ano</option><option value="2">2º Ano</option><option value="3">3º Ano</option><option value="4">4º Ano</option><option value="5">5º Ano</option><option value="6">6º Ano</option><option value="7">7º Ano</option><option value="8">8º Ano</option><option value="9">9º Ano</option><option value="10">10º Ano</option><option value="11">11º Ano</option><option value="12">12º Ano</option><option value="13">13º Ano</option>
+                          </optgroup>
+                          <optgroup label="Ensino Superior">
+                              <option value="sup1">1º Ano (Superior)</option><option value="sup2">2º Ano (Superior)</option><option value="sup3">3º Ano (Superior)</option><option value="sup4">4º Ano (Superior)</option><option value="sup5">5º Ano (Superior)</option><option value="sup6">6º Ano (Superior)</option>
+                          </optgroup>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Qual é a tua área de estudo?</label>
+                      <select id="regAcademicArea" name="academicArea" onchange="toggleAcademicOther(this.value === 'outro')">
+                          <option value="">Seleciona a área...</option>
+                          <option value="ciencias">Ciências</option>
+                          <option value="humanidades">Humanidades</option>
+                          <option value="telecomunicacoes">Telecomunicações</option>
+                          <option value="artes">Artes</option>
+                          <option value="saude">Ciências da Saúde</option>
+                          <option value="linguas-educacao">Línguas e Educação</option>
+                          <option value="economico-juridica">Económico-Jurídica</option>
+                          <option value="desporto">Desporto e Motricidade Humana</option>
+                          <option value="outro">Outro (especificar)</option>
+                      </select>
+                  </div>
+                  <div id="academicAreaOtherGroup" class="form-group" style="display: none; margin-top: 0.5rem;">
+                      <input type="text" id="regAcademicAreaOther" name="academicAreaOther" placeholder="Escreve a tua área de estudo...">
+                  </div>
+                  <div class="form-group">
+                      <label>Já tens o certificado do nível anterior?</label>
+                      <div style="display: flex; gap: 1rem;">
+                          <label style="font-size: 0.85rem;"><input type="radio" name="hasCertificate" value="sim" onchange="toggleCertificateLevel(true)"> Sim</label>
+                          <label style="font-size: 0.85rem;"><input type="radio" name="hasCertificate" value="nao" onchange="toggleCertificateLevel(false)"> Não</label>
+                      </div>
+                  </div>
+                  <div id="certificateLevelGroup" class="form-group" style="display: none;">
+                      <label>Que nível adquiriste?</label>
+                      <select id="regPreviousLevel" name="previousLevel">
+                          <option value="">Seleciona o nível...</option>
+                          <option value="tecnico-medio">Profissional Técnico-Médio</option>
+                          <option value="licenciado">Licenciado</option>
+                          <option value="mestre">Mestre</option>
+                          <option value="doutor">Doutor (PhD)</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+
+          <!-- FASE 3: Paixões (Independente) -->
+          <div class="step-page">
+              <h3 class="text-xl font-extrabold mb-1">O que te apaixona?</h3>
+              <p class="text-sm text-muted mb-6">Seleciona as áreas que fazem o teu olho brilhar (podes escolher várias).</p>
+              <div class="reg-form">
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="interest" value="tecnologia"> Tecnologia</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="interest" value="negocios"> Negócios</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="interest" value="medicina"> Medicina</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="interest" value="design"> Design</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="interest" value="engenharia"> Engenharia</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="interest" value="direito"> Direito</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="interest" value="arte"> Arte</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="interest" value="agricultura"> Agricultura</label>
+                  </div>
+              </div>
+          </div>
+
+          <!-- FASE 4: Objetivos -->
+          <div class="step-page">
+              <h3 class="text-xl font-extrabold mb-1">Visão de Futuro</h3>
+              <p class="text-sm text-muted mb-6">Onde te imaginas a chegar?</p>
+              <div class="reg-form">
+                  <div class="form-group">
+                      <label>O que gostavas de estar a fazer daqui a 10 anos?</label>
+                      <select id="regFutureGoal" name="futureGoal" onchange="toggleCompanyFields(this.value)">
+                          <option value="">Seleciona uma opção...</option>
+                          <option value="empreender">Criar a minha empresa</option>
+                          <option value="tech">Trabalhar com tecnologia</option>
+                          <option value="ajudar">Ajudar pessoas / Saúde</option>
+                          <option value="exterior">Trabalhar no exterior</option>
+                      </select>
+                  </div>
+
+                  <div id="companyFieldsGroup" style="display: none;" class="space-y-4">
+                      <div class="form-group">
+                          <label>Quais seriam os ramos de atuação?</label>
+                          <input type="text" name="companyBranch" placeholder="Ex: Tecnologia, Moda, Restauração...">
+                      </div>
+                      <div class="form-group">
+                          <label>Já tens a ideia?</label>
+                          <input type="text" name="hasIdea" placeholder="É algo concreto ou ainda estás a amadurecer?">
+                      </div>
+                      <div class="form-group">
+                          <label style="color: var(--green); font-weight: 800;">Parabéns pela iniciativa! Conta-nos mais sobre ela:</label>
+                          <textarea name="ideaDescription" placeholder="Explica a tua ideia aqui..." rows="3"></textarea>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- FASE 5: Pontos Fortes / Competências -->
+          <div class="step-page">
+              <h3 class="text-xl font-extrabold mb-1">Teus "Super Poderes"</h3>
+              <p class="text-sm text-muted mb-6">Em que atividades sentes que tens mais facilidade?</p>
+              <div class="reg-form">
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="matematica"> Matemática</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="comunicacao"> Comunicação</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="lideranca"> Liderança</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="criatividade"> Criatividade</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="programacao"> Programação</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="organizacao"> Organização</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="trabalho-equipa"> Trabalho em equipa</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="escrita"> Escrita</label>
+                      <label class="badge" style="justify-content: flex-start;"><input type="checkbox" name="skill" value="resolucao-problemas"> Resolução de problemas</label>
+                  </div>
+              </div>
+          </div>
+
+          <!-- FASE 6: Preferência das Aulas / Estilo de Aprendizagem -->
+          <div class="step-page">
+              <h3 class="text-xl font-extrabold mb-1">Teu jeito de aprender</h3>
+              <p class="text-sm text-muted mb-6">Cada um tem o seu ritmo. Qual é o teu?</p>
+              <div class="reg-form">
+                  <div class="form-group">
+                      <label>Como preferes as tuas aulas?</label>
+                      <div style="display: flex; gap: 1rem;">
+                          <label style="font-size: 0.85rem;"><input type="radio" name="learningType" value="pratica"> Práticas</label>
+                          <label style="font-size: 0.85rem;"><input type="radio" name="learningType" value="teorica"> Teóricas</label>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label>Qual modalidade te agrada mais?</label>
+                      <select id="regTeachingMethod" name="teachingMethod">
+                          <option value="presencial">Presencial</option>
+                          <option value="online">Online</option>
+                          <option value="hibrido">Híbrido</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Como rendes mais no trabalho?</label>
+                      <select id="regWorkPref" name="workStyle">
+                          <option value="sozinho">Sozinho(a)</option>
+                          <option value="grupo">Em grupo</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Que tipo de tarefas preferes?</label>
+                      <select id="regActivityType" name="activityType">
+                          <option value="tecnica">Técnicas</option>
+                          <option value="criativa">Criativas</option>
+                          <option value="analitica">Analíticas</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+
+          <!-- FASE 7: Condições & Carreira -->
+          <div class="step-page">
+              <h3 class="text-xl font-extrabold mb-1">Condições & Ambições</h3>
+              <p class="text-sm text-muted mb-6">Quase lá! Vamos garantir que as sugestões sejam reais para ti.</p>
+              <div class="reg-form">
+                  <div class="form-group">
+                      <label>Como pretendes pagar os estudos?</label>
+                      <select id="regFinancing" name="funding">
+                          <option value="gratuito">Gratuito / Público</option>
+                          <option value="privado">Privado Pago</option>
+                          <option value="bolsa">Com Bolsa</option>
+                          <option value="financiamento">Financiamento</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Quanto podes investir por mês? (Kz)</label>
+                      <select id="regBudget" name="budget">
+                          <option value="0">Apenas Gratuito</option>
+                          <option value="15000">Até 15.000 Kz</option>
+                          <option value="30000">Até 30.000 Kz</option>
+                          <option value="unlimited">Sem limite</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Até onde estás disposto a ir?</label>
+                      <select id="regMobility" name="mobility">
+                          <option value="provincia">Só na minha província</option>
+                          <option value="qualquer">Qualquer província</option>
+                          <option value="exterior">Fora do país</option>
+                      </select>
+                  </div>
+                  
+                  <!-- Categoria de Carreira (Apenas Profissionais) -->
+                  <div id="professionalCareerGroup" style="display: none;" class="pt-4 border-t border-dashed border-border mt-2 space-y-4">
+                      <label class="text-[10px] uppercase tracking-widest text-accent font-bold">Perfil Profissional</label>
+                  <div class="form-group">
+                      <label>O que é mais importante para ti numa carreira?</label>
+                      <select id="regCareerValue" name="careerValue">
+                          <option value="salario">Salário Alto</option>
+                          <option value="estabilidade">Estabilidade</option>
+                          <option value="impacto">Impacto Social</option>
+                          <option value="flexibilidade">Flexibilidade</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <label>Qual o teu maior objetivo agora?</label>
+                      <select id="regMainGoal" name="mainObjective">
+                          <option value="emprego-rapido">Emprego rápido</option>
+                          <option value="negocio">Abrir o meu negócio</option>
+                          <option value="bolsa">Conseguir uma bolsa</option>
+                      </select>
+                  </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- FASE 8: All in One School -->
+          <div class="step-page">
+              <h3 class="text-xl font-extrabold mb-1">Sobre a All in One</h3>
+              <p class="text-sm text-muted mb-6">Ajuda-nos a entender como chegaste até aqui.</p>
+              <div class="reg-form">
+                  <div class="form-group">
+                      <label>O que te motivou a procurar-nos?</label>
+                      <textarea id="regWhyAllInOne" name="whyAllInOne" rows="2" placeholder="Ex: Procuro orientação de carreira, bolsas, etc."></textarea>
+                  </div>
+                  <div class="form-group">
+                      <label>Como conheceste a All in One School?</label>
+                      <select id="regHowFound" name="howFound" onchange="toggleOtherField(this.value === 'outro')">
+                          <option value="redes">Redes Sociais</option>
+                          <option value="amigos">Amigos ou Familiares</option>
+                          <option value="escola">Escola / Instituição</option>
+                          <option value="outro">Outro (especificar)</option>
+                      </select>
+                      <input type="text" id="regHowFoundOther" name="howFoundOther" placeholder="Escreve como nos conheceste..." style="display:none; margin-top:0.5rem;">
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div id="modalControls" style="padding: 0 2rem 2rem; display: flex; justify-content: space-between; gap: 1rem;">
+          <button type="button" id="modalPrevBtn" class="btn-prev hidden">← Voltar</button>
+          <button type="button" id="modalNextBtn" class="btn-submit">Próximo →</button>
+          <button type="submit" id="modalSubmitBtn" class="btn-submit hidden">Finalizar ✓</button>
+      </div>
+    </form>
+
+    <!-- MENSAGEM DE SUCESSO STANDALONE -->
+    <div id="successView" style="display: none; text-align: center; padding: 4rem 2rem;">
+        <div style="font-size: 3.5rem; margin-bottom: 1.5rem;">🎉</div>
+        <h3 class="text-2xl font-extrabold mb-2" style="color: var(--green);">Registo Concluído!</h3>
+        <p id="successMessage" class="text-muted mb-8">Bem-vindo(a) à All in One School. Estamos prontos para te ajudar a construir o teu futuro.</p>
+        <button type="button" class="btn-green" onclick="toggleModal(false)" style="padding: 0.8rem 2.5rem; font-size: 0.9rem;">Começar a Explorar</button>
+    </div>
+  </div>
+</div>
+<footer>
+  <div>
+    <div class="footer-logo"><span style="color:var(--accent)">•</span> All in One School</div>
+    <p>O teu guia completo para o futuro.</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="página de Iniciação.html">Início</a></li>
+    <li><a href="training-centers.html#centros">Centros</a></li>
+    <li><a href="/">Sobre</a></li>
+    <li><a href="/">Contactos</a></li>
+  </ul>
+</footer>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { getFirestore, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+  import { firebaseConfig } from '../firebase-config.js';
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Guarda estado de login global para uso nos event listeners abaixo
+  let currentUser = null;
+  onAuthStateChanged(auth, (user) => { currentUser = user; });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    window.toggleCertificateLevel = function(show) {
+      const el = document.getElementById('certificateLevelGroup');
+      if(el) el.style.display = show ? 'block' : 'none';
+    };
+    window.toggleAcademicOther = function(show) {
+      document.getElementById('academicAreaOtherGroup').style.display = show ? 'block' : 'none';
+    };
+    window.toggleCompanyFields = function(value) {
+      const group = document.getElementById('companyFieldsGroup');
+      if(group) group.style.display = (value === 'empreender') ? 'block' : 'none';
+    };
+    window.toggleOtherField = function(show) {
+      const el = document.getElementById('regHowFoundOther');
+      if (el) el.style.display = show ? 'block' : 'none';
+    };
+
+    // ─── LÓGICA DO MODAL (POP-UP) ───
+    const modal = document.getElementById('regModal');
+    const openBtn = document.getElementById('openModalBtn');
+    const heroBtn = document.getElementById('heroRegBtn');
+    const closeBtn = document.getElementById('closeModalBtn');
+    
+    let currentStep = 0;
+    const totalSteps = 8;
+    const stepsWrapper = document.getElementById('stepsWrapper');
+    const progressBar = document.getElementById('progressBar');
+    const stepCounter = document.getElementById('stepCounter');
+    const nextBtn = document.getElementById('modalNextBtn');
+    const prevBtn = document.getElementById('modalPrevBtn');
+    const submitBtn = document.getElementById('modalSubmitBtn');
+
+    let isProfessionalUser = false;
+
+    function checkProfessionalStatus() {
+        const academicLevel = document.getElementById('regAcademicLevel').value;
+        const hasCertificateRadios = document.querySelectorAll('input[name="hasCertificate"]');
+        let hasCertificate = false;
+        for (const radio of hasCertificateRadios) {
+            if (radio.checked && radio.value === 'sim') { hasCertificate = true; break; }
+        }
+        const previousLevel = document.getElementById('regPreviousLevel').value;
+        isProfessionalUser = (academicLevel === 'universidade' || academicLevel === 'profissional') ||
+                             (hasCertificate && ['tecnico-medio', 'licenciado', 'mestre', 'doutor'].includes(previousLevel));
+    }
+
+    const toggleModal = (state) => {
+      if (state) modal.classList.add('active');
+      else modal.classList.remove('active');
+    };
+
+    if (openBtn) openBtn.addEventListener('click', () => toggleModal(true));
+    if (heroBtn) heroBtn.addEventListener('click', () => toggleModal(true));
+    if (closeBtn) closeBtn.addEventListener('click', () => toggleModal(false));
+    modal.addEventListener('click', (e) => { if (e.target === modal) toggleModal(false); });
+
+    function updateModalUI() {
+        stepsWrapper.style.transform = `translateX(-${currentStep * (100 / totalSteps)}%)`;
+        progressBar.style.width = `${((currentStep + 1) / totalSteps) * 100}%`;
+        stepCounter.innerText = `${currentStep + 1} / ${totalSteps}`;
+        prevBtn.classList.toggle('hidden', currentStep === 0);
+        if(currentStep === 6) document.getElementById('professionalCareerGroup').style.display = isProfessionalUser ? 'block' : 'none';
+        if (currentStep === totalSteps - 1) {
+            nextBtn.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
+        } else {
+            nextBtn.classList.remove('hidden');
+            submitBtn.classList.add('hidden');
+        }
+    }
+
+    function validateCurrentStep() {
+        const currentStepPage = stepsWrapper.children[currentStep];
+        const requiredInputs = currentStepPage.querySelectorAll('[required]');
+        for (const input of requiredInputs) {
+            if (!input.value.trim()) { input.focus(); return false; }
+            if (input.type === 'radio' && input.name) {
+                const radioGroup = document.querySelectorAll(`input[name="${input.name}"]`);
+                const isChecked = Array.from(radioGroup).some(radio => radio.checked);
+                if (!isChecked) return false;
+            }
+        }
+        return true;
+    }
+
+    nextBtn.addEventListener('click', () => {
+        if (!validateCurrentStep()) return;
+        if (currentStep < totalSteps - 1) {
+            if (currentStep === 1) checkProfessionalStatus();
+            currentStep++;
+            updateModalUI();
+        }
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentStep > 0) { currentStep--; updateModalUI(); }
+    });
+
+    document.getElementById('studentRegisterForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (!validateCurrentStep()) return;
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      const formData = new FormData(this);
+      const userData = {};
+      formData.forEach((value, key) => {
+          if (key === 'interest' || key === 'skill') {
+              if (!userData[key]) userData[key] = [];
+              userData[key].push(value);
+          } else { userData[key] = value; }
+      });
+
+      if (userData.howFound === 'outro' && userData.howFoundOther) {
+          userData.howFound = `Outro: ${userData.howFoundOther}`;
+      }
+      if (userData.academicArea === 'outro' && userData.academicAreaOther) {
+          userData.academicArea = `Outro: ${userData.academicAreaOther}`;
+      }
+      delete userData.howFoundOther;
+      delete userData.academicAreaOther;
+
+      const emailRaw = userData.email || userData.identifier || '';
+      const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailRaw);
+      const emailToUse = isEmail ? emailRaw : `${emailRaw.replace(/\s/g,'')}@aluno.aio.ao`;
+      const password = userData.password || userData.senha || 'aio12345';
+
+      try {
+          const cred = await createUserWithEmailAndPassword(auth, emailToUse, password);
+          const uid = cred.user.uid;
+
+          await setDoc(doc(db, 'users', uid), {
+              ...userData,
+              email: emailToUse,
+              role: 'student',
+              uid: uid,
+              isProfessional: isProfessionalUser,
+              createdAt: serverTimestamp()
+          });
+
+          submitBtn.classList.remove('loading');
+          document.getElementById('studentRegisterForm').style.display = 'none';
+          document.querySelector('.progress-container').style.display = 'none';
+          document.getElementById('successView').style.display = 'block';
+          if (isProfessionalUser) {
+              document.getElementById('successMessage').innerText = "Parabéns, Futuro Profissional! Estamos a preparar recomendações avançadas e oportunidades exclusivas para a tua carreira.";
+          }
+      } catch (err) {
+          let msg = 'Erro ao criar conta. Tenta novamente.';
+          if (err.code === 'auth/email-already-in-use') msg = 'Este e-mail já está registado. Faz login.';
+          if (err.code === 'auth/weak-password') msg = 'Senha fraca. Use pelo menos 6 caracteres.';
+          alert(msg);
+          submitBtn.classList.remove('loading');
+          submitBtn.disabled = false;
+      }
+    });
+
+    updateModalUI();
+
+    // Bloqueio de catálogo para não-autenticados
+    document.querySelectorAll('.catalog-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        if (!currentUser) {
+          e.preventDefault();
+          alert('Acesso Restrito: Por favor, faz o teu registro para acederes às informações detalhadas.');
+          toggleModal(true);
+        }
+      });
+    });
+
+    document.body.classList.add('js-reveal');
+    const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  });
+</script>
+</body>
+</html>
+    

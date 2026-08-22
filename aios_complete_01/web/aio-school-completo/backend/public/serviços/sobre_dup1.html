@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sobre Nós — All in One School</title>
+<meta name="description" content="Conheça a equipa e a missão da All in One School — a plataforma educativa que conecta estudantes angolanos a oportunidades reais.">
+<meta property="og:title" content="Sobre Nós — All in One School">
+<meta property="og:description" content="Somos uma startup angolana a construir a maior plataforma educativa de Angola.">
+<meta property="og:type" content="website">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#ff4d00">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0a0a0f;--paper:#f5f2eb;--accent:#ff4d00;--accent2:#0057ff;--muted:#8a8780;--card:#fff;--border:rgba(10,10,15,0.08);--shadow:0 4px 32px rgba(10,10,15,0.10);--green:#00b37e;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.1rem 5%;background:rgba(245,242,235,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:0.5rem;}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block;}
+.nav-cta{background:var(--ink);color:#fff!important;padding:0.5rem 1.2rem;border-radius:100px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;text-decoration:none;transition:0.2s;}
+.nav-cta:hover{background:var(--accent);}
+/* Hero */
+.hero{min-height:70vh;display:flex;flex-direction:column;justify-content:center;padding:9rem 5% 5rem;position:relative;}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 70% 60% at 80% 20%,rgba(255,77,0,0.10) 0%,transparent 70%),radial-gradient(ellipse 50% 50% at 10% 80%,rgba(0,87,255,0.08) 0%,transparent 60%);}
+.hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:var(--ink);color:var(--paper);border-radius:100px;padding:0.35rem 1rem;font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:1.5rem;width:fit-content;position:relative;z-index:1;}
+.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.6;transform:scale(1.4);}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,7vw,4.5rem);font-weight:800;line-height:1.05;letter-spacing:-0.03em;position:relative;z-index:1;max-width:800px;}
+.highlight{color:var(--accent);}
+.highlight-green{color:var(--green);}
+.hero p{position:relative;z-index:1;max-width:560px;color:var(--muted);font-size:1.1rem;margin-top:1.5rem;}
+section{padding:5rem 5%;}
+.section-tag{display:inline-block;background:var(--paper);border:1px solid var(--border);border-radius:100px;padding:0.3rem 1rem;font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.5rem;color:var(--muted);}
+h2{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1rem;}
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1.5rem;margin-top:3rem;}
+.stat-card{background:var(--card);border-radius:20px;padding:2rem;border:1px solid var(--border);box-shadow:var(--shadow);}
+.stat-card .num{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--accent);}
+.stat-card .lbl{color:var(--muted);font-size:0.88rem;margin-top:0.25rem;}
+/* Team */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;margin-top:2rem;}
+.team-card{background:var(--card);border-radius:20px;padding:2rem;border:1px solid var(--border);box-shadow:var(--shadow);text-align:center;}
+.team-avatar{width:80px;height:80px;border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2rem;font-weight:800;font-family:'Syne',sans-serif;background:var(--ink);color:#fff;}
+.team-role{display:inline-block;background:var(--paper);border:1px solid var(--border);border-radius:100px;padding:0.2rem 0.8rem;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;margin-top:0.5rem;color:var(--muted);}
+/* Values */
+.values-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:2rem;}
+.value-card{background:var(--card);border-radius:16px;padding:1.5rem;border:1px solid var(--border);}
+.value-card .icon{font-size:1.5rem;margin-bottom:0.75rem;}
+.value-card h4{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:0.4rem;}
+.value-card p{font-size:0.85rem;color:var(--muted);}
+/* Timeline */
+.timeline{margin-top:2rem;position:relative;padding-left:2rem;border-left:2px solid var(--border);}
+.timeline-item{margin-bottom:2rem;position:relative;}
+.timeline-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);position:absolute;left:-2.4rem;top:4px;border:2px solid var(--paper);}
+.timeline-year{font-family:'Syne',sans-serif;font-weight:800;font-size:0.82rem;color:var(--accent);margin-bottom:0.3rem;}
+.timeline-item h4{font-family:'Syne',sans-serif;font-weight:700;margin-bottom:0.25rem;}
+.timeline-item p{font-size:0.88rem;color:var(--muted);}
+/* CTA */
+.cta-section{background:var(--ink);color:#fff;border-radius:24px;padding:4rem 5%;text-align:center;margin:0 5% 5rem;}
+.cta-section h2{color:#fff;}
+.cta-section p{color:rgba(255,255,255,0.6);max-width:500px;margin:1rem auto 2rem;}
+.btn-white{background:#fff;color:var(--ink);font-family:'Syne',sans-serif;font-weight:700;border:none;border-radius:100px;padding:0.875rem 2rem;font-size:1rem;cursor:pointer;transition:0.2s;text-decoration:none;display:inline-block;}
+.btn-white:hover{background:var(--accent);color:#fff;}
+footer{text-align:center;padding:2rem 5%;color:var(--muted);font-size:0.82rem;border-top:1px solid var(--border);}
+</style>
+</head>
+<body>
+<nav>
+    <a class="logo" href="../serviços/página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+    <a href="../auth/Register.html" class="nav-cta">Começar agora →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-tag"><span class="hero-tag-dot"></span>A Nossa História</div>
+    <h1>Construímos o futuro<br>da educação em <span class="highlight">Angola.</span></h1>
+    <p>A All in One School nasceu em Luanda com uma missão simples: eliminar a distância entre o estudante angolano e a oportunidade que merece.</p>
+</section>
+
+<!-- MISSÃO -->
+<section style="background:var(--card);padding:5rem 5%;">
+    <div style="max-width:700px;margin:0 auto;text-align:center;">
+        <div class="section-tag">Missão</div>
+        <h2>Porque existimos</h2>
+        <p style="color:var(--muted);font-size:1.05rem;line-height:1.8;margin-top:1rem;">
+            Em Angola, milhares de estudantes têm talento mas não têm informação. Não sabem que universidades existem, que bolsas estão disponíveis, que empresas estão a contratar. A All in One School resolve isso — numa só plataforma, inteligente e acessível.
+        </p>
+    </div>
+</section>
+
+<!-- NÚMEROS -->
+<section>
+    <div class="section-tag">Impacto</div>
+    <h2>A plataforma em números</h2>
+    <div class="stats-grid">
+        <div class="stat-card"><div class="num">36+</div><div class="lbl">Universidades mapeadas</div></div>
+        <div class="stat-card"><div class="num">109+</div><div class="lbl">Centros de formação</div></div>
+        <div class="stat-card"><div class="num">117+</div><div class="lbl">Escolas secundárias</div></div>
+        <div class="stat-card"><div class="num">18</div><div class="lbl">Províncias cobertas</div></div>
+    </div>
+</section>
+
+<!-- EQUIPA -->
+<section style="background:var(--card);">
+    <div class="section-tag">Equipa</div>
+    <h2>Quem está por trás</h2>
+    <p style="color:var(--muted);max-width:500px;margin-bottom:0.5rem;">Três angolanos com uma visão comum: democratizar o acesso à educação.</p>
+    <div class="team-grid">
+        <div class="team-card">
+            <div class="team-avatar">J</div>
+            <h3 style="font-family:'Syne',sans-serif;font-weight:800;">Jacinto</h3>
+            <span class="team-role">CEO · Co-fundador</span>
+            <p style="font-size:0.85rem;color:var(--muted);margin-top:0.75rem;">Visão estratégica e liderança do produto. Responsável pela direcção da plataforma e relações institucionais.</p>
+        </div>
+        <div class="team-card">
+            <div class="team-avatar" style="background:var(--accent2);">A</div>
+            <h3 style="font-family:'Syne',sans-serif;font-weight:800;">Abias</h3>
+            <span class="team-role">CTO · Co-fundador</span>
+            <p style="font-size:0.85rem;color:var(--muted);margin-top:0.75rem;">Arquitectura técnica e desenvolvimento da plataforma. Especializado em sistemas escaláveis e integrações Firebase.</p>
+        </div>
+        <div class="team-card">
+            <div class="team-avatar" style="background:var(--green);">M</div>
+            <h3 style="font-family:'Syne',sans-serif;font-weight:800;">Mário</h3>
+            <span class="team-role">CMO · Co-fundador</span>
+            <p style="font-size:0.85rem;color:var(--muted);margin-top:0.75rem;">Estratégia de marketing e crescimento. Responsável pela comunicação, parcerias e expansão da base de utilizadores.</p>
+        </div>
+    </div>
+</section>
+
+<!-- VALORES -->
+<section>
+    <div class="section-tag">Valores</div>
+    <h2>O que nos guia</h2>
+    <div class="values-grid">
+        <div class="value-card"><div class="icon">🇦🇴</div><h4>Angola primeiro</h4><p>Construímos para a realidade angolana — não adaptamos produtos estrangeiros.</p></div>
+        <div class="value-card"><div class="icon">🔓</div><h4>Acesso universal</h4><p>Qualquer estudante, de Cabinda ao Cunene, merece as mesmas oportunidades.</p></div>
+        <div class="value-card"><div class="icon">🎯</div><h4>Precisão</h4><p>Recomendações baseadas em dados reais, não em suposições.</p></div>
+        <div class="value-card"><div class="icon">🤝</div><h4>Parceria real</h4><p>Trabalhamos com instituições — não somos concorrentes, somos amplificadores.</p></div>
+    </div>
+</section>
+
+<!-- TIMELINE -->
+<section style="background:var(--card);">
+    <div class="section-tag">Percurso</div>
+    <h2>Como chegámos aqui</h2>
+    <div class="timeline" style="max-width:600px;">
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2024</div><h4>A ideia nasce</h4><p>Identificamos o problema: estudantes angolanos sem acesso a informação educativa centralizada.</p></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2025</div><h4>Construção da base</h4><p>Mapeamento de 262+ instituições angolanas. Primeiro protótipo da plataforma. Formação da equipa fundadora.</p></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-year">2026</div><h4>Lançamento piloto em Luanda</h4><p>Plataforma Firebase em produção. Primeiros utilizadores reais. Início de conversas com instituições parceiras.</p></div>
+        <div class="timeline-item"><div class="timeline-dot" style="background:var(--muted);"></div><div class="timeline-year" style="color:var(--muted);">2027</div><h4 style="color:var(--muted);">Expansão nacional</h4><p>Objectivo: cobrir todas as 18 províncias e expandir para Moçambique e Cabo Verde.</p></div>
+    </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+    <h2>Junta-te à plataforma</h2>
+    <p>Se és estudante, regista-te gratuitamente. Se és uma instituição, coloca-te no mapa.</p>
+    <a href="../auth/Register.html" class="btn-white" style="margin-right:1rem;">Sou estudante →</a>
+    <a href="../auth/register-institution.html" class="btn-white" style="background:var(--green);color:#fff;">Sou instituição →</a>
+</div>
+
+<footer>© OCO 2026 · All in One School · Luanda, Angola · <a href="privacidade.html" style="color:var(--muted)">Privacidade</a></footer>
+</body>
+</html>

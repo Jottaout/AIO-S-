@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Perfil do Professor — All in One School</title>
+<meta name="description" content="Gere o teu perfil de professor na All in One School.">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#0057ff">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#0a0a0f;--paper:#f5f2eb;--accent:#0057ff;--accent-light:rgba(0,87,255,0.08);--muted:#8a8780;--card:#fff;--border:rgba(10,10,15,0.08);--shadow:0 4px 32px rgba(10,10,15,0.10);--green:#00b37e;--orange:#ff4d00;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;overflow-x:hidden;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(245,242,235,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:0.5rem;}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);display:inline-block;}
+.btn-logout{background:none;border:1px solid var(--border);border-radius:100px;padding:0.4rem 1rem;font-size:0.82rem;cursor:pointer;color:var(--muted);transition:0.2s;font-family:'Syne',sans-serif;font-weight:700;}
+.btn-logout:hover{border-color:var(--ink);color:var(--ink);}
+
+/* Loading */
+#loadingOverlay{position:fixed;inset:0;background:var(--paper);display:flex;align-items:center;justify-content:center;z-index:999;transition:opacity 0.4s;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Banner onboarding */
+.onboarding-banner{background:linear-gradient(135deg,var(--accent),#0040cc);color:#fff;padding:1rem 5%;display:none;align-items:center;gap:1rem;flex-wrap:wrap;position:fixed;top:64px;left:0;right:0;z-index:99;}
+.onboarding-banner strong{font-family:'Syne',sans-serif;}
+.onboarding-banner p{font-size:0.82rem;color:rgba(255,255,255,0.7);margin:0;}
+.btn-onboard{background:#fff;color:var(--accent);font-family:'Syne',sans-serif;font-weight:700;border:none;border-radius:100px;padding:0.45rem 1.1rem;font-size:0.82rem;cursor:pointer;transition:0.2s;}
+.btn-onboard:hover{background:rgba(255,255,255,0.85);}
+
+/* Layout */
+.main{max-width:1100px;margin:0 auto;padding:6rem 5% 4rem;}
+.profile-grid{display:grid;grid-template-columns:320px 1fr;gap:2rem;margin-top:2rem;}
+@media(max-width:800px){.profile-grid{grid-template-columns:1fr;}}
+
+/* Cover + Avatar */
+.cover-container{position:relative;height:180px;border-radius:20px 20px 0 0;overflow:hidden;background:linear-gradient(135deg,var(--accent) 0%,#0040cc 100%);}
+.cover-img{width:100%;height:100%;object-fit:cover;}
+.cover-overlay{position:absolute;inset:0;background:linear-gradient(135deg,var(--accent),#0040cc);opacity:0.7;}
+.avatar-wrap{position:relative;margin:-40px auto 0;width:80px;height:80px;z-index:2;}
+.avatar-circle{width:80px;height:80px;border-radius:50%;background:var(--ink);color:#fff;font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:3px solid #fff;box-shadow:var(--shadow);overflow:hidden;}
+.avatar-circle img{width:100%;height:100%;object-fit:cover;}
+.avatar-edit-btn{position:absolute;bottom:0;right:0;width:24px;height:24px;border-radius:50%;background:var(--accent);border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:0.6rem;cursor:pointer;color:#fff;font-weight:700;}
+
+/* Card base */
+.card{background:var(--card);border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;}
+.card-body{padding:1.5rem;}
+
+/* Sidebar */
+.sidebar-card{margin-bottom:1.25rem;}
+.profile-name{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;text-align:center;margin-top:1rem;}
+.profile-role{text-align:center;color:var(--muted);font-size:0.82rem;margin-bottom:1rem;}
+.verify-badge{display:inline-flex;align-items:center;gap:0.35rem;background:rgba(0,179,126,0.1);color:var(--green);border-radius:100px;padding:0.25rem 0.75rem;font-size:0.75rem;font-weight:700;margin:0 auto 1rem;display:flex;width:fit-content;}
+.tag{display:inline-block;background:var(--accent-light);border:1px solid rgba(0,87,255,0.15);border-radius:100px;padding:0.2rem 0.7rem;font-size:0.75rem;font-weight:600;margin:0.2rem 0.1rem;color:var(--accent);}
+.info-row{display:flex;align-items:flex-start;gap:0.6rem;margin-bottom:0.6rem;font-size:0.88rem;}
+.info-row .icon{flex-shrink:0;font-size:0.9rem;margin-top:0.1rem;}
+.info-row .val{color:var(--muted);}
+.stat-mini{display:flex;justify-content:space-around;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin:1rem 0;}
+.stat-mini .num{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;text-align:center;color:var(--accent);}
+.stat-mini .lbl{font-size:0.72rem;color:var(--muted);text-align:center;}
+.btn-edit-profile{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:0.75rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;transition:0.2s;margin-top:0.75rem;}
+.btn-edit-profile:hover{background:#0040cc;}
+.share-btn{width:100%;background:none;border:1.5px solid var(--border);color:var(--ink);border-radius:100px;padding:0.65rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;transition:0.2s;margin-top:0.5rem;}
+.share-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+/* Conteúdo principal */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+.section-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;}
+.completion-row{display:flex;justify-content:space-between;align-items:center;font-size:0.82rem;margin-bottom:0.4rem;}
+.completion-bar-bg{height:6px;background:var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.25rem;}
+.completion-bar-fill{height:100%;background:var(--green);border-radius:10px;transition:width 0.8s ease;}
+.bio-text{font-size:0.92rem;color:var(--muted);line-height:1.8;}
+.subject-grid{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.availability-row{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.5rem;}
+.avail-chip{display:inline-flex;align-items:center;gap:0.35rem;background:var(--paper);border:1px solid var(--border);border-radius:100px;padding:0.3rem 0.8rem;font-size:0.8rem;font-weight:600;}
+.rate-display{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;color:var(--accent);}
+.rate-sub{font-size:0.82rem;color:var(--muted);}
+
+/* Modal de edição */
+.modal-overlay{position:fixed;inset:0;background:rgba(10,10,15,0.5);display:none;z-index:1000;overflow-y:auto;padding:2rem 1rem;}
+.modal-box{background:var(--card);border-radius:20px;max-width:600px;margin:0 auto;padding:2rem;position:relative;}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--muted);line-height:1;}
+.modal-box h2{font-family:'Syne',sans-serif;font-size:1.25rem;font-weight:800;margin-bottom:1.5rem;}
+.modal-form label{display:block;font-size:0.82rem;font-weight:600;margin-bottom:0.35rem;margin-top:1rem;}
+.modal-form input,.modal-form select,.modal-form textarea{width:100%;border:1.5px solid var(--border);border-radius:12px;padding:0.8rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;background:#fff;}
+.modal-form input:focus,.modal-form select:focus,.modal-form textarea:focus{border-color:var(--accent);}
+.modal-form textarea{resize:vertical;min-height:90px;}
+.modal-save{width:100%;background:var(--accent);color:#fff;border:none;border-radius:100px;padding:0.875rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;cursor:pointer;margin-top:1.5rem;transition:0.2s;}
+.modal-save:hover{background:#0040cc;}
+.chips-row{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.4rem;}
+.chip-cb{display:none;}
+.chip-lbl{padding:0.35rem 0.8rem;border:1.5px solid var(--border);border-radius:100px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:0.2s;}
+.chip-cb:checked + .chip-lbl{background:var(--accent);color:#fff;border-color:var(--accent);}
+</style>
+</head>
+<body>
+<div id="loadingOverlay"><div class="spinner"></div></div>
+
+<nav>
+    <a class="logo" href="../serviços/página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+    <div style="display:flex;align-items:center;gap:0.75rem;">
+        <span id="navName" style="font-size:0.85rem;color:var(--muted);"></span>
+        <button class="btn-logout" id="btnLogout">Sair</button>
+    </div>
+</nav>
+
+<!-- Banner onboarding -->
+<div class="onboarding-banner" id="onboardingBanner">
+    <span style="font-size:1.1rem;">👋</span>
+    <div style="flex:1;">
+        <strong>Perfil incompleto</strong>
+        <p id="onboardingMsg">Completa o teu perfil para aparecer nas pesquisas dos estudantes.</p>
+    </div>
+    <button class="btn-onboard" id="btnOnboardingCTA">Completar agora →</button>
+    <button id="btnOnboardingClose" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:1.3rem;cursor:pointer;">×</button>
+</div>
+
+<main class="main">
+    <div class="profile-grid">
+
+        <!-- SIDEBAR -->
+        <aside>
+            <div class="card sidebar-card">
+                <div class="cover-container">
+                    <img id="coverImg" src="" alt="" class="cover-img" style="display:none;">
+                    <div class="cover-overlay"></div>
+                </div>
+                <div class="card-body" style="text-align:center;">
+                    <div class="avatar-wrap" style="margin:-40px auto 0;">
+                        <div class="avatar-circle" id="avatarCircle">?</div>
+                        <label class="avatar-edit-btn" for="avatarUpload" title="Alterar foto">✎</label>
+                        <input type="file" id="avatarUpload" accept="image/*" style="display:none;">
+                    </div>
+                    <h2 class="profile-name" id="profileName">—</h2>
+                    <p class="profile-role" id="profileRole">Professor Freelancer</p>
+                    <div class="verify-badge" id="verifyBadge" style="display:none;">✓ E-mail verificado</div>
+
+                    <div class="stat-mini">
+                        <div><div class="num" id="statSubjects">0</div><div class="lbl">Disciplinas</div></div>
+                        <div><div class="num" id="statYears">—</div><div class="lbl">Exp.</div></div>
+                        <div><div class="num" id="statModalities">0</div><div class="lbl">Modalidades</div></div>
+                    </div>
+
+                    <div id="sidebarInfo" style="text-align:left;margin-bottom:0.75rem;"></div>
+
+                    <button class="btn-edit-profile" id="btnEditProfile">Editar Perfil</button>
+                    <button class="share-btn" id="btnShare">🔗 Partilhar Perfil</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <div style="display:flex;flex-direction:column;gap:1.25rem;">
+
+            <!-- Completude -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="completion-row">
+                        <span style="font-weight:600;font-size:0.88rem;">Completude do perfil</span>
+                        <span id="completionPct" style="font-family:'Syne',sans-serif;font-weight:700;color:var(--green);">0%</span>
+                    </div>
+                    <div class="completion-bar-bg"><div class="completion-bar-fill" id="completionBar" style="width:0%"></div></div>
+                    <p id="completionTip" style="font-size:0.78rem;color:var(--muted);"></p>
+                </div>
+            </div>
+
+            <!-- Sobre mim -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="section-header"><span class="section-title">Sobre mim</span></div>
+                    <p class="bio-text" id="bioText" style="color:var(--muted);">Sem apresentação ainda. Edita o perfil para te apresentares.</p>
+                </div>
+            </div>
+
+            <!-- Disciplinas -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="section-header"><span class="section-title">📚 Disciplinas que leccionas</span></div>
+                    <div class="subject-grid" id="subjectGrid">
+                        <span style="color:var(--muted);font-size:0.88rem;">Nenhuma disciplina definida.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disponibilidade & Valor -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="section-header"><span class="section-title">🗓 Disponibilidade & Valor</span></div>
+                    <div class="availability-row" id="availabilityRow"></div>
+                    <div style="margin-top:1.25rem;">
+                        <div class="rate-display" id="rateDisplay">A combinar</div>
+                        <div class="rate-sub" id="rateSub"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Níveis & Modalidades -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="section-header"><span class="section-title">🎯 Público-alvo & Modalidade</span></div>
+                    <p style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">Níveis que aceitas</p>
+                    <div id="targetLevelGrid" class="subject-grid" style="margin-bottom:1rem;"></div>
+                    <p style="font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;">Modalidade de aulas</p>
+                    <div id="modalityGrid" class="subject-grid"></div>
+                </div>
+            </div>
+
+            <!-- Habilitações -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="section-header"><span class="section-title">🎓 Habilitações</span></div>
+                    <div id="qualificationsContent" style="font-size:0.9rem;line-height:2;color:var(--muted);"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<!-- Modal de Edição -->
+<div class="modal-overlay" id="editModal">
+    <div class="modal-box">
+        <button class="modal-close" id="modalClose">×</button>
+        <h2>Editar Perfil</h2>
+        <form class="modal-form" id="editForm">
+            <label>Apresentação pessoal</label>
+            <textarea id="eBio" rows="4" placeholder="Descreve a tua experiência e metodologia..."></textarea>
+            <label>WhatsApp / Telefone</label>
+            <input type="tel" id="ePhone" placeholder="+244 9XX XXX XXX"/>
+            <label>LinkedIn / Portfólio</label>
+            <input type="text" id="ePortfolio" placeholder="https://linkedin.com/in/..."/>
+            <label>Valor por hora (AOA)</label>
+            <div style="display:flex;gap:0.5rem;align-items:center;">
+                <input type="number" id="eRateMin" placeholder="Mínimo" style="max-width:140px;"/>
+                <span style="color:var(--muted)">—</span>
+                <input type="number" id="eRateMax" placeholder="Máximo" style="max-width:140px;"/>
+                <select id="eRatePer" style="max-width:110px;">
+                    <option value="hora">/ hora</option>
+                    <option value="aula">/ aula</option>
+                    <option value="mes">/ mês</option>
+                </select>
+            </div>
+            <label>Disponibilidade</label>
+            <div class="chips-row">
+                <input type="checkbox" class="chip-cb" id="av1" value="Manhã"><label class="chip-lbl" for="av1">🌅 Manhã</label>
+                <input type="checkbox" class="chip-cb" id="av2" value="Tarde"><label class="chip-lbl" for="av2">☀️ Tarde</label>
+                <input type="checkbox" class="chip-cb" id="av3" value="Noite"><label class="chip-lbl" for="av3">🌙 Noite</label>
+                <input type="checkbox" class="chip-cb" id="av4" value="Fins de semana"><label class="chip-lbl" for="av4">📅 Fim de semana</label>
+                <input type="checkbox" class="chip-cb" id="av5" value="Flexível"><label class="chip-lbl" for="av5">✅ Flexível</label>
+            </div>
+            <label>Disciplinas principais (vírgula para separar)</label>
+            <input type="text" id="eSubjects" placeholder="Ex: Matemática, Física, Inglês"/>
+            <label>Níveis que aceitas (vírgula para separar)</label>
+            <input type="text" id="eTargetLevels" placeholder="Ex: 2º Ciclo, Universitário"/>
+            <label>Modalidades</label>
+            <div class="chips-row">
+                <input type="checkbox" class="chip-cb" id="mod1" value="Presencial"><label class="chip-lbl" for="mod1">📍 Presencial</label>
+                <input type="checkbox" class="chip-cb" id="mod2" value="Online"><label class="chip-lbl" for="mod2">💻 Online</label>
+                <input type="checkbox" class="chip-cb" id="mod3" value="Híbrido"><label class="chip-lbl" for="mod3">🔄 Híbrido</label>
+            </div>
+            <button type="submit" class="modal-save">Guardar alterações</button>
+        </form>
+    </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, onSnapshot, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
+import { firebaseConfig } from '../firebase-config.js';
+
+const app     = initializeApp(firebaseConfig);
+const auth    = getAuth(app);
+const db      = getFirestore(app);
+const storage = getStorage(app);
+const overlay = document.getElementById('loadingOverlay');
+
+let uid  = null;
+let data = {};
+
+function hideOverlay() {
+  if (!overlay) return;
+  overlay.style.opacity = '0';
+  setTimeout(() => overlay.style.display = 'none', 400);
+}
+function showFatalError(msg) {
+  hideOverlay();
+  document.querySelector('.main').innerHTML = `
+    <div style="text-align:center;padding:4rem 1rem;">
+      <div style="font-size:2.5rem;margin-bottom:1rem;">⚠️</div>
+      <h2 style="font-family:'Syne',sans-serif;font-weight:800;margin-bottom:0.5rem;">Não foi possível carregar o perfil</h2>
+      <p style="color:var(--muted);max-width:420px;margin:0 auto 1.5rem;">${msg}</p>
+      <button onclick="window.location.reload()" style="background:var(--accent);color:#fff;border:none;border-radius:100px;padding:0.75rem 1.5rem;font-family:'Syne',sans-serif;font-weight:700;cursor:pointer;">Tentar novamente</button>
+    </div>`;
+}
+const safetyTimeout = setTimeout(() => {
+  showFatalError('A ligação está a demorar demasiado. Verifica a tua internet ou se o firebase-config.js está correctamente configurado.');
+}, 10000);
+
+// ── Auth guard ──
+onAuthStateChanged(auth, (user) => {
+    if (!user) { window.location.href = '../auth/login.html'; return; }
+    uid = user.uid;
+    if (user.emailVerified) document.getElementById('verifyBadge').style.display = 'flex';
+    listenProfile();
+});
+
+document.getElementById('btnLogout').onclick = async () => {
+    await signOut(auth);
+    window.location.href = '../serviços/página de Iniciação.html';
+};
+
+// ── Dados em tempo real ──
+function listenProfile() {
+    onSnapshot(
+      doc(db, 'teachers', uid),
+      (snap) => {
+        clearTimeout(safetyTimeout);
+        if (!snap.exists()) {
+          showFatalError('Não encontrámos um perfil de professor associado a esta conta. Se acabaste de te registar, aguarda alguns segundos e actualiza a página.');
+          return;
+        }
+        data = snap.data();
+        renderProfile();
+        checkOnboarding();
+        hideOverlay();
+      },
+      (err) => {
+        clearTimeout(safetyTimeout);
+        console.error('Erro ao carregar perfil:', err);
+        const msg = err.code === 'permission-denied'
+          ? 'Sem permissão para aceder aos teus dados. Verifica se as regras do Firestore foram publicadas.'
+          : 'Ocorreu um erro inesperado: ' + (err.message || err.code || 'erro desconhecido');
+        showFatalError(msg);
+      }
+    );
+}
+
+function renderProfile() {
+    const initials = (data.fullName||'?').split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase();
+    const av = document.getElementById('avatarCircle');
+    if (data.avatarUrl) { av.innerHTML=`<img src="${data.avatarUrl}" alt=""/>`; }
+    else { av.textContent = initials; }
+
+    document.getElementById('profileName').textContent = data.fullName || '—';
+    document.getElementById('navName').textContent     = data.fullName || '';
+    document.getElementById('profileRole').textContent = `Professor Freelancer · ${data.province||''}`;
+
+    // Stats
+    const subjects   = data.subjects   || [];
+    const modalities = data.modalities || [];
+    const expMap = {'menos1':'< 1 ano','1-3':'1–3 anos','3-5':'3–5 anos','5-10':'5–10 anos','mais10':'+10 anos'};
+    document.getElementById('statSubjects').textContent   = subjects.length;
+    document.getElementById('statYears').textContent      = expMap[data.yearsExperience]||'—';
+    document.getElementById('statModalities').textContent = modalities.length;
+
+    // Info sidebar
+    const si = document.getElementById('sidebarInfo');
+    si.innerHTML = [
+        data.province ? `<div class="info-row"><span class="icon">📍</span><span class="val">${data.province}${data.municipality?', '+data.municipality:''}</span></div>` : '',
+        data.phone    ? `<div class="info-row"><span class="icon">📞</span><span class="val">${data.phone}</span></div>` : '',
+        data.email    ? `<div class="info-row"><span class="icon">✉️</span><span class="val">${data.email}</span></div>` : '',
+        data.portfolioUrl ? `<div class="info-row"><span class="icon">🔗</span><a href="${data.portfolioUrl}" target="_blank" style="color:var(--accent);font-size:0.88rem;">Portfólio / LinkedIn</a></div>` : ''
+    ].join('');
+
+    // Bio
+    document.getElementById('bioText').textContent = data.bio || 'Sem apresentação ainda. Edita o perfil para te apresentares.';
+    document.getElementById('bioText').style.color = data.bio ? 'var(--ink)' : 'var(--muted)';
+
+    // Disciplinas
+    const sg = document.getElementById('subjectGrid');
+    sg.innerHTML = subjects.length ? subjects.map(s=>`<span class="tag">${s}</span>`).join('') : '<span style="color:var(--muted);font-size:0.88rem;">Nenhuma definida.</span>';
+
+    // Disponibilidade
+    const avEl = document.getElementById('availabilityRow');
+    const avails = data.availability || [];
+    const avIcons = {'Manhã':'🌅','Tarde':'☀️','Noite':'🌙','Fins de semana':'📅','Flexível':'✅'};
+    avEl.innerHTML = avails.length ? avails.map(a=>`<span class="avail-chip">${avIcons[a]||''} ${a}</span>`).join('') : '<span style="color:var(--muted);font-size:0.88rem;">Não definida.</span>';
+
+    // Valor
+    const rateEl = document.getElementById('rateDisplay');
+    const rateSub = document.getElementById('rateSub');
+    if (data.rateMin || data.rateMax) {
+        const perMap = {hora:'hora',aula:'aula',mes:'mês'};
+        rateEl.textContent = `${data.rateMin||'?'} — ${data.rateMax||'?'} AOA`;
+        rateSub.textContent = `por ${perMap[data.ratePer]||'hora'}`;
+    } else { rateEl.textContent = 'A combinar'; rateSub.textContent = ''; }
+
+    // Público-alvo
+    const tlg = document.getElementById('targetLevelGrid');
+    const targets = data.targetLevels || [];
+    tlg.innerHTML = targets.length ? targets.map(t=>`<span class="tag" style="background:rgba(0,179,126,0.08);border-color:rgba(0,179,126,0.2);color:var(--green);">${t}</span>`).join('') : '—';
+
+    // Modalidade
+    const mg = document.getElementById('modalityGrid');
+    mg.innerHTML = modalities.length ? modalities.map(m=>`<span class="tag" style="background:rgba(255,77,0,0.07);border-color:rgba(255,77,0,0.15);color:var(--orange);">${m}</span>`).join('') : '—';
+
+    // Habilitações
+    const levelMap = {
+        'tecnico-medio':'Técnico Médio','licenciatura':'Licenciatura',
+        'pos-graduacao':'Pós-Graduação','mestrado':'Mestrado','doutoramento':'Doutoramento'
+    };
+    const certMap = {sim:'✓ Com certificação pedagógica',nao:'Sem certificação pedagógica',em_curso:'Em curso'};
+    const langs = (data.languages||[]).join(', ');
+    document.getElementById('qualificationsContent').innerHTML = [
+        `<div><strong>Formação:</strong> ${levelMap[data.academicLevel]||'—'} em ${data.specialization||'—'}</div>`,
+        data.graduationInstitution ? `<div><strong>Instituição:</strong> ${data.graduationInstitution}</div>` : '',
+        `<div><strong>Experiência:</strong> ${expMap[data.yearsExperience]||'—'} de ensino</div>`,
+        `<div><strong>Certificação:</strong> ${certMap[data.pedagogicCert]||'—'}</div>`,
+        langs ? `<div><strong>Ensina em:</strong> ${langs}</div>` : ''
+    ].join('');
+}
+
+function checkOnboarding() {
+    const fields = ['bio','phone','subjects','availability','rateMin','avatarUrl'];
+    const filled  = fields.filter(f => { const v = data[f]; return Array.isArray(v) ? v.length > 0 : (v && v!==''); }).length;
+    const pct     = Math.round((filled/fields.length)*100);
+
+    // Barra de completude
+    document.getElementById('completionPct').textContent = pct + '%';
+    document.getElementById('completionBar').style.width  = pct + '%';
+
+    const tips = {
+        bio:      'Adiciona uma apresentação pessoal',
+        phone:    'Adiciona o teu telefone/WhatsApp',
+        subjects: 'Define as tuas disciplinas',
+        availability: 'Define a tua disponibilidade',
+        rateMin:  'Define o teu valor por hora',
+        avatarUrl:'Adiciona uma foto de perfil'
+    };
+    const missing = fields.filter(f => { const v=data[f]; return Array.isArray(v)?v.length===0:(!v||v===''); });
+    document.getElementById('completionTip').textContent = missing.length
+        ? `Próximo passo: ${tips[missing[0]]||''}` : '✓ Perfil completo!';
+
+    const banner = document.getElementById('onboardingBanner');
+    if (pct < 80) {
+        banner.style.display = 'flex';
+        document.getElementById('onboardingMsg').textContent = `Perfil ${pct}% completo — completa para aparecer nas pesquisas.`;
+    }
+}
+
+// ── Onboarding close ──
+document.getElementById('btnOnboardingClose').onclick   = () => { document.getElementById('onboardingBanner').style.display='none'; };
+document.getElementById('btnOnboardingCTA').onclick     = () => openModal();
+
+// ── Modal ──
+const modal    = document.getElementById('editModal');
+const modalClose = document.getElementById('modalClose');
+
+function openModal() {
+    document.getElementById('eBio').value        = data.bio||'';
+    document.getElementById('ePhone').value      = data.phone||'';
+    document.getElementById('ePortfolio').value  = data.portfolioUrl||'';
+    document.getElementById('eRateMin').value    = data.rateMin||'';
+    document.getElementById('eRateMax').value    = data.rateMax||'';
+    document.getElementById('eRatePer').value    = data.ratePer||'hora';
+    document.getElementById('eSubjects').value   = (data.subjects||[]).join(', ');
+    document.getElementById('eTargetLevels').value = (data.targetLevels||[]).join(', ');
+    // Disponibilidade
+    ['av1','av2','av3','av4','av5'].forEach(id => {
+        const cb = document.getElementById(id);
+        cb.checked = (data.availability||[]).includes(cb.value);
+    });
+    // Modalidade
+    ['mod1','mod2','mod3'].forEach(id => {
+        const cb = document.getElementById(id);
+        cb.checked = (data.modalities||[]).includes(cb.value);
+    });
+    modal.style.display = 'block';
+}
+
+document.getElementById('btnEditProfile').onclick = openModal;
+modalClose.onclick = () => { modal.style.display='none'; };
+modal.addEventListener('click', e => { if (e.target===modal) modal.style.display='none'; });
+
+document.getElementById('editForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const avChips  = ['av1','av2','av3','av4','av5'];
+    const modChips = ['mod1','mod2','mod3'];
+    const avail = avChips.filter(id=>document.getElementById(id).checked).map(id=>document.getElementById(id).value);
+    const mods  = modChips.filter(id=>document.getElementById(id).checked).map(id=>document.getElementById(id).value);
+    const subjectsRaw = document.getElementById('eSubjects').value.split(',').map(s=>s.trim()).filter(s=>s);
+    const levelsRaw   = document.getElementById('eTargetLevels').value.split(',').map(s=>s.trim()).filter(s=>s);
+
+    await updateDoc(doc(db,'teachers',uid), {
+        bio:          document.getElementById('eBio').value,
+        phone:        document.getElementById('ePhone').value,
+        portfolioUrl: document.getElementById('ePortfolio').value,
+        rateMin:      document.getElementById('eRateMin').value,
+        rateMax:      document.getElementById('eRateMax').value,
+        ratePer:      document.getElementById('eRatePer').value,
+        availability: avail,
+        subjects:     subjectsRaw,
+        targetLevels: levelsRaw,
+        modalities:   mods
+    });
+    modal.style.display = 'none';
+};
+
+// ── Upload avatar ──
+document.getElementById('avatarUpload').onchange = async function() {
+    const file = this.files[0];
+    if (!file) return;
+    const storageRef = ref(storage, `teachers/${uid}/avatar`);
+    await uploadBytes(storageRef, file);
+    const url = await getDownloadURL(storageRef);
+    await updateDoc(doc(db,'teachers',uid), { avatarUrl: url });
+};
+
+// ── Partilhar perfil ──
+document.getElementById('btnShare').onclick = () => {
+    const url = `${window.location.origin}/perfis/perfil-professor-publico.html?id=${uid}`;
+    if (navigator.share) {
+        navigator.share({ title: data.fullName, text: 'Vê o meu perfil de professor na All in One School', url });
+    } else {
+        navigator.clipboard.writeText(url);
+        alert('Link copiado para a área de transferência!');
+    }
+};
+</script>
+</body>
+</html>

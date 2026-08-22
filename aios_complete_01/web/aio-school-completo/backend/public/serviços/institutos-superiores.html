@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ensino Superior — All in One School</title>
+<meta name="description" content="Explora universidades, institutos superiores e centros de formação em Angola. Filtra por província, área e tipo de instituição.">
+<meta property="og:title" content="Ensino Superior em Angola — All in One School">
+<meta property="og:description" content="Descobre as melhores instituições de ensino superior em Angola.">
+<meta property="og:type" content="website">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#ff4d00">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f2eb;
+    --accent: #ff4d00;
+    --accent2: #0057ff;
+    --muted: #8a8780;
+    --card: #ffffff;
+    --border: rgba(10, 10, 15, 0.08);
+    --shadow: 0 4px 32px rgba(10, 10, 15, 0.10);
+    --green: #00b37e;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--paper);
+    background-image: radial-gradient(circle at top left, rgba(0,179,126,0.08), transparent 45%),
+                      radial-gradient(circle at bottom right, rgba(0,179,126,0.06), transparent 35%);
+    background-blend-mode: normal;
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 5%;
+    background: rgba(245, 242, 235, 0.90);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    animation: slideDown 0.6s ease both;
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--ink);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .logo-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--ink);
+  }
+
+  .hero {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 9rem 5% 5rem;
+    position: relative;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 20%, rgba(255, 77, 0, 0.10) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 10% 80%, rgba(0, 87, 255, 0.08) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 100px;
+    padding: 0.35rem 1rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    width: fit-content;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .hero-tag-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.4);
+    }
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .highlight {
+    color: var(--green);
+  }
+
+  section {
+    padding: 4rem 5%;
+  }
+
+  .section-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .centers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 2rem;
+  }
+
+  /* ─── FILTER STYLES ─── */
+  .section-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin: 2rem 0 3rem;
+  }
+  .filter-button {
+    border: 1px solid rgba(10, 10, 15, 0.1);
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--ink);
+    padding: 0.85rem 1.35rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: 'Syne', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .filter-button:hover,
+  .filter-button.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+    transform: translateY(-1px);
+  }
+
+  /* ─── SEARCH BAR STYLES ─── */
+  .search-wrapper {
+    position: relative;
+    max-width: 500px;
+    margin-bottom: 1.5rem;
+  }
+  .search-wrapper input {
+    width: 100%;
+    padding: 0.9rem 1.5rem 0.9rem 3rem;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    font-family: 'DM Sans', sans-serif;
+    outline: none;
+    transition: all 0.3s ease;
+  }
+  .search-wrapper input:focus {
+    border-color: var(--green);
+    box-shadow: 0 4px 12px rgba(0, 179, 126, 0.1);
+  }
+
+  .search-wrapper .search-icon {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .category.hidden {
+    display: none;
+  }
+
+  .category.showing {
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ─── CARD REVEAL ─── */
+  .center-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .center-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .center-card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 2.2rem;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    position: relative;
+    min-height: 440px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .center-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .center-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .center-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: var(--green);
+  }
+
+  .center-type {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .center-card h3 {
+    font-family: 'Syne', sans-serif;
+    margin-bottom: 0.8rem;
+  }
+
+  .detail-item {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+  }
+  
+  /* ─── COURSES VIEW STYLES ─── */
+  .btn-view-courses {
+    margin-top: auto;
+    background: transparent;
+    color: var(--green);
+    border: 1.5px solid var(--green);
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Syne', sans-serif;
+    width: fit-content;
+    display: block;
+    align-self: flex-start;
+  }
+
+  .btn-view-courses:hover {
+    background: var(--green);
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  #courses-container {
+    display: none;
+  }
+
+  #courses-container.active {
+    display: block;
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--ink);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+  }
+
+  .btn-back:hover {
+    color: var(--green);
+  }
+
+  .unit-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.8rem;
+    border: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+  }
+
+  .unit-card h4 {
+    font-family: 'Syne', sans-serif;
+    color: var(--green);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .btn-map-link {
+    background: rgba(0, 179, 126, 0.1);
+    color: var(--green);
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .btn-map-link:hover {
+    background: var(--green);
+    color: white;
+  }
+
+  .courses-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.6rem;
+    list-style: none;
+  }
+
+  .courses-list li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--paper);
+    border-radius: 8px;
+  }
+
+  .courses-list li::before {
+    content: '→';
+    color: var(--green);
+    font-weight: bold;
+    font-size: 0.7rem;
+  }
+
+  .grid-container.hidden {
+    display: none;
+  }
+
+  footer {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+</style>
+</head>
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import { firebaseConfig } from '../firebase-config.js';
+  const _app = initializeApp(firebaseConfig);
+  const _auth = getAuth(_app);
+  onAuthStateChanged(_auth, (user) => {
+    if (!user) { window.location.href = 'página de Iniciação.html'; }
+    else {
+      // Injeta botão logout no nav
+      const nav = document.querySelector('nav');
+      if (nav) {
+        const btn = document.createElement('button');
+        btn.textContent = 'Sair';
+        btn.style.cssText = 'background:none;border:1px solid rgba(10,10,15,0.15);border-radius:100px;padding:0.4rem 1rem;font-size:0.82rem;cursor:pointer;color:#8a8780;font-family:Syne,sans-serif;font-weight:700;margin-left:1rem;transition:0.2s;';
+        btn.onmouseover = () => { btn.style.color='#0a0a0f'; btn.style.borderColor='#0a0a0f'; };
+        btn.onmouseout  = () => { btn.style.color='#8a8780'; btn.style.borderColor='rgba(10,10,15,0.15)'; };
+        btn.onclick = async () => { await signOut(_auth); window.location.href = 'página de Iniciação.html'; };
+        nav.appendChild(btn);
+      }
+    }
+  });
+</script>
+<body>
+
+<nav>
+  <a class="logo" href="página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+  <ul class="nav-links">
+    <li><a href="página de Iniciação.html">Início</a></li>
+    <li><a href="bolsas.html">Bolsas</a></li>
+    <li><a href="institutos-medios.html">Escolas de ensino Médio</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-tag"><span class="hero-tag-dot"></span>Graduação</div>
+  <h1>Ensino <span class="highlight">Superior</span></h1>
+  <p style="max-width: 60ch; color: var(--muted); margin-top: 1.5rem;">Candidata-te às melhores universidades e institutos superiores públicos e privados em Angola.</p>
+</section>
+
+<section id="lista-universidades">
+  <div class="search-wrapper">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="universitySearch" placeholder="Procurar universidade ou instituto...">
+  </div>
+
+  <div class="section-filter">
+    <button type="button" class="filter-button active" data-target="publicas">Públicas →</button>
+    <button type="button" class="filter-button" data-target="privadas">Privadas →</button>
+    <button type="button" class="filter-button" data-target="institutos">Institutos Superiores →</button>
+  </div>
+
+  <!-- UNIVERSIDADES PÚBLICAS -->
+  <div class="category" data-section="publicas">
+    <div class="centers-grid">
+      <!-- Universidade Agostinho Neto -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/uan.jpg" alt="Logo UAN" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade Agostinho Neto (UAN)</h3>
+        <p>A maior e mais antiga universidade pública de Angola, referência nacional em Medicina, engenharias, Economia e Direito.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Campus da Camama - Cidade Universitária)</div>
+               <button class="btn-view-courses" onclick="openCourses('uan')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade José Eduardo dos Santos -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ujes.jpg" alt="Logo UJES" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade José Eduardo dos Santos (UJES)</h3>
+        <p>Instituição de referência na região centro, focada no desenvolvimento agrário e científico.</p>
+        <div class="detail-item"><strong>Local:</strong> Huambo (Bairro de Santo António)</div>
+              <button class="btn-view-courses" onclick="openCourses('ujes')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade Katyavala Bwila -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ukb.png" alt="Logo UKB" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade Katyavala Bwila (UKB)</h3>
+        <p>Serve a província de Benguela com excelência no ensino e extensão universitária.</p>
+        <div class="detail-item"><strong>Local:</strong> Benguela (Bairro da Graça)</div>
+               <button class="btn-view-courses" onclick="openCourses('ukb')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade Mandume ya Ndemufayo -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/umn.jpg" alt="Logo UMN" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade Mandume ya Ndemufayo (UMN)</h3>
+        <p>Instituição central na região sul, promovendo o conhecimento e a cidadania.</p>
+        <div class="detail-item"><strong>Local:</strong> Lubango, Huíla (Bairro de Nossa Senhora do Monte)</div>
+              <button class="btn-view-courses" onclick="openCourses('umn')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade Kimpa Vita -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/unikivi.png" alt="Logo UKV" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade Kimpa Vita (UKV)</h3>
+        <p>Focada no ensino superior de qualidade para a região norte de Angola.</p>
+        <div class="detail-item"><strong>Local:</strong> Uíge (Bairro de Gaulo)</div>
+               <button class="btn-view-courses" onclick="openCourses('ukv')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade Lueji a Nkonde -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ulueji.jpg" alt="Logo ULN" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade Lueji a Nkonde (ULN)</h3>
+        <p>Desenvolve o potencial académico e científico na região leste do país.</p>
+        <div class="detail-item"><strong>Local:</strong> Dundo, Lunda Norte (Bairro do Samanhonga)</div>
+                <button class="btn-view-courses" onclick="openCourses('uln')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade 11 de Novembro -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/uon.png" alt="Logo U11N" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade 11 de Novembro (U11N)</h3>
+        <p>Instituição comprometida com o progresso social e científico de Cabinda.</p>
+        <div class="detail-item"><strong>Local:</strong> Cabinda (Bairro Gvante - Sede)</div>
+               <button class="btn-view-courses" onclick="openCourses('u11n')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade Cuito Cuanavale -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ucc.jpg" alt="Logo UCC" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade Cuito Cuanavale (UCC)</h3>
+        <p>Fomentando o ensino e a investigação na província do Cuando Cubango.</p>
+        <div class="detail-item"><strong>Local:</strong> Menongue, Cuando Cubango</div>
+               <button class="btn-view-courses" onclick="openCourses('ucc')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade do Namibe -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/unam.jpg" alt="Logo UNAM" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade do Namibe (UNAM)</h3>
+        <p>Especializada em áreas estratégicas para o desenvolvimento costeiro e económico.</p>
+        <div class="detail-item"><strong>Local:</strong> Moçâmedes, Namibe (Bairro 5 de Abril)</div>
+                <button class="btn-view-courses" onclick="openCourses('unam')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade Rainha Njinga a Mbande -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/urainhajinga.jpg" alt="Logo URNM" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade Rainha Njinga a Mbande (URNM)</h3>
+        <p>Promovendo a educação superior e o desenvolvimento da região de Malanje.</p>
+        <div class="detail-item"><strong>Local:</strong> Malanje (Bairro da Maxinde)</div>
+        <button class="btn-view-courses" onclick="openCourses('urnm')">Ver Cursos →</button>
+      </div>
+
+      <!-- Universidade de Luanda -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/uniluanda.png" alt="Logo UniLuanda" loading="lazy">
+        </div>
+        <span class="center-type">Pública</span>
+        <h3>Universidade de Luanda (UniLuanda)</h3>
+        <p>Uma das mais recentes instituições públicas, unindo tecnologia e ciências sociais. Tem se solidificado no mercado tecnológico como referência.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Adjacente ao estádio 11 de Novembro - Talatona )</div>
+               <button class="btn-view-courses" onclick="openCourses('uniluanda')">Ver Cursos →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIVERSIDADES PRIVADAS -->
+  <div class="category hidden" data-section="privadas">
+    <div class="centers-grid">
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ucan.jpg" alt="Logo UCAN" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade Católica (UCAN)</h3>
+        <p>Instituição de prestígio focada em Direito, Economia e Ciências Humanas, promovendo ética e excelência. Reconhecida como a melhor em Direito e intercala a primeira posição no ranking nacional apenas com a UAN(Univerdidade Agostinho Neto).</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Bairro Palanca)</div>
+        <div class="detail-item"><strong>Áreas:</strong> Direito, Gestão, Economia, Ciências da Saúde, Engenharia</div>
+        <button class="btn-view-courses" onclick="openCourses('ucan')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/unipiaget.png" alt="Logo Jean Piaget" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade Jean Piaget</h3>
+        <p>Instituição multidisciplinar com forte presença em áreas de saúde, conhecida como a segunda melhor em medicina, reconhecida nacionalmente como uma das melhores em Angola. Top 5.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Viana, Kapanga-bairro piaget)</div>
+        <button class="btn-view-courses" onclick="openCourses('piaget')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ula.png" alt="Logo Lusíada" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade Lusíada de Angola</h3>
+        <p>Focada em áreas sociais, económicas e tecnológicas, com tradição lusófona. Designada como a melhor em economia.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Bairro de Alvalade)</div>
+        <button class="btn-view-courses" onclick="openCourses('lusiada')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/unia.jpg" alt="Logo UNINDA" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade Independente de Angola</h3>
+        <p>Instituição versátil com cursos que abrangem desde engenharias a artes e comunicação.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Bairro Cassequel)</div>
+        <button class="btn-view-courses" onclick="openCourses('uninda')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ugs.jpg" alt="Logo UGS" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade Gregório Semedo</h3>
+        <p>Especializada em Direito, Gestão e Comunicação, preparando profissionais para o mercado global.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Bairro do Cassenda)</div>
+        <button class="btn-view-courses" onclick="openCourses('ugs')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/unibelas.jpg" alt="Logo UniBelas" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade de Belas</h3>
+        <p>Instituição focada na inovação e no desenvolvimento de competências técnicas e científicas.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Kilamba)</div>
+        <button class="btn-view-courses" onclick="openCourses('unibelas')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/uor.jpg" alt="Logo UOR" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade Óscar Ribas</h3>
+        <p>Focada no empreendedorismo e na formação de competências para o desenvolvimento nacional.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Talatona, rua das embaixadas)</div>
+        <button class="btn-view-courses" onclick="openCourses('uor')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/upra.png" alt="Logo UPRA" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade Privada de Angola</h3>
+        <p>Instituição com foco em saúde, outra grande em medicina, umas das referências nacionais e é tida como o Top 3 em medicina nacionalmente abrangindo também áreas de tecnologias, promovendo o rigor científico.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Talatona, desvio da estrada da UÓR)</div>
+        <button class="btn-view-courses" onclick="openCourses('upra')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/utanga.png" alt="Logo UTANGA" loading="lazy">
+        </div>
+        <span class="center-type">Privada</span>
+        <h3>Universidade Técnica de Angola</h3>
+        <p>Excelência em engenharias e tecnologias, com forte ligação ao setor produtivo.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Golf-2, Bairro da Capossoca)</div>
+        <button class="btn-view-courses" onclick="openCourses('utanga')">Ver Cursos →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTITUTOS SUPERIORES -->
+  <div class="category hidden" data-section="institutos">
+    <div class="centers-grid">
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/iscah.jpg" alt="Logo ISCAH" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior de Ciências de Administração e Humanas (ISCAH)</h3>
+        <p>Especializado em Administração, Economia, Direito e Ciências Políticas.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('iscah')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Katangoji -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispk.jpg" alt="Logo ISKAT" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Katangoji</h3>
+        <p>Foco em Administração Pública, Gestão de Banca, Seguros e Relações Internacionais.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('iskat')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior de Ciências Sociais e Relações Internacionais -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/cis.jpg" alt="Logo ISCSRI" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior de Ciências Sociais e Relações Internacionais (CIS)</h3>
+        <p>Referência no ensino de Psicologia (Clínica, Escolar e Organizacional) e Enfermagem.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda(Talatona, via do CAT)</div>
+        <button class="btn-view-courses" onclick="openCourses('iscsri')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Internacional de Angola -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/isia.png" alt="Logo ISPIA" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Internacional de Angola (ISIA)</h3>
+        <p>Formação multidisciplinar em Psicologia, Direito, Gestão, Engenharias e Saúde.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Benfica e Sequele)</div>
+        <button class="btn-view-courses" onclick="openCourses('ispia')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Alvorecer da Juventude -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispaj.jpg" alt="Logo ISPAJ" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Alvorecer da Juventude (ISPAJ)</h3>
+        <p>Ensino focado em Economia, Direito, Comunicação, Arquitetura, Engenharias e Saúde.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda(Projeto Nova Vida)</div>
+        <button class="btn-view-courses" onclick="openCourses('ispaj')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Metropolitano -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/imetro.png" alt="Logo IMETRO" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Metropolitano (IMETRO)</h3>
+        <p>Excelência em Engenharias, Economia, Gestão, Estatística e Psicologia.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda(Benfica, morro bento)</div>
+        <button class="btn-view-courses" onclick="openCourses('ismet')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Técnico de Angola -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ista.jpg" alt="Logo ISTA" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Técnico de Angola (ISTA)</h3>
+        <p>Focado em Administração, Auditoria, Engenharias, Enfermagem e Psicologia.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda(Viana)</div>
+        <button class="btn-view-courses" onclick="openCourses('ista')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico do Cazenga -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispoca.jpg" alt="Logo ISPOCA" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico do Cazenga (ISPOCA)</h3>
+        <p>Formação em Pedagogia, Arquitetura, Engenharias, Economia e Relações Internacionais.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Cazenga)</div>
+        <button class="btn-view-courses" onclick="openCourses('ispoca')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Kalandula de Angola -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispeka.jpg" alt="Logo ISPAKA" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Kalandula de Angola (ISPAKA)</h3>
+        <p>Vasta oferta em Engenharias, Direito, Ciências Políticas, Gestão, Psicologia e Saúde.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda(Camama, vida adjacente à sede TPA)</div>
+        <button class="btn-view-courses" onclick="openCourses('ispka')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico de Kangonjo -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/iska.jpg" alt="Logo ISPK" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico de Kangonjo</h3>
+        <p>Foco em Direito, Economia, Engenharias, Saúde e Ciências da Educação.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('ispk')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Atlântida -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispa.jpg" alt="Logo ISPA" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Atlântida</h3>
+        <p>Formação em Sociologia, Psicologia, Engenharias, Arquitetura e Saúde.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('ispa')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior de Angola -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/isa.jpg" alt="Logo ISA" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior de Angola (ISA)</h3>
+        <p>Ampla gama de cursos incluindo Direito, Gestão, Ciências Aeronáuticas e Agronomia.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('isange')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Tocoísta -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispt.jpg" alt="Logo ISPT" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Tocoísta (ISPT)</h3>
+        <p>Especializado em Eletrónica, Construção Civil, Informática e Saúde.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda(Golf-2)</div>
+        <button class="btn-view-courses" onclick="openCourses('ispt')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico do Zango -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispozango.jpg" alt="Logo ISPOZango" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico do Zango (ISPOZango)</h3>
+        <p>Foco em Psicologia, Gestão, Marketing, Direito, Multimédia e TI.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Vianaa, Luanda Sul-amor e paz)</div>
+        <button class="btn-view-courses" onclick="openCourses('ispz')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Deolinda Rodrigues -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispdr.jpg" alt="Logo ISPDR" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Deolinda Rodrigues</h3>
+        <p>Ensino em Direito, Estatística, Psicologia, Contabilidade e Engenharias.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda(Vila Gamek, via talatona)</div>
+        <button class="btn-view-courses" onclick="openCourses('ispdr')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Técnico de Administração e Finanças -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/isaf.png" alt="Logo ISAF" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Técnico de Administração e Finanças (ISAF)</h3>
+        <p>Especialista em Direito, Gestão, Saúde, Psicologia e Finanças.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('istaf')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Intercontinental de Luanda -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispil.jpg" alt="Logo ISPIL" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Intercontinental de Luanda (ISPIL)</h3>
+        <p>Formação em Direito, Gestão, Relações Internacionais, Psicologia e Engenharias.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('ispil')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico do Bita -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispob.jpg" alt="Logo ISPB" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico do Bita</h3>
+        <p>Foco em Economia, Gestão, Direito, Psicologia e Ciências da Educação.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Bita)</div>
+        <button class="btn-view-courses" onclick="openCourses('ispb')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Nelson Mandela -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispnm.png" alt="Logo ISPNM" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Nelson Mandela</h3>
+        <p>Ensino focado em Engenharias, Direito, Gestão, Psicologia e Educação.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('ispnm')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Crescente -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispc.jpg" alt="Logo ISPC Crescente" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Crescente</h3>
+        <p>Focado em TI, Sistemas de Potência, Engenharias e Gestão.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('ispc_cres')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico São Martinho de Lima -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispsml.png" alt="Logo ISPSML" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico São Martinho de Lima</h3>
+        <p>Referência em Direito, Psicologia, Enfermagem e Análises Clínicas.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('ispsml')">Ver Cursos →</button>
+      </div>
+
+      <!-- Instituto Superior Politécnico Privado do Kilamba -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispkilamba.jpg" alt="Logo ISPPK" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>Instituto Superior Politécnico Privado do Kilamba (ISPPK)</h3>
+        <p>Ampla gama de cursos de Saúde, Comunicação, Direito, Gestão e Engenharias.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Kilamba)</div>
+        <button class="btn-view-courses" onclick="openCourses('isppk')">Ver Cursos →</button>
+      </div>
+
+      <!-- Escola Superior Técnica de Ciências do Desporto -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/estcd.png" alt="Logo ESTCD" loading="lazy">
+        </div>
+        <span class="center-type">Escola Superior</span>
+        <h3>Escola Superior Técnica de Ciências do Desporto (ESTCD)</h3>
+        <p>Especializada em Desporto, Gestão Ambiental, Psicologia e Nutrição.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('estcd')">Ver Cursos →</button>
+      </div>
+
+      <!-- Escola Superior de Saúde Castelo -->
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/essca.jpg" alt="Logo ESSC" loading="lazy">
+        </div>
+        <span class="center-type">Escola Superior</span>
+        <h3>Escola Superior de Saúde Castelo</h3>
+        <p>Foco exclusivo na formação de excelência em áreas da Saúde.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda</div>
+        <button class="btn-view-courses" onclick="openCourses('essc')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/isptec.png" alt="Logo ISPTEC" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>ISPTEC</h3>
+        <p>Instituto Superior Politécnico de Tecnologias e Ciências. Elevados padrões de ensino com foco em engenharias. Referência nacional em formações no ramo petrolífero e tecnologias, com parcerias e gerências de uma das maiores empresas no setor petrolífero, a SONANGOL.</p>
+        <div class="detail-item"><strong>Local:</strong> Luanda (Avenida Luanda Sul, Talatona)</div>
+        <div class="detail-item"><strong>Diferencial:</strong> Parceria com setor industrial e petrolífero</div>
+        <button class="btn-view-courses" onclick="openCourses('isptec')">Ver Cursos →</button>
+      </div>
+
+      <div class="center-card">
+        <div class="center-icon">
+          <img src="logos/ispsn.jpg" alt="Logo ISPSN" loading="lazy">
+        </div>
+        <span class="center-type">Instituto Superior</span>
+        <h3>ISPSN</h3>
+        <p>Instituto Superior Politécnico Sol Nascente. Oferece uma vasta gama de licenciaturas no centro do Huambo.</p>
+        <div class="detail-item"><strong>Local:</strong> Huambo (Bairro da Chiva)</div>
+        <div class="detail-item"><strong>Cursos:</strong> Enfermagem, Economia, Ciência Política</div>
+        <button class="btn-view-courses" onclick="openCourses('ispsn')">Ver Cursos →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Container de Visualização Detalhada de Cursos (Global) -->
+  <div id="courses-container">
+    <div class="btn-back" onclick="closeCourses()">← Voltar à lista</div>
+    <div id="courses-content"></div>
+  </div>
+</section>
+
+<!-- MAP MODAL -->
+<div id="map-modal">
+  <div class="map-content">
+    <button class="close-map" onclick="closeMap()">&times;</button>
+    <div id="map-canvas"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">© OCO 2026. Todos os direitos reservados</div>
+  <p>All in One School — O teu guia educativo.</p>
+</footer>
+
+<!-- GOOGLE MAPS API -->
+<script>
+  function initMap() {
+    console.log("Google Maps API carregada.");
+  }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=SUA_CHAVE_AQUI&callback=initMap" async defer></script>
+<!-- LEAFLET JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+</body>
+<script>
+  // Dados detalhados das Unidades Orgânicas e Cursos
+  const universityData = {
+    uan: {
+      name: "Universidade Agostinho Neto (UAN)",
+      units: [
+        { name: "Faculdade de Medicina", courses: ["Medicina"] },
+        { name: "Faculdade de Direito", courses: ["Direito"] },
+        { name: "Faculdade de Economia", courses: ["Economia", "Gestão de Empresas", " Gestão Financeira", "Contabilidade e administração", "Contabilidade e auditoria"] },
+        { name: "Faculdade de Engenharia", courses: ["Eng. Civil", "Eng. Mecânica", "Eng. Electrónica e Telecomunicações", "Eng. Minas", "Eng. Informática", "Eng. de Eletrotecnia", "Engenharia Química", "Engenharia de Petróleos", "Arquitetura."] },
+        { name: "Faculdade de Ciências Naturais", courses: ["Matemática", "Física", "Química", "Biologia", "Geofísica", "Ciências da Computação", "Geologia", "Eng. Geográfica", "Metereologia."] },
+        { name: "Faculdade de Ciências Sociais", courses: ["Sociologia", "Psicologia", "Ciências Políticas", "História", "Ciências da Informação", "Geodmografia", "Antropologia", "Gestão e administração Pública."] },
+        { name: "Faculdade de Humanidades", courses: ["História", "Línguas e Literatura em Inglês, Francês e Português", "Filosofia", "secretariado Executivo e Comunicação Empresarial."] },
+        { name: "IEFD", courses: ["Ed. Física e Desporto"] },
+        { name: "Escola de Hotelaria e Turismo", courses: ["Gestão Turística"] },
+        { name: "Instituto Superior de Ciências da Saúde", courses: ["Ciências da Enfermagem", "Análises Clínicas e Saúde Pública", "Psicologia Clínica", "Psicologia Escolar", "Ciências farmacêuticas."] }
+      ]
+    },
+    ujes: {
+      name: "Universidade José Eduardo dos Santos (UJES)",
+      units: [
+        { name: "Faculdade de Medicina", courses: ["Medicina"] },
+        { name: "Faculdade de Direito", courses: ["Direito"] },
+        { name: "Faculdade de Economia", courses: ["Economia"] },
+        { name: "Faculdade de Ciências Agrárias", courses: ["Agronomia"] },
+        { name: "Faculdade de Medicina Veterinária", courses: ["Medicina Veterinária"] },
+        { name: "Instituto Politécnico", courses: ["Engenharia Informática", "Engenharia Mecânica", "Enfermagem"] },
+        { name: "ISCED Huambo", courses: ["Psicologia"] }
+      ]
+    },
+    ukb: {
+      name: "Universidade Katyavala Bwila (UKB)",
+      units: [
+        { name: "Faculdade de Medicina", courses: ["Medicina"] },
+        { name: "Faculdade de Direito", courses: ["Direito"] },
+        { name: "Faculdade de Economia", courses: ["Gestão", "Contabilidade"] },
+        { name: "Faculdade de Engenharia", courses: ["Engenharia Civil", "Engenharia Informática"] },
+        { name: "ISCED Benguela", courses: ["Psicologia", "Ensino da Biologia"] }
+      ]
+    },
+    umn: {
+      name: "Universidade Mandume ya Ndemufayo (UMN)",
+      units: [
+        { name: "Faculdade de Direito", courses: ["Direito"] },
+        { name: "Faculdade de Economia", courses: ["Economia"] },
+        { name: "Faculdade de Engenharia", courses: ["Engenharia Civil", "Engenharia Informática", "Engenharia Mecânica"] },
+        { name: "Instituto Superior Politécnico", courses: ["Engenharia Agronómica", "Engenharia de Minas", "Ciências da Computação", "Medicina", "Matemática"] },
+        { name: "Escola Superior Pedagógica", courses: ["Gestão Turística", "Informática de Gestão"] }
+      ]
+    },
+    ukv: {
+      name: "Universidade Kimpa Vita (UKV)",
+      units: [
+        { name: "Faculdade de Medicina", courses: ["Medicina"] },
+        { name: "Faculdade de Direito", courses: ["Direito"] },
+        { name: "Faculdade de Economia", courses: ["Gestão", "Contabilidade"] },
+        { name: "ISCED Uíge", courses: ["Psicologia", "Pedagogia"] }
+      ]
+    },
+    u11n: {
+      name: "Universidade 11 de Novembro (U11N)",
+      units: [
+        { name: "Faculdade de Direito", courses: ["Direito"] },
+        { name: "Faculdade de Economia", courses: ["Economia"] },
+        { name: "Faculdade de Medicina", courses: ["Medicina"] },
+        { name: "ISCED Cabinda", courses: ["Psicologia", "Ensino da Matemática"] }
+      ]
+    },
+    uln: {
+      name: "Universidade Lueji A'Nkonde (ULN)",
+      units: [
+        { name: "Faculdade de Direito", courses: ["Direito"] },
+        { name: "Faculdade de Economia", courses: ["Economia", "Gestão"] },
+        { name: "Instituto Politécnico", courses: ["Engenharia Informática", "Contabilidade"] },
+        { name: "Escola Pedagógica", courses: ["Pedagogia"] }
+      ]
+    },
+    ucc: {
+      name: "Universidade Cuíto Cuanavale (UCC)",
+      units: [
+        { name: "Faculdade de Ciências Agrárias", courses: ["Agronomia", "Engenharia Florestal", "Zootecnia"] },
+        { name: "Instituto Politécnico", courses: ["Gestão"] },
+        { name: "Escola Pedagógica", courses: ["Pedagogia"] }
+      ]
+    },
+    unam: {
+      name: "Universidade do Namibe (UNAM)",
+      units: [
+        { name: "Escola Superior Politécnica", courses: ["Engenharia Informática", "Gestão", "Contabilidade"] },
+        { name: "Escola Superior Pedagógica", courses: ["Psicologia", "Ensino da Matemática"] }
+      ]
+    },
+    urnm: {
+      name: "Universidade Rainha Njinga a Mbande (URNM)",
+      units: [
+        { name: "Faculdade de Medicina", courses: ["Medicina"] },
+        { name: "Faculdade de Direito", courses: ["Direito"] },
+        { name: "Instituto Politécnico", courses: ["Engenharia Informática", "Gestão"] },
+        { name: "Escola Pedagógica", courses: ["Pedagogia"] }
+      ]
+    },
+    uniluanda: {
+      name: "Universidade de Luanda (UniLuanda)",
+      units: [
+        { name: "Faculdade de Artes", courses: ["Artes Visuais", "Teatro", "Música", "design de Moda", "Gestão e Produção Cultural"] },
+        { name: "Faculdade de Serviço Social", courses: ["Serviço Social", "Relações Internacionais", "Educação de Infância."] },
+        { name: "INSTIC", courses: ["Engenharia Informática", "Engenharia de Telecomunicações", "Informática de Gestão"] },
+        { name: "Instituto Politécnico de Gestão, Logística e Transportes", courses: ["Gestão", "Gestão de Logística e Transportes", "Contabilidade", "Gestão Aeoronautica", "Engenharia Mecatrônica", "Engenharia de Transportes"] }
+      ]
+    },
+    isptec: {
+      name: "Instituto Superior Politécnico de Tecnologias e Ciências (ISPTEC)",
+      units: [
+        { 
+          name: "Cursos de Graduação", 
+          courses: ["Engenharia de Produção Industrial", "Engenharia Química", "Engenharia Mecânica", "Engenharia Electrotécnica", "Engenharia Informática", "Economia", "Gestão"] 
+        }
+      ]
+    },
+    ispc_tech: {
+      name: "Instituto Superior Politécnico de Ciências e Tecnologia (ISPC)",
+      units: [{ name: "Cursos Disponíveis", courses: ["Geofísica", "Engenharia de Petróleos", "Engenharia Informática", "Engenharia Química", "Engenharia Mecânica", "Engenharia Electrotécnica", "Engenharia Civil", "Engenharia de Produção Industrial", "Gestão Empresarial", "Economia", "Contabilidade"] }]
+    },
+    isptc_crim: {
+      name: "Instituto Superior Politécnico de Tecnologias e Ciências",
+      units: [{ name: "Cursos Disponíveis", courses: ["Ciências Criminais", "Direito", "Contabilidade", "Hotelaria e Turismo", "Logística e Gestão Comercial", "Gestão de Recursos Humanos", "Engenharia Informática e Sistemas de Informação", "Engenharia de Redes e Telecomunicações", "Engenharia Informática", "Engenharia Civil", "Engenharia Química", "Engenharia Mecânica", "Engenharia de Pesquisa e Produção de Petróleo", "Engenharia Geográfica", "Engenharia Hidráulica"] }]
+    },
+    iscah: {
+      name: "Instituto Superior de Ciências de Administração e Humanas",
+      units: [{ name: "Cursos Disponíveis", courses: ["Contabilidade e Administração", "Economia", "Gestão de Recursos Humanos", "Direito", "Ciência Política"] }]
+    },
+    iskat: {
+      name: "Instituto Superior Politécnico Katangoji",
+      units: [{ name: "Cursos Disponíveis", courses: ["Administração Pública", "Economia", "Contabilidade e Auditoria", "Gestão de Banca e Seguros", "Gestão de Recursos Humanos", "Sociologia", "Relações Internacionais", "Ciências Políticas", "Direito"] }]
+    },
+    iscsri: {
+      name: "Instituto Superior de Ciências Sociais e Relações Internacionais",
+      units: [{ name: "Cursos Disponíveis", courses: ["Psicologia Clínica", "Psicologia Escolar", "Psicologia Organizacional/Trabalho", "Enfermagem"] }]
+    },
+    ispia: {
+      name: "Instituto Superior Politécnico Internacional de Angola",
+      units: [{ name: "Cursos Disponíveis", courses: ["Psicologia Criminal", "Psicologia do Trabalho", "Psicologia do Desporto", "Psicologia Escolar", "Psicologia Clínica", "Direito", "Ciência Política e Relações Internacionais", "Gestão Bancária e Seguros", "Gestão de Recursos Humanos e Marketing", "Gestão e Administração de Empresas", "Comunicação Social e Imagem", "Educação Primária", "Gestão e Inspecção", "Arquitectura e Urbanismo", "Electrotecnia", "Telecomunicações", "Engenharia Informática", "Engenharia Mecânica", "Engenharia Civil", "Análises Clínicas e Saúde Pública", "Enfermagem", "Ciências Farmacêuticas", "Fisioterapia", "Medicina Dentária"] }]
+    },
+    ispaj: {
+      name: "Instituto Superior Politécnico Alvorecer da Juventude",
+      units: [{ name: "Cursos Disponíveis", courses: ["Economia", "Gestão Bancária", "Administração de Empresas", "Gestão Pública", "Gestão de Recursos Humanos", "Direito Jurídico-Político", "Direito Jurídico-Forense", "Direito Jurídico-Económicas", "Jornalismo", "Cinema e Televisão", "Gestão Escolar", "Ciências da Educação – Pedagogia", "Arquitectura", "Ciências da Computação", "Engenharia Civil", "Planeamento Regional e Urbano", "Informática", "Engenharia Electrónica e Telecomunicações", "Engenharia de Geologia e Minas", "Análises Clínicas e Saúde Pública", "Cardiopneumologia", "Educação Física e Desportos", "Radiologia", "Odontologia"] }]
+    },
+    ismet: {
+      name: "Instituto Superior Metropolitano",
+      units: [{ name: "Cursos Disponíveis", courses: ["Engenharia Informática", "Engenharia de Recursos Naturais e Ambiente", "Engenharia Industrial e Sistemas Eléctricos", "Engenharia Civil", "Estatística Económica", "Gestão de Informação", "Economia", "Gestão de Empresas", "Gestão de Recursos Humanos", "Contabilidade e Auditoria", "Administração Pública", "Gestão Bancária e Seguradora", "Relações Internacionais", "Psicologia", "Comunicação Social"] }]
+    },
+    ista: {
+      name: "Instituto Superior Técnico de Angola",
+      units: [{ name: "Cursos Disponíveis", courses: ["Administração e Controle Financeiro", "Administração Pública", "Auditoria", "Fiscalidade", "Instituições Financeiras", "Engenharia Informática e de Computadores", "Engenharia Electrónica", "Engenharia de Telecomunicações", "Engenharia Electromecânica", "Engenharia Energética", "Enfermagem", "Gestão Hospitalar", "Psicologia Clínica", "Psicologia do Trabalho", "Psicologia Escolar"] }]
+    },
+    ispoca: {
+      name: "Instituto Superior Politécnico do Cazenga",
+      units: [{ name: "Cursos Disponíveis", courses: ["Pedagogia", "Arquitectura e Urbanismo", "Engenharia Ambiental", "Engenharia Informática", "Engenharia Electrotécnica e Telecomunicações", "Engenharia Agronómica", "Economia Internacional", "Economia Monetária", "Informática de Gestão", "Gestão de Administração Pública", "Auditoria Financeira", "Banca e Seguros", "Gestão e Controlo Financeiro", "Direito", "Relações Internacionais", "Sociologia"] }]
+    },
+    ispka: {
+      name: "Instituto Superior Politécnico Kalandula de Angola",
+      units: [{ name: "Cursos Disponíveis", courses: ["Telecomunicações", "Engenharia Informática", "Engenharia de Petróleos/Pesquisa e Produção", "Engenharia de Petróleos/Refinação", "Engenharia Civil", "Engenharia Mecânica", "Arquitectura e Urbanismo", "Direito-Económico", "Direito-Jurídico Forense", "Direito-Criminalístico", "Ciências Políticas", "Relações Internacionais", "Gestão de Recursos Humanos", "Gestão e Administração de Empresa", "Gestão de Contabilidade", "Gestão e Marketing", "Contabilidade", "Economia", "Psicologia do Trabalho", "Psicologia Criminal", "Psicologia Clínica", "Psicologia Escolar", "Enfermagem", "Análises Clínicas", "Fisioterapia", "Ciências Farmacêuticas", "Medicina Dentária"] }]
+    },
+    ispk: {
+      name: "Instituto Superior Politécnico de Kangonjo",
+      units: [{ name: "Cursos Disponíveis", courses: ["Direito", "Ciências Políticas", "Relações Internacionais", "Economia", "Gestão", "Engenharia Informática", "Engenharia de Telecomunicações", "Enfermagem", "Análises Clínicas", "Fisioterapia", "Ciências Farmacêuticas", "Gestão e Inspecção da Educação", "Instrução Primária"] }]
+    },
+    ispa: {
+      name: "Instituto Superior Politécnico Atlântida",
+      units: [{ name: "Cursos Disponíveis", courses: ["Sociologia", "Psicologia", "Engenharia Civil", "Engenharia Informática", "Arquitectura", "Fisioterapia", "Enfermagem", "Análises Clínicas", "Ciências Farmacêuticas"] }]
+    },
+    isange: {
+      name: "Instituto Superior de Angola",
+      units: [{ name: "Cursos Disponíveis", courses: ["Direito", "Gestão e Contabilidade", "Gestão de Empresas", "Economia", "Psicologia", "Pedagogia", "Relações Internacionais", "Sociologia", "Gestão de Recursos Humanos", "Gestão Escolar", "Ciência Política", "Comunicação Social", "Marketing", "Ciências Alimentares", "Ciências Aeronáuticas", "Agronomia"] }]
+    },
+    ispt: {
+      name: "Instituto Superior Politécnico Tocoísta",
+      units: [{ name: "Cursos Disponíveis", courses: ["Electrónica e Telecomunicações", "Construção Civil", "Engenharia Informática", "Enfermagem", "Análises Clínicas", "Fisioterapia", "Educação Física"] }]
+    },
+    ispz: {
+      name: "Instituto Superior Politécnico do Zango",
+      units: [{ name: "Cursos Disponíveis", courses: ["Psicologia Social e das Organizações", "Psicologia Clínica e da Saúde", "Gestão de Recursos Humanos", "Marketing", "Contabilidade e Finanças", "Ciência Política e Autarquia", "Diplomacia", "Direito Jurídico Forense", "Direito Marítimo", "Multimédia", "Jogos Digitais", "Tecnologias de Informação e Telecomunicações", "Energia e Potência", "Sociologia"] }]
+    },
+    ispdr: {
+      name: "Instituto Superior Politécnico Deolinda Rodrigues",
+      units: [{ name: "Cursos Disponíveis", courses: ["Direito Jurídico-Civil", "Direito Jurídico-Económica", "Estatística", "Psicologia Clínica", "Psicologia do Trabalho", "Psicologia da Educação", "Contabilidade e Finanças", "Engenharia Civil", "Engenharia Informática", "Engenharia Electrotécnica", "Arquitectura e Urbanismo"] }]
+    },
+    istaf: {
+      name: "Instituto Superior Técnico de Administração e Finanças",
+      units: [{ name: "Cursos Disponíveis", courses: ["Direito Jurídico Forense", "Direito Jurídico Económico", "Direito Jurídico Publicista", "Gestão de Empresas", "Gestão de Recursos Humanos", "Enfermagem", "Análises Clínicas e Saúde Pública", "Psicologia Clínica", "Psicologia do Trabalho e das Organizações", "Psicologia Escolar", "Psicologia Criminal e Forense", "Engenharia Informática", "Gestão Bancária e de Seguros", "Contabilidade e Finanças", "Informática de Gestão Financeira"] }]
+    },
+    ispil: {
+      name: "Instituto Superior Politécnico Intercontinental de Luanda",
+      units: [{ name: "Cursos Disponíveis", courses: ["Direito", "Gestão de Recursos Humanos", "Gestão e Administração Pública", "Gestão Bancária e Seguradora", "Contabilidade e Auditoria", "Relações Internacionais", "Pedagogia", "Psicologia Clínica", "Psicologia da Educação", "Psicologia do Trabalho", "Psicologia Criminal", "Análises Clínicas", "Enfermagem", "Engenharia Informática", "Arquitectura", "Engenharia Industrial e Sistema Eléctrico"] }]
+    },
+    ispb: {
+      name: "Instituto Superior Politécnico do Bita",
+      units: [{ name: "Cursos Disponíveis", courses: ["Economia", "Gestão e Administração de Empresas", "Gestão dos Recursos Humanos", "Ensino da Informática", "Instrução Primária", "Direito", "Psicologia", "Ensino da Matemática", "Inspecção Escolar", "Enfermagem", "Análises Clínicas"] }]
+    },
+    ispnm: {
+      name: "Instituto Superior Politécnico Nelson Mandela",
+      units: [{ name: "Cursos Disponíveis", courses: ["Engenharia Informática", "Direito Jurídico-Civil e Forense", "Direito Jurídico-Económico", "Direito Jurídico-Político", "Contabilidade e Gestão", "Gestão dos Recursos Humanos", "Psicologia da Educação", "Psicologia Clínica", "Comunicação Social", "Ensino Primário"] }]
+    },
+    ispc_cres: {
+      name: "Instituto Superior Politécnico Crescente",
+      units: [{ name: "Cursos Disponíveis", courses: ["Desenvolvimento do Software", "Informática de Gestão", "Sistema de Potência", "Electromecânica", "Telecomunicações e Electrónica", "Energias Renováveis", "Engenharia Civil", "Arquitectura", "Gestão e Administração de Empresas", "Gestão Bancária e Seguros", "Gestão de Recursos Humanos"] }]
+    },
+    ispsml: {
+      name: "Instituto Superior Politécnico São Martinho de Lima",
+      units: [{ name: "Cursos Disponíveis", courses: ["Direito", "Psicologia Clínica", "Psicologia Criminal", "Psicologia Escolar", "Psicologia do Trabalho", "Enfermagem", "Análises Clínicas e Saúde Pública"] }]
+    },
+    isppk: {
+      name: "Instituto Superior Politécnico Privado do Kilamba",
+      units: [{ name: "Cursos Disponíveis", courses: ["Análises Clínicas", "Ciências Farmacêuticas", "Enfermagem", "Fisioterapia", "Medicina Dentária", "Comunicação Social", "Direito", "Gestão de Empresas", "Gestão de Recursos Humanos", "Psicologia", "Engenharia Informática", "Arquitectura e Urbanismo"] }]
+    },
+    estcd: {
+      name: "Escola Superior Técnica de Ciências do Desporto",
+      units: [{ name: "Cursos Disponíveis", courses: ["Biotecnologia", "Educação Física e Desportos", "Gestão Desportiva", "Gestão Ambiental", "Psicologia", "Fisioterapia", "Nutrição"] }]
+    },
+    essc: {
+      name: "Escola Superior de Saúde Castelo",
+      units: [{ name: "Cursos Disponíveis", courses: ["Análises Clínicas", "Ciências Farmacêuticas", "Enfermagem", "Fisioterapia", "Odontologia"] }]
+    },
+    ucan: {
+      name: "Universidade Católica de Angola (UCAN)",
+      units: [
+        { name: "Economia e Gestão", courses: ["Contabilidade e Administração", "Economia", "Gestão Financeira", "Gestão de Produção e Marketing", "Economia e Gestão de Saúde"] },
+        { name: "Direito", courses: ["Direito"] },
+        { name: "Engenharia e Tecnologias", courses: ["Engenharia de Petróleos", "Engenharia de Telecomunicações", "Engenharia Informática", "Petróleo e Gás (Bacharelato)", "Ciências da Terra e Geo-Recursos", "Engenharia do Ambiente"] },
+        { name: "Ciências da Saúde", courses: ["Nutrição", "Saúde Pública (Bacharelato)"] },
+        { name: "Ciências Sociais e Humanas", courses: ["Psicologia Clínica", "Psicologia do Trabalho e das Organizações", "Psicologia Escolar", "Sociologia", "Antropologia", "Línguas e Administração", "Língua Portuguesa", "Filosofia", "Serviço Social", "Educação Moral e Cívica"] },
+        { name: "Educação e Agronomia", courses: ["Ensino Primário", "Educação de Infância", "Agronomia"] }
+      ]
+    },
+    piaget: {
+      name: "Universidade Jean Piaget de Angola",
+      units: [
+        { name: "Ciências da Saúde", courses: ["Medicina", "Enfermagem", "Farmácia", "Fisioterapia", "Medicina Dentária"] },
+        { name: "Ciências Sociais e Humanas", courses: ["Psicologia (Várias especialidades)", "Direito", "Sociologia", "Ciências da Comunicação", "Ensino do Português e Línguas Nacionais"] },
+        { name: "Engenharia e Tecnologias", courses: ["Engenharia de Petróleos", "Engenharia de Construção Civil", "Engenharia Electromecânica", "Informática de Gestão"] },
+        { name: "Gestão e Desporto", courses: ["Economia e Gestão", "Motricidade Humana"] }
+      ]
+    },
+    lusiada: {
+      name: "Universidade Lusíada de Angola",
+      units: [
+        { name: "Economia e Gestão", courses: ["Economia", "Contabilidade", "Gestão de Empresas", "Contabilidade de Gestão", "Contabilidade e Finanças", "Gestão de Recursos Humanos"] },
+        { name: "Direito e Sociedade", courses: ["Direito", "Relações Internacionais", "Psicologia"] },
+        { name: "Engenharia e Arquitetura", courses: ["Engenharia Informática", "Informática de Gestão", "Arquitectura"] },
+        { name: "Educação", courses: ["Educação Física e Desportos"] }
+      ]
+    },
+    uninda: {
+      name: "Universidade Independente de Angola",
+      units: [
+        { name: "Engenharias", courses: ["Engenharia Informática", "Engenharia Civil", "Engenharia de Recursos Naturais e Ambiente", "Engenharia e Gestão Industrial", "Engenharia Electrotécnica e Telecomunicações"] },
+        { name: "Ciências Sociais e Humanas", courses: ["Direito", "Sociologia", "Psicologia", "Relações Internacionais", "Administração Local e Autarquias", "Português e Literatura"] },
+        { name: "Economia e Gestão", courses: ["Economia", "Gestão e Marketing", "Contabilidade e Auditoria", "Gestão de Recursos Humanos", "Turismo e Gestão Hoteleira", "Finanças e Contabilidade", "Informática de Gestão de Empresas"] },
+        { name: "Artes e Comunicação", courses: ["Ciências da Comunicação", "Design", "Cinema", "Arquitectura e Urbanismo"] }
+      ]
+    },
+    ugs: {
+      name: "Universidade Gregório Semedo",
+      units: [
+        { name: "Ciências Jurídicas e Sociais", courses: ["Direito", "Ciência Política e Administração de Território"] },
+        { name: "Gestão e Economia", courses: ["Gestão de Recursos Humanos", "Organização e Gestão de Empresas", "Gestão Comercial e Marketing"] },
+        { name: "Comunicação e Tecnologia", courses: ["Comunicação Social", "Comunicação Empresarial e Línguas", "Engenharia Informática", "Informática de Gestão"] },
+        { name: "Artes e Construção", courses: ["Arquitectura, Urbanismo e Construção"] }
+      ]
+    },
+    unibelas: {
+      name: "Universidade de Belas",
+      units: [
+        { name: "Saúde", courses: ["Medicina Dentária", "Enfermagem", "Fisioterapia", "Farmácia", "Análises Clínicas e Saúde Pública", "Nutrição e Dietética"] },
+        { name: "Engenharias e Gestão", courses: ["Engenharia Informática", "Engenharia de Petróleos", "Gestão Aeronáutica", "Gestão Hospitalar", "Contabilidade e Gestão", "Administração e Marketing"] },
+        { name: "Ciências Sociais", courses: ["Direito", "Relações Internacionais", "Psicologia", "Gestão das Autarquias", "Gestão de Recursos Humanos"] }
+      ]
+    },
+    uor: {
+      name: "Universidade Óscar Ribas",
+      units: [
+        { name: "Economia e Gestão", courses: ["Contabilidade e Finanças", "Gestão de Administração e Marketing"] },
+        { name: "Engenharias e Arquitetura", courses: ["Engenharia Civil", "Engenharia Electromecânica", "Engenharia Informática e Comunicações", "Arquitectura e Urbanismo", "Engenharia de Gestão Industrial"] },
+        { name: "Ciências Sociais", courses: ["Direito", "Psicologia", "Relações Internacionais"] }
+      ]
+    },
+    upra: {
+      name: "Universidade Privada de Angola",
+      units: [
+        { name: "Ciências da Saúde", courses: ["Medicina", "Enfermagem", "Ciências Farmacêuticas", "Fisioterapia", "Odontologia"] },
+        { name: "Engenharia e Arquitetura", courses: ["Engenharia Mecânica", "Engenharia Civil", "Engenharia Informática", "Arquitectura e Urbanismo"] },
+        { name: "Ciências Sociais e Gestão", courses: ["Psicologia", "Gestão e Contabilidade", "Turismo e Gestão Hoteleira"] }
+      ]
+    },
+    utanga: {
+      name: "Universidade Técnica de Angola",
+      units: [
+        { name: "Engenharias e Geociências", courses: ["Engenharia Informática", "Engenharia do Ambiente", "Engenharia de Geologia e Minas", "Engenharia de Minas", "Geologia", "Engenharia Civil", "Telecomunicações e Electrónica"] },
+        { name: "Gestão e Economia", courses: ["Gestão", "Contabilidade e Finanças"] },
+        { name: "Ciências Sociais e Letras", courses: ["Direito", "Relações Internacionais", "Psicologia", "Língua Inglesa", "Língua e Literatura Inglesa"] },
+        { name: "Artes", courses: ["Arquitectura e Urbanismo"] }
+      ]
+    },
+    ispsn: {
+      name: "Instituto Superior Politécnico Sol Nascente (ISPSN)",
+      units: [
+        { name: "Cursos Disponíveis", courses: ["Enfermagem", "Economia", "Ciência Política", "Cardiopneumologia", "Direito", "Psicologia", "Sociologia", "Finanças e Contabilidade", "Gestão de Recursos Humanos"] }
+      ]
+    }
+  };
+
+  function openCourses(id) {
+    const data = universityData[id];
+    if (!data) {
+      alert("Detalhes para esta universidade ainda estão sendo atualizados.");
+      return;
+    }
+
+    const container = document.getElementById('courses-container');
+    const content = document.getElementById('courses-content');
+
+    // Esconder filtros, busca e categorias para focar nos cursos
+    document.querySelector('.section-filter').style.display = 'none';
+    document.querySelector('.search-wrapper').style.display = 'none';
+    document.querySelectorAll('.category').forEach(cat => cat.classList.add('hidden'));
+
+    let html = `<h2>${data.name}</h2><p class="section-intro">Cursos e Licenciaturas disponíveis por Unidade Orgânica.</p>`;
+    
+    data.units.forEach(unit => {
+      const addressQuery = `${unit.name}, ${data.name}, Angola`;
+      html += `
+        <div class="unit-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h4 style="margin:0;">${unit.name}</h4>
+            <button class="btn-map-link" onclick="showOnMap('${addressQuery}', '${unit.name}')">
+              📍 Ver no Mapa
+            </button>
+          </div>
+          <ul class="courses-list">${unit.courses.map(c => `<li>${c}</li>`).join('')}</ul>
+        </div>`;
+    });
+
+    content.innerHTML = html;
+    container.classList.add('active');
+    window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+  }
+
+  function closeCourses() {
+    document.getElementById('courses-container').classList.remove('active');
+    
+    // Mostrar filtros e busca novamente
+    document.querySelector('.section-filter').style.display = 'flex';
+    document.querySelector('.search-wrapper').style.display = 'block';
+    
+    // Restaurar a categoria correta baseada no filtro ativo
+    performFiltering();
+  }
+
+  const searchInput = document.getElementById('universitySearch');
+  const filterButtons = document.querySelectorAll('.filter-button');
+  const categories = document.querySelectorAll('.category');
+
+  function performFiltering() {
+    const query = searchInput.value.toLowerCase().trim();
+    const activeTarget = document.querySelector('.filter-button.active').dataset.target;
+
+    categories.forEach(category => {
+      const isVisibleCategory = category.dataset.section === activeTarget;
+      
+      if (isVisibleCategory) {
+        category.classList.remove('hidden');
+        category.classList.add('showing');
+        
+        const cards = category.querySelectorAll('.center-card');
+        cards.forEach((card) => {
+          const name = card.querySelector('h3').textContent.toLowerCase();
+          const matchesSearch = name.includes(query);
+          
+          if (matchesSearch) {
+            card.style.display = 'block';
+            setTimeout(() => card.classList.add('visible'), 10);
+          } else {
+            card.classList.remove('visible');
+            card.style.display = 'none';
+          }
+        });
+      } else {
+        category.classList.add('hidden');
+        category.classList.remove('showing');
+        category.querySelectorAll('.center-card').forEach(c => c.classList.remove('visible'));
+      }
+    });
+  }
+
+  searchInput.addEventListener('input', performFiltering);
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      performFiltering();
+    });
+  });
+
+  function showOnMap(address, title) {
+    const query = encodeURIComponent(address);
+    const url = `https://www.google.com/maps/search/?api=1&query=${query}`;
+    window.open(url, '_blank');
+  }
+
+  // Inicializar com a primeira categoria visível
+  document.addEventListener('DOMContentLoaded', performFiltering);
+</script>
+</html>

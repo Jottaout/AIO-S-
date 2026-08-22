@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The School - Registro de Aluno</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+    <meta name="description" content="Regista-te na All in One School — a plataforma que conecta estudantes angolanos com universidades, bolsas e oportunidades de carreira.">
+    <meta property="og:title" content="Registro de Aluno — All in One School">
+    <meta property="og:description" content="Cria o teu perfil e recebe recomendações personalizadas de instituições e oportunidades em Angola.">
+    <meta property="og:type" content="website">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#ff4d00">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        :root {
+            --ink: #0a0a0f; --paper: #f5f2eb; --accent: #ff4d00; --accent2: #0057ff; 
+            --muted: #8a8780; --card: #ffffff; --border: rgba(10,10,15,0.08); --green: #00b37e;
+            --shadow: 0 4px 32px rgba(10,10,15,0.10);
+            --step-transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden; 
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        h2 { font-family: 'Syne', sans-serif; color: var(--ink) !important; }
+
+        /* ─── NAV ─── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.1rem 5%;
+            background: rgba(245,242,235,0.90);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            animation: slideDown 0.6s ease both;
+        }
+
+        @keyframes slideDown { from { transform: translateY(-100%); opacity:0; } to { transform: translateY(0); opacity:1; } }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            text-decoration: none;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent); display: inline-block; }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a {
+            font-size: 0.9rem; font-weight: 500; color: var(--muted);
+            text-decoration: none; transition: color 0.2s;
+            letter-spacing: 0.01em;
+        }
+        .nav-links a:hover { color: var(--ink); }
+
+        .nav-cta {
+            background: var(--ink); color: var(--paper) !important;
+            padding: 0.55rem 1.4rem; border-radius: 100px;
+            font-weight: 500 !important; font-size: 0.875rem !important;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .nav-cta:hover { background: var(--accent) !important; color: #fff !important; transform: scale(1.04) !important; }
+
+        label { font-weight: 600; font-size: 0.82rem; margin-bottom: 0.5rem; display: block; color: var(--ink); }
+       
+        input, select {
+            background-color: #fff !important;
+            border: 1.5px solid var(--border) !important;
+            border-radius: 6px !important;
+            padding: 0.7rem 1rem !important;
+            font-size: 0.95rem !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            width: 100% !important;
+        }
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ff4d00' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.1rem;
+            padding-right: 3rem !important;
+            cursor: pointer;
+            font-family: 'Syne', sans-serif !important;
+            font-weight: 700;
+        }
+        input:focus, select:focus { 
+            border-color: var(--accent) !important; 
+            background-color: #fff !important;
+            outline: none !important;
+            box-shadow: 0 0 0 3px rgba(255,77,0,0.1) !important;
+        }
+        .btn-primary-custom, .btn-next, .btn-submit-all {
+            background: var(--ink); color: #fff;
+            font-family: 'Syne', sans-serif; border-radius: 100px;
+            box-shadow: 0 4px 12px rgba(10,10,15,0.1);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            padding: 0.875rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        .btn-primary-custom:hover, .btn-next:hover { background: var(--accent); transform: translateY(-2px); }
+        
+        .btn-prev {
+            background: transparent; color: var(--muted);
+            font-family: 'Syne', sans-serif; font-weight: 700;
+            border: 1px solid var(--border); border-radius: 100px;
+            padding: 0.875rem 1.5rem; cursor: pointer; transition: 0.3s;
+        }
+        .btn-prev:hover { border-color: var(--ink); color: var(--ink); }
+
+        /* ─── ESTRUTURA MULTI-STEP ─── */
+        .register-container {
+            width: 100%; max-width: 550px;
+            background: white; border-radius: 24px;
+            box-shadow: var(--shadow); overflow: hidden;
+            position: relative;
+        }
+
+        .progress-container {
+            padding: 1.5rem 2rem 0;
+        }
+        .progress-bar-bg { height: 4px; background: var(--border); border-radius: 10px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.5s ease; }
+
+        .steps-wrapper {
+            display: flex;
+            width: 700%; /* 7 telas */
+            transition: transform var(--step-transition);
+        }
+        .step-page {
+            width: 14.285%; /* 100 / 7 */
+            padding: 2rem;
+        }
+
+        .error-message { color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem; display: none; }
+        
+        /* Loader Animation */
+        .btn-primary-custom.loading {
+            color: transparent !important;
+            position: relative;
+            pointer-events: none;
+        }
+        .btn-primary-custom.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px; height: 20px;
+            top: 50%; left: 50%;
+            margin-top: -10px; margin-left: -10px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .warning-border { border-color: #f97316 !important; background-color: #fff7ed !important; }
+        .error-border { border-color: #ef4444 !important; }        
+
+        /* ─── HERO BG ─── */
+        .hero-bg {
+            position: absolute; inset: 0; z-index: 0;
+            background:
+              radial-gradient(ellipse 70% 60% at 80% 20%, rgba(255,77,0,0.10) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 50% at 10% 80%, rgba(0,87,255,0.08) 0%, transparent 60%);
+        }
+
+        .hero-grid {
+            position: absolute; inset: 0; z-index: 0;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                              linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden">
+
+    <!-- NAV -->
+    <nav>
+      <a class="logo" href="../serviços/página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+      <ul class="nav-links">
+      </ul>
+      <a href="register-institution.html" class="nav-cta">Registrar Instituição →</a>
+    </nav>
+
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+
+    <div class="relative z-10 flex justify-center items-center min-h-screen pt-24 pb-4 px-4">
+        <div class="register-container">
+            <div class="progress-container">
+                <div class="flex justify-between text-[10px] font-bold uppercase tracking-wider text-muted mb-2">
+                    <span id="phaseLabel">Fase 1: Identidade</span>
+                    <span id="stepCounter">1 / 7</span>
+                </div>
+                <div class="progress-bar-bg">
+                    <div id="progressBar" class="progress-bar-fill"></div>
+                </div>
+            </div>
+
+            <form id="registerForm">
+                <div class="steps-wrapper" id="stepsWrapper">
+                    
+                    <!-- FASE 1: Identidade -->
+                    <div class="step-page">
+                        <h2 class="text-xl font-extrabold mb-1">Olá! Vamos começar?</h2>
+                        <p class="text-sm text-muted mb-6">Primeiro, o básico para criarmos o teu perfil.</p>
+                        <div class="space-y-4">
+                            <div><label>Como te chamas?</label><input type="text" id="fullName" name="fullName" required placeholder="Teu nome completo"></div>
+                            <div><label>Como podemos contactar-te?</label><input type="text" id="identifier" name="identifier" required placeholder="E-mail ou Telefone"></div>
+                            <div><label>Cria uma senha segura</label><input type="password" id="password" name="password" required></div>
+                            <div>
+                                <label>Em que província vives?</label>
+
+                                <select id="province" name="province" required>
+                                    <option value="">Onde vives?</option>
+                                    <option value="Bengo">Bengo</option>
+                                    <option value="Benguela">Benguela</option>
+                                    <option value="Bié">Bié</option>
+                                    <option value="Cabinda">Cabinda</option>
+                                    <option value="Cuando Cubango">Cuando Cubango</option>
+                                    <option value="Cuanza Norte">Cuanza Norte</option>
+                                    <option value="Cuanza Sul">Cuanza Sul</option>
+                                    <option value="Cunene">Cunene</option>
+                                    <option value="Huambo">Huambo</option>
+                                    <option value="Huíla">Huíla</option>
+                                    <option value="Luanda">Luanda</option>
+                                    <option value="Lunda Norte">Lunda Norte</option>
+                                    <option value="Lunda Sul">Lunda Sul</option>
+                                    <option value="Malanje">Malanje</option>
+                                    <option value="Moxico">Moxico</option>
+                                    <option value="Namibe">Namibe</option>
+                                    <option value="Uíge">Uíge</option>
+                                    <option value="Zaire">Zaire</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FASE 2: Situação Académica -->
+                    <div class="step-page">
+                        <h2 class="text-xl font-extrabold mb-1">Vida Académica</h2>
+                        <p class="text-sm text-muted mb-6">Isto ajuda-nos a calibrar as tuas recomendações.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <label>Nível de ensino atual</label>
+                                <select id="academicLevel" name="academicLevel" required>
+                                    <option value="primario">Primário</option>
+                                    <option value="1ciclo">1º Ciclo</option>
+                                    <option value="2ciclo">2º Ciclo / Médio</option>
+                                    <option value="universidade">Universidade</option>
+                                    <option value="profissional">Formação Profissional</option>
+                                </select>
+                            </div>
+                            <div><label>Escola / Instituição Atual</label><input type="text" id="institution" name="institution"></div>
+                            <div><label>Classe ou Ano</label><input type="text" id="academicYear" name="academicYear" placeholder="Ex: 12ª Classe"></div>
+                            <div>
+                                <label>Área de Estudo</label>
+                                <select id="academicArea" name="academicArea">
+                                    <option value="ciencias">Ciências Exactas</option>
+                                    <option value="humanidades">Humanidades</option>
+                                    <option value="informatica">Informática / TI</option>
+                                    <option value="saude">Saúde</option>
+                                    <option value="outro">Outra</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FASE 3A: Interesses -->
+                    <div class="step-page">
+                        <h2 class="text-xl font-extrabold mb-1">Interesses</h2>
+                        <p class="text-sm text-muted mb-6">O que faz os teus olhos brilharem?</p>
+                        <div class="space-y-4">
+                            <label>Áreas que te interessam (múltipla escolha)</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 p-2 border rounded-xl text-xs cursor-pointer"><input type="checkbox" name="interest" value="tecnologia"> Tecnologia</label>
+                                <label class="flex items-center gap-2 p-2 border rounded-xl text-xs cursor-pointer"><input type="checkbox" name="interest" value="negocios"> Negócios</label>
+                                <label class="flex items-center gap-2 p-2 border rounded-xl text-xs cursor-pointer"><input type="checkbox" name="interest" value="artes"> Artes</label>
+                                <label class="flex items-center gap-2 p-2 border rounded-xl text-xs cursor-pointer"><input type="checkbox" name="interest" value="saude"> Medicina</label>
+                            </div>
+                            <div>
+                                <label>O que gostavas de fazer no futuro?</label>
+                                <select id="futureGoal" name="futureGoal">
+                                    <option value="empreender">Criar a minha empresa</option>
+                                    <option value="tech">Trabalhar com tecnologia</option>
+                                    <option value="ajudar">Ajudar pessoas / Saúde</option>
+                                    <option value="exterior">Trabalhar no exterior</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FASE 3B: Competências -->
+                    <div class="step-page">
+                        <h2 class="text-xl font-extrabold mb-1">Super Poderes</h2>
+                        <p class="text-sm text-muted mb-6">No que és realmente bom?</p>
+                        <div class="space-y-4">
+                            <label>Onde tens mais facilidade?</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <label class="flex items-center gap-2 p-2 border rounded-xl text-xs cursor-pointer"><input type="checkbox" name="skill" value="matematica"> Matemática</label>
+                                <label class="flex items-center gap-2 p-2 border rounded-xl text-xs cursor-pointer"><input type="checkbox" name="skill" value="comunicacao"> Comunicação</label>
+                                <label class="flex items-center gap-2 p-2 border rounded-xl text-xs cursor-pointer"><input type="checkbox" name="skill" value="criatividade"> Criatividade</label>
+                                <label class="flex items-center gap-2 p-2 border rounded-xl text-xs cursor-pointer"><input type="checkbox" name="skill" value="lideranca"> Liderança</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FASE 3C: Estilo de Aprendizagem -->
+                    <div class="step-page">
+                        <h2 class="text-xl font-extrabold mb-1">Como aprendes?</h2>
+                        <p class="text-sm text-muted mb-6">Cada um tem o seu ritmo.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <label>Preferes aulas:</label>
+                                <div class="flex gap-4">
+                                    <label class="text-sm flex gap-1"><input type="radio" name="learningType" value="pratica"> Práticas</label>
+                                    <label class="text-sm flex gap-1"><input type="radio" name="learningType" value="teorica"> Teóricas</label>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Preferes ensino:</label>
+                                <select id="teachingMethod" name="teachingMethod">
+                                    <option value="presencial">Presencial</option>
+                                    <option value="online">Online</option>
+                                    <option value="hibrido">Híbrido</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Trabalho preferido:</label>
+                                <select id="workStyle" name="workStyle">
+                                    <option value="sozinho">Sozinho</option>
+                                    <option value="grupo">Em Grupo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FASE 3D: Perfil de Carreira -->
+                    <div class="step-page">
+                        <h2 class="text-xl font-extrabold mb-1">Ambições</h2>
+                        <p class="text-sm text-muted mb-6">O que valorizas numa carreira?</p>
+                        <div class="space-y-4">
+                            <div>
+                                <label>O que mais valorizas?</label>
+                                <select id="careerValue" name="careerValue">
+                                    <option value="salario">Salário Alto</option>
+                                    <option value="estabilidade">Estabilidade</option>
+                                    <option value="impacto">Impacto Social</option>
+                                    <option value="flexibilidade">Flexibilidade</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Principal objetivo atual:</label>
+                                <select id="mainObjective" name="mainObjective">
+                                    <option value="emprego">Emprego rápido</option>
+                                    <option value="bolsa">Conseguir uma Bolsa</option>
+                                    <option value="especializar">Especializar-me</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FASE 4: Condições Práticas -->
+                    <div class="step-page">
+                        <h2 class="text-xl font-extrabold mb-1">Viabilidade</h2>
+                        <p class="text-sm text-muted mb-6">Quase lá! Vamos filtrar o que é possível.</p>
+                        <div class="space-y-4">
+                            <div>
+                                <label>Financiamento preferido</label>
+                                <select id="funding" name="funding">
+                                    <option value="gratuito">Gratuito / Público</option>
+                                    <option value="pago">Privado Pago</option>
+                                    <option value="bolsa">Com Bolsa</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Orçamento mensal (Kz)</label>
+                                <select id="budget" name="budget">
+                                    <option value="0">Gratuito</option>
+                                    <option value="15000">Até 15.000 Kz</option>
+                                    <option value="30000">Até 30.000 Kz</option>
+                                    <option value="unlimited">Sem limite</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label>Tens computador próprio?</label>
+                                <div class="flex gap-4">
+                                    <label class="text-sm flex gap-1"><input type="radio" name="hasPC" value="sim"> Sim</label>
+                                    <label class="text-sm flex gap-1"><input type="radio" name="hasPC" value="nao"> Não</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- BOTÕES DE NAVEGAÇÃO -->
+                <div class="p-8 pt-0 flex justify-between gap-4">
+                    <button type="button" id="prevBtn" class="btn-prev hidden">← Voltar</button>
+                    <button type="button" id="nextBtn" class="btn-next w-full">Próximo →</button>
+                    <button type="submit" id="submitBtn" class="btn-primary-custom w-full hidden">Finalizar Registro ✓</button>
+                </div>
+            </form>
+            
+            <div class="px-8 pb-8 text-center">
+                <p class="text-xs text-muted">Já és cadastrado? <a href="login.html" class="font-bold text-accent">Entrar</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+        import { getFirestore, doc, setDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+        import { firebaseConfig } from '../firebase-config.js';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db   = getFirestore(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) window.location.href = '../serviços/dashboard-aluno.html';
+        });
+
+        let currentStep = 0;
+        const totalSteps = 7;
+        const wrapper      = document.getElementById('stepsWrapper');
+        const progressBar  = document.getElementById('progressBar');
+        const stepCounter  = document.getElementById('stepCounter');
+        const phaseLabel   = document.getElementById('phaseLabel');
+        const nextBtn      = document.getElementById('nextBtn');
+        const prevBtn      = document.getElementById('prevBtn');
+        const submitBtn    = document.getElementById('submitBtn');
+
+        const phases = ["Fase 1: Identidade","Fase 2: Académica","Fase 3: Interesses","Fase 3: Competências","Fase 3: Estilo","Fase 3: Carreira","Fase 4: Prática"];
+
+        function updateUI() {
+            wrapper.style.transform = `translateX(-${currentStep * (100/totalSteps)}%)`;
+            progressBar.style.width = `${((currentStep+1)/totalSteps)*100}%`;
+            stepCounter.innerText   = `${currentStep+1} / ${totalSteps}`;
+            phaseLabel.innerText    = phases[currentStep];
+            prevBtn.classList.toggle('hidden', currentStep === 0);
+            nextBtn.classList.toggle('hidden', currentStep === totalSteps - 1);
+            submitBtn.classList.toggle('hidden', currentStep !== totalSteps - 1);
+        }
+
+        nextBtn.addEventListener('click', () => { if (currentStep < totalSteps-1) { currentStep++; updateUI(); } });
+        prevBtn.addEventListener('click', () => { if (currentStep > 0) { currentStep--; updateUI(); } });
+
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            submitBtn.classList.add('loading'); submitBtn.disabled = true;
+
+            const formData = new FormData(this);
+            const userData = {};
+            formData.forEach((value, key) => {
+                if (!userData[key]) { userData[key] = value; }
+                else { if (!Array.isArray(userData[key])) userData[key] = [userData[key]]; userData[key].push(value); }
+            });
+
+            const identifier = (userData.identifier || '').trim();
+            const isEmail    = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identifier);
+            const emailToUse = isEmail ? identifier : `${identifier.replace(/\s/g,'')}@aluno.aio.ao`;
+            const password   = userData.password;
+
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, emailToUse, password);
+                const uid  = cred.user.uid;
+
+                await setDoc(doc(db, 'users', uid), {
+                    ...userData, email: emailToUse, role: 'student', uid,
+                    createdAt: serverTimestamp()
+                });
+
+                // Envia verificação de e-mail apenas para e-mails reais
+                if (isEmail) await sendEmailVerification(cred.user);
+
+                alert('Cadastro concluído! ' + (isEmail ? 'Verifica o teu e-mail para activar a conta.' : 'As tuas recomendações estão a ser preparadas.'));
+                window.location.href = '../serviços/dashboard-aluno.html';
+            } catch (err) {
+                const msgs = { 'auth/email-already-in-use':'Este e-mail já está registado.', 'auth/weak-password':'Senha fraca. Usa pelo menos 6 caracteres.' };
+                alert(msgs[err.code] || 'Erro ao criar conta. Tenta novamente.');
+                submitBtn.classList.remove('loading'); submitBtn.disabled = false;
+            }
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>

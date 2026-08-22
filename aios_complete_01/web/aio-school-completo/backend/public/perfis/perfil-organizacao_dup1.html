@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Perfil Institucional — All in One School</title>
+<meta name="description" content="Perfil institucional na All in One School — gere a presença da sua instituição e alcance estudantes angolanos.">
+<meta property="og:title" content="Perfil Institucional — All in One School">
+<meta property="og:type" content="website">
+<link rel="manifest" href="../manifest.json">
+<meta name="theme-color" content="#00b37e">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<style>
+  /* Design System baseado em institutos-superiores.html */
+  :root {
+    --ink: #0a0a0f;
+    --paper: #eef7f2; /* Verde visivelmente sutil */
+    --accent: #ff4d00;
+    --accent2: #0057ff;
+    --muted: #8a8780;
+    --card: #ffffff;
+    --border: rgba(10, 10, 15, 0.08);
+    --shadow: 0 4px 32px rgba(10, 10, 15, 0.10);
+    --green: #00b37e;
+  }
+  .progress-fill { transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
+  *, 
+  *::before, 
+  *::after { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+  }
+
+  body { 
+    font-family: 'DM Sans', sans-serif; 
+    background-color: var(--paper); 
+    color: var(--ink); 
+    line-height: 1.6; 
+    position: relative;
+  }
+
+  .logo-header {
+    display: flex; 
+    align-items: center; 
+    padding: 2rem 5% 1rem;
+    position: relative;
+    z-index: 10;
+  }
+
+  .logo { 
+    font-family: 'Syne', sans-serif; 
+    font-weight: 800; 
+    font-size: 0.95rem; 
+    color: #ffffff; 
+    text-decoration: none; 
+    display: flex; 
+    align-items: center; 
+    gap: 0.5rem; 
+    background: var(--ink);
+    padding: 0.5rem 1.2rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 77, 0, 0.2);
+  }
+
+  .logo-dot { 
+    width: 10px; 
+    height: 10px; 
+    border-radius: 50%; 
+    background: var(--accent); 
+  }
+
+  .hero-grid {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    background-image: 
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: linear-gradient(to bottom, black 90%, transparent 100%);
+  }
+  
+  /* Layout do Perfil Reorganizado */
+  .profile-header {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 1rem;
+    position: relative; 
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+  }
+
+  .cover-photo-container {
+    width: 100%;
+    height: 250px;
+    background-color: var(--ink);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #orgCover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+  }
+
+  .header-main-info {
+    padding: 1.5rem 5%;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    margin-top: -60px;
+  }
+
+  .profile-pic-container {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid var(--card);
+    background: var(--paper);
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: var(--shadow);
+    z-index: 5;
+  }
+
+  .profile-pic-container img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover;
+  }
+
+  .bio-container {
+    flex-grow: 1;
+    margin-top: 45px;
+  }
+
+  .bio-text {
+    font-size: 0.85rem;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .info-cards-wrapper {
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr; /* Contactos com mais largura */
+    gap: 1.25rem;
+    grid-column: 1 / -1;
+    margin-bottom: 1rem;
+    align-items: start;
+  }
+
+  .btn-edit-small {
+    width: auto !important;
+    align-self: flex-end;
+    margin-top: 45px;
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.7rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .btn-edit-small:hover {
+    background: var(--ink);
+    color: #fff;
+  }
+
+  .header-divider {
+    width: 90%;
+    margin: 1rem auto;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  .profile-nav {
+    display: flex;
+    gap: 1rem;
+    padding: 0 5% 1.5rem;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .btn-nav {
+    padding: 0.6rem 1.5rem;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-radius: 12px;
+    transition: 0.3s;
+  }
+
+  .btn-nav:hover, .btn-nav.active {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--border);
+  }
+
+  /* Section 2 Grid */
+  .profile-grid {
+    max-width: 1200px;
+    margin: 2rem auto 4rem;
+    padding: 0 5%;
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 1.25rem;
+  }
+
+  .secondary-feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .card-expandable {
+    height: auto;
+    overflow: visible;
+  }
+
+  .feed-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    grid-column: 2;
+  }
+
+  /* Card de Criar Post */
+  .create-post-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+
+  .mini-profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--paper);
+  }
+
+  .mini-profile-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .fake-search-bar {
+    flex-grow: 1;
+    background: var(--paper);
+    padding: 0.8rem 1.2rem;
+    border-radius: 100px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    border: 1px solid var(--border);
+    cursor: text;
+    transition: 0.3s;
+    resize: none;
+    height: 48px;
+    min-height: 48px; /* Garante altura mínima para o textarea */
+    padding-top: 12px;
+    font-family: inherit;
+    line-height: 1.2;
+    overflow: hidden;
+    outline: none;
+  }
+
+  .fake-search-bar:hover {
+    border-color: var(--green);
+    background: var(--card);
+  }
+
+  .btn-publish {
+    background: var(--green);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    flex-shrink: 0;
+  }
+
+  .btn-publish:hover {
+    background: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  /* Estilos para o novo painel de opções de publicação */
+  .post-options-card {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .post-options-card h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .options-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: var(--ink);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: var(--paper);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+
+  .checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+
+  .checkbox-container input:checked ~ .checkmark {
+    background-color: var(--green);
+    border-color: var(--green);
+  }
+
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+
+  .checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+  }
+
+  .checkbox-container .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  .post-actions {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .btn-publish-confirm {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 100px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    flex-grow: 1;
+  }
+
+  .btn-publish-confirm:hover {
+    background: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  .btn-cancel {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--border);
+    padding: 0.8rem 1.5rem;
+    border-radius: 100px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .btn-cancel:hover {
+    background: var(--ink);
+    color: white;
+  }
+
+  /* Estilo para garantir que o texto das publicações não ultrapasse a margem */
+  .post-text {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    white-space: pre-wrap; /* Preserva as quebras de linha (Enter) do usuário */
+    display: block;
+    width: 100%;
+  }
+
+  .alert-tag {
+    background-color: var(--accent);
+    color: white;
+    padding: 1px 4px;
+    border-radius: 4px;
+    font-size: 0.55rem;
+    font-weight: 700;
+    margin-top: 2px;
+    flex-shrink: 0;
+    display: inline-block;
+    width: fit-content;
+    opacity: 0.85;
+  }
+
+  .post-media {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0.8rem 0;
+    background: var(--paper);
+    border: 1px solid var(--border);
+  }
+
+  /* Interações das Publicações */
+  .post-actions-bar {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .action-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: 0.2s;
+  }
+
+  .action-btn:hover {
+    color: var(--green);
+    transform: scale(1.05);
+  }
+
+  .post-options {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.4rem;
+    opacity: 0;
+    transition: 0.3s;
+  }
+
+  .card:hover .post-options {
+    opacity: 1;
+  }
+
+  .option-btn {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: 0.2s;
+  }
+
+  .option-btn:hover {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+  }
+
+  /* Seção de Comentários */
+  .comments-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    display: none; /* Hidden by default */
+  }
+
+  .comments-section.active {
+    display: block;
+  }
+
+  .comments-list {
+    margin-bottom: 1rem;
+    max-height: 200px; /* Limit height for scrolling */
+    overflow-y: auto;
+    padding-right: 5px; /* For scrollbar */
+  }
+
+  .comment-item {
+    background: var(--paper);
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--ink);
+    position: relative;
+  }
+
+  .comment-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .comment-meta {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .comment-edit-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .comment-edit-btn:hover {
+    color: var(--green);
+  }
+
+  .comment-input-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .comment-input {
+    flex-grow: 1;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+    min-height: 38px;
+    max-height: 100px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .comment-input:focus {
+    border-color: var(--green);
+  }
+
+  .btn-add-comment {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.2s;
+    flex-shrink: 0;
+  }
+
+  .btn-add-comment:hover {
+    background: var(--ink);
+  }
+
+  .highlight-indicator {
+    color: var(--green);
+    font-size: 1.2em;
+    margin-right: 0.5rem;
+  }
+
+  .alert-badge {
+    background-color: var(--accent);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 50%;
+    padding: 0.1rem 0.4rem;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 18px;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .profile-grid {
+      grid-template-columns: 1fr;
+    }
+    .feed-column {
+      grid-column: auto;
+    }
+    #secondaryFeedSection {
+      grid-column: auto;
+    }
+    .header-main-info {
+      flex-direction: column;
+      text-align: center;
+      margin-top: -70px;
+    }
+    .bio-container {
+      margin-top: 10px;
+    }
+    .btn-edit-small {
+      align-self: center;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .info-cards-wrapper {
+      grid-template-columns: 1fr;
+    }
+  }
+  .main-content { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 2rem; 
+  }
+
+  .card { 
+    background: var(--card); 
+    padding: 2.5rem; 
+    border-radius: 12px; 
+    border: 1px solid var(--border); 
+    box-shadow: var(--shadow); 
+    position: relative;
+    transition: 
+      transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+      box-shadow 0.4s ease,
+      border-color 0.4s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 48px rgba(10, 10, 15, 0.12);
+    border-color: var(--green);
+  }
+  
+  h1, 
+  h2, 
+  h3 { 
+    font-family: 'Syne', sans-serif; 
+    letter-spacing: -0.02em; 
+  }
+
+  h1 { 
+    font-size: 2.8rem; 
+    line-height: 1.1; 
+    margin-bottom: 0.5rem; 
+  }
+
+  h2 { 
+    font-size: 1.4rem; 
+    margin-bottom: 1.8rem; 
+    color: var(--green); 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    border-left: 4px solid var(--green); 
+    padding-left: 1rem; 
+  }
+
+  /* Interações das Publicações */
+  .post-actions-bar {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .action-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: 0.2s;
+  }
+
+  .action-btn:hover {
+    color: var(--green);
+    transform: scale(1.05);
+  }
+
+  .post-options {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.4rem;
+    opacity: 0;
+    transition: 0.3s;
+  }
+
+  .card:hover .post-options {
+    opacity: 1;
+  }
+
+  .option-btn {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: 0.2s;
+  }
+
+  .post-header-info {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.3s ease;
+    z-index: 5;
+  }
+
+  .mini-logo-post {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+  }
+
+  .post-handle {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--muted);
+    font-family: 'Syne', sans-serif;
+  }
+
+  .card:hover .post-header-info {
+    opacity: 0;
+  }
+
+  .option-btn:hover {
+    background: var(--ink);
+    color: white;
+    border-color: var(--ink);
+  }
+
+  .info-list { 
+    list-style: none; 
+    text-align: left; 
+  }
+
+  .info-grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .info-grid-container {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+  }
+
+  .info-list li { 
+    margin-bottom: 1.2rem; 
+    font-size: 0.9rem; 
+    color: var(--muted); 
+    display: flex; 
+    flex-direction: column; 
+  }
+
+  .info-list strong { 
+    color: var(--ink); 
+    font-size: 1rem; 
+    margin-bottom: 0.2rem; 
+  }
+
+  .description { 
+    font-size: 1.1rem; 
+    color: var(--muted); 
+    white-space: pre-line; 
+    line-height: 1.8; 
+  }
+
+  .course-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
+    gap: 1rem; 
+    list-style: none; 
+    margin-top: 1rem; 
+  }
+
+  /* Feed Vertical */
+  .vertical-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  /* Estilo simples para itens dentro do Holder de Destaques */
+  .highlight-item {
+    background: var(--paper);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+    transition: 0.3s;
+  }
+  .highlight-item:hover {
+    border-color: var(--green);
+    background: white;
+  }
+
+  .post-time {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+
+  .course-item::before { 
+    content: '→'; 
+    color: var(--green); 
+    font-weight: 800; 
+  }
+
+  .branches-section {
+    grid-column: 1 / -1;
+  }
+
+  .branches-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+  }
+
+  .unit-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 1.8rem;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .unit-card h3 {
+    color: var(--green);
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .unit-meta {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    color: var(--muted);
+    font-size: 0.88rem;
+  }
+
+  .unit-meta strong {
+    color: var(--ink);
+  }
+
+  .courses-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.6rem;
+    list-style: none;
+    margin-top: 0.8rem;
+  }
+
+  .courses-list li {
+    font-size: 0.88rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.75rem;
+    background: var(--paper);
+    border-radius: 8px;
+  }
+
+  .courses-list li::before {
+    content: '→';
+    color: var(--green);
+    font-weight: 800;
+    font-size: 0.7rem;
+  }
+
+  .btn-edit { 
+    background: var(--ink); 
+    color: #fff; 
+    border: none; 
+    padding: 1rem 2rem; 
+    border-radius: 100px; 
+    font-family: 'Syne', sans-serif; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: 0.3s; 
+    margin-top: 1.5rem; 
+    text-decoration: none; 
+    display: inline-block; 
+    width: 100%; 
+  }
+
+  .btn-edit:hover { 
+    background: var(--green); 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 20px rgba(0, 179, 126, 0.2); 
+  }
+
+  @media (max-width: 900px) {
+    .profile-container { 
+      grid-template-columns: 1fr; 
+      margin-top: 2rem; 
+    }
+    .hero { 
+      min-height: 25vh; 
+    }
+  }
+
+  /* Estilos do Modal de Edição */
+  .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
+    left: 0; 
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(10, 10, 15, 0.6);
+    backdrop-filter: blur(8px); 
+    overflow-y: auto;
+  }
+
+  .modal-content {
+    background-color: var(--card); 
+    margin: 5vh auto; 
+    padding: 3rem;
+    border-radius: 24px; 
+    width: 90%; 
+    max-width: 600px;
+    box-shadow: var(--shadow); 
+    position: relative; 
+    border: 1px solid var(--border);
+  }
+
+  .close-modal {
+    position: absolute; 
+    top: 1.5rem; 
+    right: 2rem; 
+    font-size: 1.5rem;
+    cursor: pointer; 
+    color: var(--muted); 
+    transition: color 0.2s;
+  }
+
+  .close-modal:hover { 
+    color: var(--accent); 
+  }
+
+  .form-group { 
+    margin-bottom: 1.5rem; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.5rem; 
+  }
+
+  .form-group label {
+    font-family: 'Syne', sans-serif; 
+    font-weight: 700; 
+    font-size: 0.85rem;
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    color: var(--ink);
+  }
+
+  .form-group input, 
+  .form-group textarea,
+  .form-group select {
+    padding: 1rem 1.2rem; 
+    border-radius: 12px; 
+    border: 1.5px solid var(--border);
+    font-family: 'DM Sans', sans-serif; 
+    font-size: 1rem;
+    background: var(--paper); 
+    color: var(--ink); 
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+    outline: none;
+  }
+
+  .form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300b37e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1.2rem center;
+    background-size: 1.2rem;
+    padding-right: 3.2rem;
+  }
+
+  .form-group input:focus, 
+  .form-group textarea:focus,
+  .form-group select:focus { 
+    border-color: var(--green); 
+    box-shadow: 0 0 0 4px rgba(0, 179, 126, 0.1);
+  }
+
+  .btn-save {
+    background: var(--ink); 
+    color: #fff; 
+    border: none; 
+    padding: 1rem;
+    border-radius: 100px; 
+    font-family: 'Syne', sans-serif; 
+    font-weight: 700;
+    cursor: pointer; 
+    width: 100%; 
+    transition: 0.3s; 
+    margin-top: 1rem;
+  }
+
+  .btn-save:hover {
+    background: var(--green); 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 179, 126, 0.2);
+  }
+
+  /* Estilos para o Construtor Dinâmico de Unidades */
+  .dynamic-unit-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .dynamic-unit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .dynamic-unit-item input[type="text"],
+  .dynamic-unit-item input[type="tel"],
+  .dynamic-unit-item input[type="email"] {
+    padding: 0.6rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 0.9rem;
+    background: var(--paper);
+  }
+  .mgmt-courses-section {
+    margin-top: 1rem;
+    border-top: 1px dashed var(--border);
+    padding-top: 1rem;
+  }
+  .mgmt-courses-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .mgmt-course-tag {
+    background: var(--green);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .mgmt-course-tag button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  /* Notificação de Sucesso (Ciclo de Registro) */
+  .toast {
+    display: none; 
+    position: fixed; 
+    bottom: 2rem; 
+    right: 2rem;
+    background: var(--ink); 
+    color: #fff; 
+    padding: 1rem 2rem;
+    border-radius: 12px; 
+    z-index: 2000; 
+    box-shadow: var(--shadow);
+    animation: slideIn 0.5s ease forwards;
+  }
+
+  @keyframes slideIn {
+    from { 
+      transform: translateY(100%); 
+      opacity: 0; 
+    }
+    to { 
+      transform: translateY(0); 
+      opacity: 1; 
+    }
+  }
+
+  footer { 
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2rem 5%; /* Reduzido o padding geral do footer */
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo restante */
+    align-items: center;
+    position: relative;
+    z-index: 10;
+  }
+
+  .footer-bottom { 
+    width: 100%; 
+    margin-top: 0; /* Removido margem superior */
+    padding-top: 0; /* Removido padding superior */
+    border-top: none; /* Removida a borda superior */
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    color: var(--muted);
+    font-size: 0.75rem; /* Reduzido o tamanho da fonte */
+  }
+</style>
+</head>
+<body>
+
+<!-- Banner de onboarding para perfis incompletos -->
+<div id="onboardingBanner" style="display:none;background:linear-gradient(135deg,#0a0a0f,#1a1a2e);color:#fff;padding:1rem 5%;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+    <span style="font-size:1.2rem;">🎉</span>
+    <div style="flex:1;min-width:200px;">
+        <strong style="font-family:'Syne',sans-serif;">Bem-vindo à plataforma!</strong>
+        <p style="font-size:0.82rem;color:rgba(255,255,255,0.6);margin:0;">Completa o teu perfil para aparecer nas pesquisas dos estudantes.</p>
+    </div>
+    <div style="display:flex;gap:0.5rem;align-items:center;">
+        <div id="onboardingProgress" style="font-size:0.78rem;color:rgba(255,255,255,0.5);"></div>
+        <button id="onboardingCTA" style="background:#ff4d00;color:#fff;border:none;border-radius:100px;padding:0.5rem 1.2rem;font-family:'Syne',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;">Completar perfil →</button>
+        <button id="onboardingClose" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.2rem;cursor:pointer;">×</button>
+    </div>
+</div>
+
+<header class="logo-header">
+  <a class="logo" href="../serviços/página de Iniciação.html"><span class="logo-dot"></span>All in One School</a>
+</header>
+
+<div class="hero-grid"></div>
+
+
+
+<div class="profile-container">
+  <div class="profile-header">
+    <div class="cover-photo-container">
+      <img id="orgCover" src="logos/cover-placeholder.png" alt="Capa">
+    </div>
+    
+    <div class="header-main-info">
+      <div class="profile-pic-container">
+        <img id="orgLogo" src="logos/placeholder.png" alt="Logo">
+      </div>
+      <div class="bio-container">
+        <h1 id="mainOrgName" style="margin: 0 0 5px; font-size: 1.8rem;">Instituição</h1>
+        <p id="displaySlogan" style="font-style: italic; color: var(--muted); margin-bottom: 8px; font-size: 0.9rem;">"Adicione o seu slogan aqui"</p>
+        <p id="orgBio" class="bio-text">Carregando biografia da organização...</p>
+        <div style="margin-top: 15px; display: flex; align-items: center; gap: 10px;">
+          <div style="width: 200px; height: 6px; background: var(--paper); border-radius: 10px; overflow: hidden; border: 1px solid var(--border);">
+            <div id="profileProgress" class="progress-fill" style="height: 100%; width: 0%; background: var(--green);"></div>
+          </div>
+          <span id="progressText" style="font-size: 0.75rem; font-weight: 700; color: var(--green);">0% completo</span>
+        </div>
+      </div>
+      <button class="btn-edit-small btn-edit" id="mainEditBtn">Editar Perfil</button>
+    </div>
+
+    <hr class="header-divider">
+    <nav class="profile-nav">
+      <button class="btn-nav active" id="btnNavPublications" data-filter="all">Publicações</button>
+      <button class="btn-nav" id="btnNavAbout">Sobre</button>
+      <button class="btn-nav" id="btnNavAlerts" style="color: var(--accent); position: relative;">
+        Alertas
+        <span id="alertBadge" class="alert-badge" style="display: none;">0</span>
+      </button>
+      <button class="btn-nav" id="btnNavBranches">Unidades Orgânicas</button>
+    </nav>
+  </div>
+
+  <div class="profile-grid">
+    <div class="info-cards-wrapper">
+      <div class="card card-expandable" id="expandableCard">
+          <h2>Informações Gerais</h2>
+          <div class="info-grid-container">
+            <ul class="info-list" style="margin-top: 1rem;">
+              <li><strong>CEO / Diretor</strong> <span id="infoCEO">---</span></li>
+              <li><strong>Ano de Fundação</strong> <span id="infoFoundationYear">N/A</span></li>
+              <li><strong>Tipo de Ensino</strong> <span id="infoTeachingType">N/A</span></li>
+              <li><strong>Faixa Etária</strong> <span id="infoAgeGroup">N/A</span></li>
+              <li><strong>Língua de Instrução</strong> <span id="infoLanguage">N/A</span></li>
+            </ul>
+            <ul class="info-list" style="margin-top: 1rem;">
+              <li><strong>Morada Completa</strong> <span id="infoAddress">N/A</span></li>
+              <li><strong>Município</strong> <span id="infoMunicipality">N/A</span></li>
+              <li><strong>Província</strong> <span id="infoProvince">N/A</span></li>
+              <li><strong>Google Maps</strong> <a id="infoMapsLink" href="#" target="_blank" style="color: var(--green); text-decoration: underline;">Ver no Mapa</a></li>
+              <li><strong id="infoBranchesLabel">Unidades Orgânicas</strong> <span id="infoBranches">N/A</span></li>
+            </ul>
+          </div>
+        </div>
+
+      <div class="card card-expandable" id="contactInfoCard">
+          <h2>Contactos Públicos</h2>
+          <div class="info-grid-container">
+            <ul class="info-list" style="margin-top: 1rem;">
+              <li><strong>Website Oficial</strong> <a id="infoWebsite" href="#" target="_blank" style="color: var(--green); text-decoration: underline;">N/A</a></li>
+              <li><strong>WhatsApp</strong> <span id="infoWhatsapp">N/A</span></li>
+              <li><strong>E-mail Candidaturas</strong> <span id="infoAppEmail">N/A</span></li>
+              <li><strong>Sede</strong> <span id="infoLocation">Luanda, Angola</span></li>
+              <li><strong>E-mail</strong> <span id="infoEmail">admin@escola.ao</span></li>
+              <li><strong>Contacto</strong> <span id="infoPhone">+244 ---</span></li>
+              <li><strong>Tipo</strong> <span id="infoTypeDetail">Geral</span></li>
+            </ul>
+            <ul class="info-list" style="margin-top: 1rem;">
+              <li><strong>Correspondência</strong> <span id="infoPostal">N/A</span></li>
+              <li><strong>Facebook</strong> <a id="infoFacebook" href="#" target="_blank" style="color: var(--green); text-decoration: underline;">N/A</a></li>
+              <li><strong>Instagram</strong> <a id="infoInstagram" href="#" target="_blank" style="color: var(--green); text-decoration: underline;">N/A</a></li>
+              <li><strong>LinkedIn</strong> <a id="infoLinkedin" href="#" target="_blank" style="color: var(--green); text-decoration: underline;">N/A</a></li>
+              <li><strong>Outros Contactos</strong> <span id="infoSocial">N/A</span></li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+    <div id="branchesSection" class="branches-section" style="display: none;">
+      <h2>Unidades Orgânicas e Cursos</h2>
+      <div id="branchesList" class="branches-grid"></div>
+    </div>
+
+    <!-- Bloco de destaques e criação lado a lado -->
+    <div class="card" id="highlightsSection">
+      <h2>Publicações em Destaque</h2>
+      <div id="servicesList" class="course-grid"></div>
+    </div>
+
+    <div class="card create-post-card">
+      <div id="postInputContainer" style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+        <div class="mini-profile-icon">
+          <img id="miniOrgLogo" src="logos/placeholder.png" alt="Mini Logo">
+        </div>
+        <textarea id="postInput" class="fake-search-bar" placeholder="No que estás a pensar?"></textarea>
+        <button id="btnPublish" class="btn-publish" title="Publicar">↑</button>
+      </div>
+
+      <!-- Novo painel de opções de publicação -->
+      <div class="card post-options-card" id="postOptionsCard" style="display: none;">
+        <h3>Opções de Publicação</h3>
+        <div class="options-group">
+          <label class="checkbox-container"><input type="checkbox" id="optionHighlight"><span class="checkmark"></span> Destacar no Perfil</label>
+          <label class="checkbox-container"><input type="checkbox" id="optionAlert"><span class="checkmark"></span> Marcar como Alerta</label>
+        </div>
+        <div class="post-actions">
+          <button id="btnConfirmPublish" class="btn-publish-confirm">Publicar</button>
+          <button id="btnCancelPublish" class="btn-cancel">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feeds automáticos -->
+    <div id="secondaryFeedSection" style="display: none; grid-column: 1;">
+      <h2 style="margin: 1.5rem 0 1rem; border-left: 4px solid var(--green); padding-left: 1rem;">Mais Publicações</h2>
+      <div id="secondaryFeed" class="secondary-feed-grid"></div>
+    </div>
+
+    <div class="feed-column">
+      <div id="profileFeed" class="vertical-feed"></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>&copy; 2024 All in One School. Todos os direitos reservados.</p>
+    <p>Educação & Tecnologia • Angola</p>
+  </div>
+</footer>
+
+<!-- Notificação para o Ciclo de Registro -->
+<div id="welcomeToast" class="toast">✓ Perfil criado com sucesso! Bem-vindo à rede.</div>
+
+<!-- Modal de Edição -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" id="closeModal">&times;</span>
+    <h2 style="margin-bottom: 2rem;">Editar Perfil Institucional</h2>
+    <form id="editForm">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-group">
+          <label for="editNome">Nome da Instituição</label>
+          <input type="text" id="editNome" required>
+        </div>
+        <div class="form-group">
+          <label for="editSlogan">Slogan (Máx. 120 caracteres)</label>
+          <input type="text" id="editSlogan" maxlength="120" placeholder="Ex: Formando líderes...">
+        </div>
+      </div>
+      
+      <div style="background: var(--paper); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+        <h4 style="font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1rem; color: var(--muted);">Sobre a Instituição</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="editFoundationYear">Ano de Fundação</label>
+            <input type="number" id="editFoundationYear" placeholder="Ex: 1995">
+          </div>
+          <div class="form-group">
+            <label for="editTeachingType">Tipo de Ensino</label>
+            <select id="editTeachingType">
+              <option value="Presencial">Presencial</option>
+              <option value="Online">Online</option>
+              <option value="Híbrido">Híbrido</option>
+            </select>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="editAgeGroup">Faixa Etária</label>
+            <input type="text" id="editAgeGroup" placeholder="Ex: 5-12 anos, 13-18 anos, Adultos">
+          </div>
+          <div class="form-group">
+            <label for="editLanguage">Língua de Instrução</label>
+            <input type="text" id="editLanguage" placeholder="Ex: Português, Inglês">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editLogo">Foto de Perfil (Logo)</label>
+        <input type="file" id="editLogo" accept="image/*">
+      </div>
+      <div class="form-group">
+        <label for="editCover">Foto de Capa</label>
+        <input type="file" id="editCover" accept="image/*">
+      </div>
+
+      <div style="background: var(--paper); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+        <h4 style="font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1rem; color: var(--muted);">Localização</h4>
+        <div class="form-group">
+          <label for="editAddress">Morada Completa</label>
+          <input type="text" id="editAddress" placeholder="Rua, Bairro, Prédio...">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="editMunicipality">Município</label>
+            <input type="text" id="editMunicipality">
+          </div>
+          <div class="form-group">
+            <label for="editProvince">Província</label>
+            <input type="text" id="editProvince">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="editMapsLink">Link do Google Maps</label>
+          <input type="url" id="editMapsLink" placeholder="https://goo.gl/maps/...">
+        </div>
+      </div>
+      <div id="dynamicBranchesGroup" style="background: var(--paper); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; display: none;">
+        <h4 id="dynamicBranchesLabel" style="font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1rem; color: var(--muted);">Gestão de Unidades Orgânicas</h4>
+        <div id="branchesContainer"></div>
+        <button type="button" id="btnAddBranch" class="btn-publish" style="width: auto; border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.8rem;">+ Adicionar Unidade/Curso</button>
+      </div>
+
+      <div style="background: var(--paper); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+        <h4 style="font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1rem; color: var(--muted);">Canais de Atendimento ao Público</h4>
+        <div class="form-group">
+          <label for="editWebsite">Website Oficial</label>
+          <input type="url" id="editWebsite" placeholder="www.instituicao.ao">
+        </div>
+        <div class="form-group">
+          <label for="editWhatsapp">WhatsApp Institucional</label>
+          <input type="text" id="editWhatsapp" placeholder="+244 9xx xxx xxx">
+        </div>
+        <div class="form-group">
+          <label for="editAppEmail">E-mail para Candidaturas</label>
+          <input type="email" id="editAppEmail" placeholder="inscricoes@dominio.com">
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label for="editFacebook">Facebook</label>
+            <input type="text" id="editFacebook" placeholder="facebook.com/...">
+          </div>
+          <div class="form-group">
+            <label for="editInstagram">Instagram</label>
+            <input type="text" id="editInstagram" placeholder="@instituicao">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="editLinkedin">LinkedIn</label>
+          <input type="text" id="editLinkedin" placeholder="linkedin.com/company/...">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="editTipo">Tipo de Organização</label>
+        <select id="editTipo" onchange="handleTipoChange(this.value)">
+          <option value="">Selecione o tipo</option>
+          <option value="U. privada">Universidade Privada</option>
+          <option value="U. pública">Universidade Pública</option>
+          <option value="IESs">Instituto Superior</option>
+          <option value="I. médio">Instituição de Ensino Médio</option>
+          <option value="Academia">Academia de Formação</option>
+          <option value="Centro de Formação Profissional">Centro de Formação Profissional</option>
+          <option value="Organização de Gestão de Bolsas">Organização de Gestão de Bolsas</option>
+          <option value="Ministérios">Instituições Governamentais</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="editPostal">Endereço para Correspondência</label>
+        <input type="text" id="editPostal">
+      </div>
+      <div class="form-group">
+        <label for="editDescricao">Sobre a Organização</label>
+        <textarea id="editDescricao" rows="4"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="editServicos">Serviços </label>
+        <input type="text" id="editServicos">
+      </div>
+      <button type="submit" class="btn-save">Guardar Alterações</button>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+  import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+  import {
+    getFirestore, doc, updateDoc, onSnapshot, arrayUnion, serverTimestamp
+  } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+  import { getStorage, ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js';
+  import { firebaseConfig } from '../firebase-config.js';
+
+  const app     = initializeApp(firebaseConfig);
+  const auth    = getAuth(app);
+  const db      = getFirestore(app);
+  const storage = getStorage(app);
+
+  let currentUID = null;
+  let orgData    = {};
+  let currentFilter = 'all';
+
+  // ── Auth Guard + Logout ──
+  onAuthStateChanged(auth, (user) => {
+    if (!user) { window.location.href = '../auth/login.html'; return; }
+    currentUID = user.uid;
+
+    const logoHeader = document.querySelector('.logo-header');
+    if (logoHeader) {
+      const btn = document.createElement('button');
+      btn.textContent = 'Sair';
+      btn.style.cssText = 'margin-left:auto;background:none;border:1px solid rgba(10,10,15,0.15);border-radius:100px;padding:0.4rem 1rem;font-size:0.82rem;cursor:pointer;color:#8a8780;font-family:Syne,sans-serif;font-weight:700;transition:0.2s;';
+      btn.onclick = async () => { await signOut(auth); window.location.href = '../serviços/página de Iniciação.html'; };
+      logoHeader.appendChild(btn);
+    }
+
+    loadProfile();
+  });
+
+  // ── Dados em tempo real ──
+  function loadProfile() {
+    onSnapshot(
+      doc(db, 'institutions', currentUID),
+      (snap) => {
+        if (!snap.exists()) {
+          console.warn('Documento da instituição ainda não existe para este UID.');
+          return;
+        }
+        orgData = snap.data();
+        renderProfile();
+        checkOnboarding();
+      },
+      (err) => {
+        console.error('Erro ao carregar perfil institucional:', err);
+        const msg = err.code === 'permission-denied'
+          ? 'Sem permissão para aceder aos dados. Verifica se as regras do Firestore foram publicadas.'
+          : 'Ocorreu um erro ao carregar o perfil: ' + (err.message || err.code || 'erro desconhecido');
+        const container = document.querySelector('.profile-container');
+        if (container) {
+          container.insertAdjacentHTML('afterbegin', `
+            <div style="background:#fff7ed;border:1px solid #f97316;border-radius:12px;padding:1rem 1.5rem;margin:1rem 0;font-size:0.88rem;color:#c2410c;">
+              ⚠️ ${msg}
+            </div>`);
+        } else {
+          alert(msg);
+        }
+      }
+    );
+  }
+
+  // ── Helpers seguros para preencher elementos ──
+  function setText(id, val, fallback = 'N/A') {
+    const el = document.getElementById(id);
+    if (el) el.textContent = (val !== undefined && val !== null && val !== '') ? val : fallback;
+  }
+  function setLink(id, val, fallback = 'N/A') {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (val) { el.textContent = val; el.href = val.startsWith('http') ? val : `https://${val}`; }
+    else { el.textContent = fallback; el.href = '#'; }
+  }
+  function setSrc(id, val) {
+    const el = document.getElementById(id);
+    if (el && val) el.src = val;
+  }
+
+  // ── Render principal do perfil ──
+  function renderProfile() {
+    const d = orgData;
+    if (!d) return;
+
+    // Cabeçalho
+    setText('mainOrgName',   d.nome, 'Instituição');
+    setText('displaySlogan', d.slogan ? `"${d.slogan}"` : '"Adicione o seu slogan aqui"', '');
+    setText('orgBio',        d.descricao || d.tagline || 'Adicione uma biografia ao editar o perfil.', '');
+    setSrc('orgLogo',  d.logo);
+    setSrc('orgCover', d.capa);
+    setSrc('miniOrgLogo', d.logo);
+
+    // Informações Gerais
+    setText('infoCEO',            d.ceo);
+    setText('infoFoundationYear', d.foundationYear);
+    setText('infoTeachingType',   d.teachingType);
+    setText('infoAgeGroup',       d.ageGroup);
+    setText('infoLanguage',       d.language);
+    setText('infoAddress',        d.address);
+    setText('infoMunicipality',   d.municipality);
+    setText('infoProvince',       d.province);
+    setLink('infoMapsLink',       d.mapsLink, 'Ver no Mapa');
+    const branchCount = Array.isArray(d.branches) ? d.branches.length : 0;
+    setText('infoBranches', branchCount > 0 ? `${branchCount} unidade(s)` : 'N/A');
+
+    // Contactos Públicos
+    setLink('infoWebsite',  d.website);
+    setText('infoWhatsapp', d.whatsapp);
+    setText('infoAppEmail', d.appEmail);
+    const loc = [d.address, d.municipality, d.province].filter(Boolean).join(', ') || d.location;
+    setText('infoLocation', loc, 'Luanda, Angola');
+    setText('infoEmail',    d.email);
+    setText('infoPhone',    d.telefone || d.whatsapp);
+    setText('infoTypeDetail', d.tipo, 'Geral');
+    setText('infoPostal',   d.postal);
+    setLink('infoFacebook',  d.facebook);
+    setLink('infoInstagram', d.instagram);
+    setLink('infoLinkedin',  d.linkedin);
+    setText('infoSocial', '');
+
+    // Serviços (destaques)
+    renderServices(d.servicos || []);
+
+    // Unidades Orgânicas
+    renderBranches(d.branches || []);
+
+    // Feed de publicações
+    renderFeed(d.publicacoes || []);
+  }
+
+  // ── Serviços / Destaques ──
+  function renderServices(servicos) {
+    const el = document.getElementById('servicesList');
+    if (!el) return;
+    if (!servicos.length) {
+      el.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">Nenhum serviço adicionado ainda.</p>';
+      return;
+    }
+    el.innerHTML = servicos.map(s => `<span class="tag" style="display:inline-block;background:var(--paper);border:1px solid var(--border);border-radius:100px;padding:0.3rem 0.9rem;font-size:0.8rem;font-weight:600;margin:0.2rem;">${s}</span>`).join('');
+  }
+
+  // ── Unidades Orgânicas (filiais) ──
+  function renderBranches(branches) {
+    const section = document.getElementById('branchesSection');
+    const list = document.getElementById('branchesList');
+    if (!list) return;
+    if (!branches.length) {
+      list.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">Nenhuma unidade orgânica registada.</p>';
+    } else {
+      list.innerHTML = branches.map(b => `
+        <div class="card" style="padding:1.25rem;">
+          <strong style="font-family:'Syne',sans-serif;">${b.nome||'Unidade'}</strong>
+          <p style="font-size:0.82rem;color:var(--muted);margin-top:0.3rem;">${b.endereco||''}</p>
+          ${b.telefone ? `<p style="font-size:0.8rem;color:var(--muted);">📞 ${b.telefone}</p>` : ''}
+        </div>`).join('');
+    }
+  }
+
+  // ── Feed de publicações ──
+  function renderFeed(publicacoes) {
+    const feedEl = document.getElementById('profileFeed');
+    if (!feedEl) return;
+
+    const filtered = currentFilter === 'alerts'
+      ? publicacoes.filter(p => p.isAlert)
+      : publicacoes;
+
+    // Badge de alertas
+    const alertCount = publicacoes.filter(p => p.isAlert).length;
+    const badge = document.getElementById('alertBadge');
+    if (badge) {
+      badge.textContent = alertCount;
+      badge.style.display = alertCount > 0 ? 'inline-block' : 'none';
+    }
+
+    if (!filtered.length) {
+      feedEl.innerHTML = '<p style="color:var(--muted);text-align:center;padding:2rem;">Nenhuma publicação aqui ainda.</p>';
+      return;
+    }
+
+    const sorted = [...filtered].sort((a,b) => new Date(b.date) - new Date(a.date));
+    feedEl.innerHTML = sorted.map(pub => {
+      const date = pub.date ? new Date(pub.date).toLocaleDateString('pt-AO', { day:'numeric', month:'long', year:'numeric' }) : '';
+      const badgeHtml = pub.isHighlighted
+        ? '<span style="background:var(--accent);color:#fff;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:100px;font-weight:700;">★ Destaque</span>'
+        : pub.isAlert
+        ? '<span style="background:#f97316;color:#fff;font-size:0.7rem;padding:0.2rem 0.6rem;border-radius:100px;font-weight:700;">⚠ Alerta</span>'
+        : '';
+      return `<div class="card" style="padding:1.5rem;margin-bottom:1rem;">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.75rem;">
+          <div class="mini-profile-icon"><img src="${orgData.logo||''}" onerror="this.style.display='none'" style="width:36px;height:36px;border-radius:50%;object-fit:cover;"></div>
+          <div><strong style="font-size:0.9rem;">${orgData.nome||''}</strong><br><span style="font-size:0.75rem;color:var(--muted);">${date}</span></div>
+          <div style="margin-left:auto;">${badgeHtml}</div>
+        </div>
+        <p style="font-size:0.9rem;line-height:1.6;">${pub.text}</p>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Completude / Onboarding ──
+  function checkOnboarding() {
+    const d = orgData;
+    const fields = ['nome','descricao','logo','website','telefone','province','tipo'];
+    const filled = fields.filter(f => d[f] && d[f] !== '').length;
+    const pct = Math.round((filled / fields.length) * 100);
+
+    const bar = document.getElementById('profileProgress');
+    const txt = document.getElementById('progressText');
+    if (bar) bar.style.width = pct + '%';
+    if (txt) txt.textContent = pct + '% completo';
+
+    const banner = document.getElementById('onboardingBanner');
+    if (banner) {
+      if (pct < 80) {
+        banner.style.display = 'flex';
+        const pg = document.getElementById('onboardingProgress');
+        if (pg) pg.textContent = `Perfil ${pct}% completo`;
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+  }
+  document.getElementById('onboardingClose')?.addEventListener('click', () => {
+    const b = document.getElementById('onboardingBanner'); if (b) b.style.display = 'none';
+  });
+  document.getElementById('onboardingCTA')?.addEventListener('click', () => openEditModal());
+
+  // ── Navegação entre secções do perfil ──
+  const feedColumnEl       = document.querySelector('.feed-column');
+  const createPostCardEl   = document.querySelector('.create-post-card');
+  const branchesSectionEl  = document.getElementById('branchesSection');
+  const infoCardsWrapperEl = document.querySelector('.info-cards-wrapper');
+
+  function setActiveNav(activeBtn) {
+    document.querySelectorAll('.profile-nav .btn-nav').forEach(b => b.classList.remove('active'));
+    activeBtn.classList.add('active');
+  }
+
+  document.getElementById('btnNavPublications')?.addEventListener('click', (e) => {
+    setActiveNav(e.currentTarget);
+    currentFilter = 'all';
+    if (branchesSectionEl) branchesSectionEl.style.display = 'none';
+    if (createPostCardEl)  createPostCardEl.style.display  = '';
+    if (feedColumnEl)      feedColumnEl.style.display      = '';
+    renderProfile();
+  });
+
+  document.getElementById('btnNavAlerts')?.addEventListener('click', (e) => {
+    setActiveNav(e.currentTarget);
+    currentFilter = 'alerts';
+    if (branchesSectionEl) branchesSectionEl.style.display = 'none';
+    if (createPostCardEl)  createPostCardEl.style.display  = '';
+    if (feedColumnEl)      feedColumnEl.style.display       = '';
+    renderProfile();
+  });
+
+  document.getElementById('btnNavBranches')?.addEventListener('click', (e) => {
+    setActiveNav(e.currentTarget);
+    if (branchesSectionEl) branchesSectionEl.style.display = 'block';
+    if (createPostCardEl)  createPostCardEl.style.display  = 'none';
+    if (feedColumnEl)      feedColumnEl.style.display      = 'none';
+  });
+
+  document.getElementById('btnNavAbout')?.addEventListener('click', (e) => {
+    setActiveNav(e.currentTarget);
+    if (infoCardsWrapperEl) infoCardsWrapperEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // ── Modal de Edição ──
+  const modal     = document.getElementById('editModal');
+  const closeBtn  = document.getElementById('closeModal');
+  const editForm  = document.getElementById('editForm');
+
+  function openEditModal() {
+    const d = orgData;
+    const s = (id, val) => { const el = document.getElementById(id); if (el) el.value = val || ''; };
+    s('editNome', d.nome); s('editSlogan', d.slogan || d.tagline);
+    s('editFoundationYear', d.foundationYear); s('editTeachingType', d.teachingType);
+    s('editAgeGroup', d.ageGroup); s('editLanguage', d.language);
+    s('editAddress', d.address); s('editMunicipality', d.municipality);
+    s('editProvince', d.province); s('editMapsLink', d.mapsLink);
+    s('editWebsite', d.website); s('editWhatsapp', d.whatsapp);
+    s('editAppEmail', d.appEmail || d.email); s('editFacebook', d.facebook);
+    s('editInstagram', d.instagram); s('editLinkedin', d.linkedin);
+    s('editTipo', d.tipo); s('editDescricao', d.descricao);
+    s('editPostal', d.postal); s('editServicos', (d.servicos || []).join(', '));
+    if (modal) modal.style.display = 'block';
+  }
+
+  function closeEditModal() { if (modal) modal.style.display = 'none'; }
+
+  document.getElementById('mainEditBtn')?.addEventListener('click', openEditModal);
+  if (closeBtn) closeBtn.onclick = closeEditModal;
+  window.addEventListener('click', (e) => { if (e.target === modal) closeEditModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal && modal.style.display === 'block') closeEditModal(); });
+
+  if (editForm) editForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const g = (id) => { const el = document.getElementById(id); return el ? el.value : ''; };
+    const updated = {
+      nome: g('editNome'), slogan: g('editSlogan'), foundationYear: g('editFoundationYear'),
+      teachingType: g('editTeachingType'), ageGroup: g('editAgeGroup'), language: g('editLanguage'),
+      address: g('editAddress'), municipality: g('editMunicipality'), province: g('editProvince'),
+      mapsLink: g('editMapsLink'), website: g('editWebsite'), whatsapp: g('editWhatsapp'),
+      appEmail: g('editAppEmail'), facebook: g('editFacebook'), instagram: g('editInstagram'),
+      linkedin: g('editLinkedin'), tipo: g('editTipo'), descricao: g('editDescricao'),
+      postal: g('editPostal'), servicos: g('editServicos').split(',').map(s => s.trim()).filter(s => s)
+    };
+
+    closeEditModal();
+
+    const logoFile  = document.getElementById('editLogo')  ? document.getElementById('editLogo').files[0]  : null;
+    const coverFile = document.getElementById('editCover') ? document.getElementById('editCover').files[0] : null;
+
+    if (logoFile) {
+      const r = ref(storage, `institutions/${currentUID}/logo`);
+      await uploadBytes(r, logoFile);
+      updated.logo = await getDownloadURL(r);
+    }
+    if (coverFile) {
+      const r = ref(storage, `institutions/${currentUID}/cover`);
+      await uploadBytes(r, coverFile);
+      updated.capa = await getDownloadURL(r);
+    }
+
+    await updateDoc(doc(db, 'institutions', currentUID), updated);
+  });
+
+  // ── Adicionar Unidade Orgânica (simples) ──
+  document.getElementById('btnAddBranch')?.addEventListener('click', async () => {
+    const nome = prompt('Nome da unidade / curso:');
+    if (!nome) return;
+    const endereco = prompt('Endereço (opcional):') || '';
+    const telefone = prompt('Telefone (opcional):') || '';
+    await updateDoc(doc(db, 'institutions', currentUID), {
+      branches: arrayUnion({ nome, endereco, telefone })
+    });
+  });
+
+  // ── Publicações ──
+  const btnPublish         = document.getElementById('btnPublish');
+  const postInput          = document.getElementById('postInput');
+  const postOptionsCard    = document.getElementById('postOptionsCard');
+  const postInputContainer = document.getElementById('postInputContainer');
+  const btnConfirmPublish  = document.getElementById('btnConfirmPublish');
+  const btnCancelPublish   = document.getElementById('btnCancelPublish');
+  const optionHighlight    = document.getElementById('optionHighlight');
+  const optionAlert        = document.getElementById('optionAlert');
+
+  if (btnPublish && postInput) {
+    btnPublish.onclick = () => {
+      if (!postInput.value.trim()) { alert('Adiciona texto para publicar.'); return; }
+      if (postInputContainer) postInputContainer.style.display = 'none';
+      if (postOptionsCard)    postOptionsCard.style.display    = 'flex';
+    };
+
+    if (btnConfirmPublish) btnConfirmPublish.onclick = async () => {
+      const text = postInput.value.trim();
+      if (!text) return;
+      await updateDoc(doc(db, 'institutions', currentUID), {
+        publicacoes: arrayUnion({
+          text,
+          date: new Date().toISOString(),
+          isHighlighted: optionHighlight ? optionHighlight.checked : false,
+          isAlert: optionAlert ? optionAlert.checked : false
+        })
+      });
+      postInput.value = '';
+      if (optionHighlight) optionHighlight.checked = false;
+      if (optionAlert)     optionAlert.checked     = false;
+      if (postOptionsCard)     postOptionsCard.style.display     = 'none';
+      if (postInputContainer)  postInputContainer.style.display  = 'flex';
+    };
+
+    if (btnCancelPublish) btnCancelPublish.onclick = () => {
+      postInput.value = '';
+      if (postOptionsCard)    postOptionsCard.style.display    = 'none';
+      if (postInputContainer) postInputContainer.style.display = 'flex';
+    };
+  }
+
+  // ── Toast de boas-vindas (vindo do registo) ──
+  document.addEventListener('DOMContentLoaded', () => {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get('registered') === 'true') {
+      const t = document.getElementById('welcomeToast');
+      if (t) { t.style.display = 'block'; setTimeout(() => t.style.display = 'none', 5000); }
+    }
+  });
+
+  // ── Service Worker ──
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('../sw.js');
+</script>
+</body>
+</html>
